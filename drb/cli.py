@@ -112,12 +112,15 @@ def main(argv=None):
             if pack_name not in packs:
                 print(f"Pack '{pack_name}' not found.", file=sys.stderr)
                 sys.exit(1)
-            from drb.deps import check_pack_deps
-            errors = check_pack_deps(packs_dir, pack_name)
-            if errors:
-                print(f"Cannot switch to pack '{pack_name}' — missing dependencies:", file=sys.stderr)
-                for err in errors:
-                    print(f"  - {err}", file=sys.stderr)
+            from drb.problems import load_pack
+            from drb.container import load_config, ensure_image
+            pack_data = load_pack(packs_dir, pack_name)
+            config = load_config(os.path.join(state_dir, "config.json"))
+            engine = config.get("engine", "docker")
+            try:
+                ensure_image(engine, pack_data["image"])
+            except Exception as e:
+                print(f"Failed to pull image '{pack_data['image']}': {e}", file=sys.stderr)
                 sys.exit(1)
             sm = StateManager(state_dir)
             sm.active_pack = pack_name

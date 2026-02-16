@@ -102,25 +102,43 @@ def test_uninstall_removes_artifacts(tmp_path):
     assert "other-tool" in updated["hooks"]["UserPromptSubmit"][0]["hooks"][0]["command"]
 
 
-def test_packs_use_rejects_missing_deps(tmp_path):
-    """Test that check_pack_deps catches missing dependencies."""
-    packs_dir = str(tmp_path / "packs")
-    pack_dir = os.path.join(packs_dir, "badpack")
+def test_packs_use_pulls_image(tmp_path):
+    """Test that packs use calls ensure_image for the pack's container image."""
+    state_dir = str(tmp_path / "state")
+    os.makedirs(state_dir)
+
+    # Create pack under state_dir/packs so cli.py's fallback resolution finds it
+    packs_dir = os.path.join(state_dir, "packs")
+    pack_dir = os.path.join(packs_dir, "testpack")
     os.makedirs(pack_dir)
 
     with open(os.path.join(pack_dir, "pack.json"), "w") as f:
         json.dump({
-            "name": "badpack",
+            "name": "testpack",
             "language": "python",
             "version": "1.0.0",
             "description": "Test",
+            "image": "python:3.12-slim",
+            "test_command": "pytest test_solution.py",
             "problems": [],
-            "dependencies": {
-                "executables": ["totally_bogus_binary_xyz"],
-            },
         }, f)
 
-    from drb.deps import check_pack_deps
-    errors = check_pack_deps(packs_dir, "badpack")
-    assert len(errors) == 1
-    assert "totally_bogus_binary_xyz" in errors[0]
+    config_path = os.path.join(state_dir, "config.json")
+    with open(config_path, "w") as f:
+        json.dump({"engine": "docker"}, f)
+
+    # The cli resolves packs_dir relative to __file__ first, then falls back
+    # to state_dir/packs. We need to force the fallback by making the first
+    # os.path.isdir check return False for the repo-relative packs dir.
+    real_isdir = os.path.isdir
+
+    def fake_isdir(path):
+        if "drb" in path and path.endswith("packs") and "state" not in path:
+            return False
+        return real_isdir(path)
+
+    with patch("drb.cli.DEFAULT_STATE_DIR", state_dir), \
+         patch("drb.cli.os.path.isdir", side_effect=fake_isdir), \
+         patch("drb.container.ensure_image") as mock_ensure:
+        main(["packs", "use", "testpack"])
+        mock_ensure.assert_called_once_with("docker", "python:3.12-slim")
