@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dont-rust-bro &mdash; Practice coding while your agent does the real work</title>
+  <meta name="description" content="Pop up leetcode-style coding challenges while your AI agent is busy thinking. Stay sharp on interviews while your agent ships production code.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ========== Nav ========== -->
+<nav>
+  <div class="container">
+    <div class="logo">dont-rust-<span>bro</span></div>
+    <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="#problem">Why</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#demo">Demo</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="https://github.com/peterkarman1/dont-rust-bro" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== 1. Hero ========== -->
+<section class="hero">
+  <div class="container">
+    <h1>Don't let your skills<br>get <span class="green">rusty</span>.</h1>
+    <p class="subtitle">
+      Your AI agent writes the code that ships to production. But companies
+      still want you to reverse a linked list on a whiteboard in 8 minutes.
+      Make it make sense.
+    </p>
+
+    <div class="terminal-box">
+      <div class="terminal-titlebar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span>Terminal</span>
+      </div>
+      <div class="terminal-body">
+        <div class="copy-wrap">
+          <button class="copy-btn" data-copy="curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/install.sh | bash">Copy</button>
+          <span class="prompt">$ </span><span class="command" id="hero-typed"></span><span class="cursor" id="hero-cursor"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 2. The Problem ========== -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label">// the problem</div>
+    <h2 class="section-title">AI agents do the engineering.<br>Companies still interview like it's 2015.</h2>
+    <p style="color:var(--text-dim);max-width:640px;margin-bottom:1rem;">
+      <strong style="color:var(--heading)">dont-rust-bro</strong> pops up leetcode-style coding challenges while
+      your AI agent is busy thinking, so you can grind algorithms during the downtime.
+      Your agent handles the real work. You handle the interview prep. Everybody wins &mdash;
+      except maybe the interviewers who think this is how they find good engineers.
+    </p>
+
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="icon">&#129302;</div>
+        <h3>Agents do the work</h3>
+        <p>Your Claude agent writes better production code than you. That's just the timeline we're in.</p>
+      </div>
+      <div class="reason-card">
+        <div class="icon">&#128196;</div>
+        <h3>Interviews haven't changed</h3>
+        <p>Companies still want you to implement quicksort on a whiteboard. Cool, cool, cool.</p>
+      </div>
+      <div class="reason-card">
+        <div class="icon">&#9203;</div>
+        <h3>Dead time exists</h3>
+        <p>Your agent is thinking. You're staring at a spinner. That's wasted practice time.</p>
+      </div>
+      <div class="reason-card">
+        <div class="icon">&#127919;</div>
+        <h3>Play the game</h3>
+        <p>Might as well get good at the game they make you play to get hired.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 3. How It Works ========== -->
+<section id="how">
+  <div class="container">
+    <div class="section-label">// how it works</div>
+    <h2 class="section-title">Automatic. Seamless. Zero effort.</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Claude spawns a subagent</h3>
+          <p>Your agent kicks off background work. The hook fires.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>A practice window pops up</h3>
+          <p>A coding challenge appears in a separate window. Two Sum? Merge intervals? Let's go.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>You write code, click Run</h3>
+          <p>Solve the problem, run the tests, see if you pass. Real practice, real feedback.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Agent finishes &mdash; window hides</h3>
+          <p>Claude needs your attention? The practice window disappears automatically. Real work comes first.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>State is saved</h3>
+          <p>Window vanished mid-problem? Your code is still there when it comes back. Multiple agents? Window stays open until they're all done.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4. Live Demo ========== -->
+<section id="demo">
+  <div class="container">
+    <div class="section-label">// live demo</div>
+    <h2 class="section-title">What it looks like</h2>
+    <p style="color:var(--text-dim);margin-bottom:0.5rem;">This is the popup that appears while your agent thinks.</p>
+
+    <div class="editor-window">
+      <div class="editor-titlebar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span class="tab active">dont-rust-bro</span>
+      </div>
+      <div class="editor-split">
+        <!-- Left: problem description -->
+        <div class="editor-problem">
+          <h3>Two Sum</h3>
+          <span class="difficulty">Easy</span>
+          <p>
+            Given an array of integers <code style="color:var(--heading)">nums</code> and an integer
+            <code style="color:var(--heading)">target</code>, return indices of the two numbers
+            such that they add up to <code style="color:var(--heading)">target</code>.
+          </p>
+          <p>You may assume each input has exactly one solution, and you may not use the same element twice.</p>
+          <pre>Input:  nums = [2,7,11,15], target = 9
+Output: [0, 1]
+Explanation: nums[0] + nums[1] == 9</pre>
+          <pre>Input:  nums = [3,2,4], target = 6
+Output: [1, 2]</pre>
+        </div>
+        <!-- Right: code editor -->
+        <div class="editor-code">
+          <div class="editor-code-area">
+            <div><span class="line-num">1</span><span class="kw">def</span> <span class="fn">two_sum</span>(nums, target):</div>
+            <div><span class="line-num">2</span>    seen = {}</div>
+            <div><span class="line-num">3</span>    <span class="kw">for</span> i, n <span class="kw">in</span> <span class="fn">enumerate</span>(nums):</div>
+            <div><span class="line-num">4</span>        diff = target - n</div>
+            <div><span class="line-num">5</span>        <span class="kw">if</span> diff <span class="kw">in</span> seen:</div>
+            <div><span class="line-num">6</span>            <span class="ret">return</span> [seen[diff], i]</div>
+            <div><span class="line-num">7</span>        seen[n] = i</div>
+            <div><span class="line-num">8</span></div>
+          </div>
+          <div class="editor-toolbar">
+            <span class="test-result" id="demo-result"></span>
+            <button class="run-btn" id="demo-run">Run</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5. Features ========== -->
+<section id="features">
+  <div class="container">
+    <div class="section-label">// features</div>
+    <h2 class="section-title">Built for the grind</h2>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>Auto show / hide</h3>
+        <p>Practice window appears when agents spawn and disappears when they need you. Zero manual toggling.</p>
+      </div>
+      <div class="feature-card">
+        <h3>State persistence</h3>
+        <p>Window vanishes mid-problem? Your code is right where you left it when it comes back.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Multi-agent aware</h3>
+        <p>Multiple subagents running? The window stays open until they're all done. Smart reference counting.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Problem packs</h3>
+        <p>Swap between language-specific packs. Python ships now. JS, Rust, Go coming soon.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Built-in test runner</h3>
+        <p>Write your solution, click Run, see pass/fail immediately. Real feedback loop.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Claude Code hooks</h3>
+        <p>Integrates via Claude Code's hook system. One install command and you're set.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6. Problem Packs ========== -->
+<section id="packs">
+  <div class="container">
+    <div class="section-label">// problem packs</div>
+    <h2 class="section-title">Choose your weapon</h2>
+    <p style="color:var(--text-dim);margin-bottom:0;">Switch packs any time with <code style="font-family:var(--mono);color:var(--heading)">drb packs use &lt;name&gt;</code></p>
+
+    <div class="packs-list">
+      <div class="pack-card active">
+        <h3>python</h3>
+        <span class="badge available">available</span>
+        <p>Fundamentals &amp; algorithms. The default pack.</p>
+      </div>
+      <div class="pack-card">
+        <h3>javascript</h3>
+        <span class="badge soon">coming soon</span>
+        <p>DOM-free algorithm grind in JS.</p>
+      </div>
+      <div class="pack-card">
+        <h3>rust</h3>
+        <span class="badge soon">coming soon</span>
+        <p>Ownership-safe algo practice.</p>
+      </div>
+      <div class="pack-card">
+        <h3>go</h3>
+        <span class="badge soon">coming soon</span>
+        <p>Goroutine-free problem solving.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 7. Install ========== -->
+<section id="install">
+  <div class="container">
+    <div class="section-label">// install</div>
+    <h2 class="section-title">One command. That's it.</h2>
+
+    <div class="terminal-box" style="margin-bottom:2.5rem;">
+      <div class="terminal-titlebar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span>Terminal</span>
+      </div>
+      <div class="terminal-body">
+        <div class="copy-wrap">
+          <button class="copy-btn" data-copy="curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/install.sh | bash">Copy</button>
+          <span class="prompt">$ </span><span class="command">curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/install.sh | bash</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--heading);margin-bottom:0.5rem;">CLI Commands</h3>
+    <table class="commands-table">
+      <thead>
+        <tr><th>Command</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>drb status</code></td><td>Check daemon status</td></tr>
+        <tr><td><code>drb packs list</code></td><td>List installed problem packs</td></tr>
+        <tr><td><code>drb packs use &lt;name&gt;</code></td><td>Switch active pack</td></tr>
+        <tr><td><code>drb update</code></td><td>Pull latest problems</td></tr>
+        <tr><td><code>drb stop</code></td><td>Stop the daemon</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ========== 8. Philosophy / CTA ========== -->
+<section class="cta-section">
+  <div class="container">
+    <p class="tagline">Don't <span class="green">rust</span>, bro.</p>
+    <p class="cta-sub">
+      Your agent is better at writing production code than you are. That's fine.
+      But until the industry catches up, you still need to prove you can implement
+      Two Sum in under 5 minutes. Use the spare cycles to stay sharp on the stuff
+      that gets you hired.
+    </p>
+    <a class="gh-btn" href="https://github.com/peterkarman1/dont-rust-bro" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+</section>
+
+<!-- ========== Footer ========== -->
+<footer>
+  <div class="container">
+    dont-rust-bro &mdash; stay sharp while your agent ships code
+  </div>
+</footer>
+
+<!-- ========== JS ========== -->
+<script>
+(function () {
+  'use strict';
+
+  /* ---- Mobile nav toggle ---- */
+  const toggle = document.querySelector('.nav-toggle');
+  const links  = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    links.addEventListener('click', () => links.classList.remove('open'));
+  }
+
+  /* ---- Typing animation in hero terminal ---- */
+  const typed   = document.getElementById('hero-typed');
+  const cursorEl = document.getElementById('hero-cursor');
+  const command  = 'curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/install.sh | bash';
+  let i = 0;
+
+  function typeNext() {
+    if (i < command.length) {
+      typed.textContent += command[i];
+      i++;
+      setTimeout(typeNext, 28 + Math.random() * 32);
+    }
+  }
+
+  /* Start typing when hero is visible (or immediately if already visible) */
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        obs.disconnect();
+        setTimeout(typeNext, 600);
+      }
+    }, { threshold: 0.3 });
+    obs.observe(document.querySelector('.hero'));
+  } else {
+    setTimeout(typeNext, 600);
+  }
+
+  /* ---- Copy-to-clipboard buttons ---- */
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          showCopied(btn);
+        });
+      } else {
+        /* Fallback for older browsers */
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showCopied(btn);
+      }
+    });
+  });
+
+  function showCopied(btn) {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 1800);
+  }
+
+  /* ---- Fake "Run" button in demo ---- */
+  var runBtn = document.getElementById('demo-run');
+  var result = document.getElementById('demo-result');
+  if (runBtn && result) {
+    runBtn.addEventListener('click', function () {
+      result.textContent = 'Running...';
+      result.style.color = 'var(--text-dim)';
+      runBtn.disabled = true;
+      setTimeout(function () {
+        result.style.color = 'var(--accent)';
+        result.textContent = '2/2 tests passed';
+        runBtn.disabled = false;
+      }, 900);
+    });
+  }
+
+  /* ---- Smooth-scroll for nav links (fallback for older Safari) ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
