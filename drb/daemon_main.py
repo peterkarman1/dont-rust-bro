@@ -21,7 +21,7 @@ def main():
         server_thread = threading.Thread(target=server.serve_forever, daemon=True)
         server_thread.start()
 
-        # Run tkinter GUI in main thread (required by tkinter)
+        # Run GUI in main thread (required by pywebview)
         from drb.gui import PracticeWindow
 
         packs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "packs")

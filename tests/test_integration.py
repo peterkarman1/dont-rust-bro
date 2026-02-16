@@ -28,6 +28,8 @@ def env(tmp_path, request):
         json.dump({
             "name": "python", "language": "python",
             "version": "1.0.0", "description": "Test",
+            "image": "python:3.12-slim",
+            "test_command": "pytest test_solution.py --tb=short -q",
             "problems": ["add", "sub"]
         }, f)
 
@@ -62,7 +64,7 @@ def send_cmd(sock_path, cmd):
 def test_full_lifecycle(env):
     state_dir, packs_dir = env
 
-    # Daemon headless=False so it calls gui.show/hide; GUI headless=True so no tkinter
+    # Daemon headless=False so it calls gui.show/hide; GUI headless=True so no webview
     server = DaemonServer(state_dir, headless=False)
     gui = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
     server.set_gui(gui)
