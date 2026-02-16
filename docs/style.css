@@ -342,6 +342,8 @@ nav .nav-links a:hover {
   overflow: hidden;
   margin-top: 2rem;
   max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .editor-titlebar {
@@ -642,6 +644,23 @@ footer {
   font-size: 0.8rem;
   color: var(--text-dim);
   font-family: var(--mono);
+}
+
+/* ---------- Utility classes ---------- */
+.text-dim { color: var(--text-dim); }
+.text-heading { color: var(--heading); }
+code.text-heading { color: var(--heading); }
+.section-intro { color: var(--text-dim); max-width: 640px; margin-bottom: 1rem; }
+.demo-intro { color: var(--text-dim); margin-bottom: 0.5rem; }
+.packs-hint { color: var(--text-dim); margin-bottom: 0; }
+.packs-hint code { font-family: var(--mono); color: var(--heading); }
+.install-terminal { margin-bottom: 2.5rem; }
+.cli-heading { color: var(--heading); margin-bottom: 0.5rem; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+  html { scroll-behavior: auto; }
 }
 
 /* ---------- Mobile ---------- */

@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦀</text></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -60,8 +62,8 @@
   <div class="container">
     <div class="section-label">// the problem</div>
     <h2 class="section-title">AI agents do the engineering.<br>Companies still interview like it's 2015.</h2>
-    <p style="color:var(--text-dim);max-width:640px;margin-bottom:1rem;">
-      <strong style="color:var(--heading)">dont-rust-bro</strong> pops up leetcode-style coding challenges while
+    <p class="section-intro">
+      <strong class="text-heading">dont-rust-bro</strong> pops up leetcode-style coding challenges while
       your AI agent is busy thinking, so you can grind algorithms during the downtime.
       Your agent handles the real work. You handle the interview prep. Everybody wins &mdash;
       except maybe the interviewers who think this is how they find good engineers.
@@ -143,7 +145,7 @@
   <div class="container">
     <div class="section-label">// live demo</div>
     <h2 class="section-title">What it looks like</h2>
-    <p style="color:var(--text-dim);margin-bottom:0.5rem;">This is the popup that appears while your agent thinks.</p>
+    <p class="demo-intro">This is the popup that appears while your agent thinks.</p>
 
     <div class="editor-window">
       <div class="editor-titlebar">
@@ -158,9 +160,9 @@
           <h3>Two Sum</h3>
           <span class="difficulty">Easy</span>
           <p>
-            Given an array of integers <code style="color:var(--heading)">nums</code> and an integer
-            <code style="color:var(--heading)">target</code>, return indices of the two numbers
-            such that they add up to <code style="color:var(--heading)">target</code>.
+            Given an array of integers <code class="text-heading">nums</code> and an integer
+            <code class="text-heading">target</code>, return indices of the two numbers
+            such that they add up to <code class="text-heading">target</code>.
           </p>
           <p>You may assume each input has exactly one solution, and you may not use the same element twice.</p>
           <pre>Input:  nums = [2,7,11,15], target = 9
@@ -231,7 +233,7 @@ Output: [1, 2]</pre>
   <div class="container">
     <div class="section-label">// problem packs</div>
     <h2 class="section-title">Choose your weapon</h2>
-    <p style="color:var(--text-dim);margin-bottom:0;">Switch packs any time with <code style="font-family:var(--mono);color:var(--heading)">drb packs use &lt;name&gt;</code></p>
+    <p class="packs-hint">Switch packs any time with <code>drb packs use &lt;name&gt;</code></p>
 
     <div class="packs-list">
       <div class="pack-card active">
@@ -264,7 +266,7 @@ Output: [1, 2]</pre>
     <div class="section-label">// install</div>
     <h2 class="section-title">One command. That's it.</h2>
 
-    <div class="terminal-box" style="margin-bottom:2.5rem;">
+    <div class="terminal-box install-terminal">
       <div class="terminal-titlebar">
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
@@ -279,7 +281,7 @@ Output: [1, 2]</pre>
       </div>
     </div>
 
-    <h3 style="color:var(--heading);margin-bottom:0.5rem;">CLI Commands</h3>
+    <h3 class="cli-heading">CLI Commands</h3>
     <table class="commands-table">
       <thead>
         <tr><th>Command</th><th>Description</th></tr>
@@ -367,21 +369,26 @@ Output: [1, 2]</pre>
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function () {
           showCopied(btn);
+        }).catch(function () {
+          fallbackCopy(text, btn);
         });
       } else {
-        /* Fallback for older browsers */
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showCopied(btn);
+        fallbackCopy(text, btn);
       }
     });
   });
+
+  function fallbackCopy(text, btn) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showCopied(btn);
+  }
 
   function showCopied(btn) {
     var orig = btn.textContent;
