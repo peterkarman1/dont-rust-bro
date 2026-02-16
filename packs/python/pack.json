@@ -3,5 +3,9 @@
   "language": "python",
   "version": "1.0.0",
   "description": "Python fundamentals and algorithms",
-  "problems": ["two_sum", "add_two_numbers", "reverse_string", "valid_palindrome", "fizzbuzz"]
+  "problems": ["two_sum", "add_two_numbers", "reverse_string", "valid_palindrome", "fizzbuzz"],
+  "dependencies": {
+    "executables": ["python3"],
+    "python_modules": ["pytest"]
+  }
 }

@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import signal
 import socket
 import subprocess
@@ -7,6 +8,8 @@ import sys
 
 
 DEFAULT_STATE_DIR = os.path.expanduser("~/.dont-rust-bro")
+DEFAULT_BIN_DIR = os.path.expanduser("~/.local/bin")
+CLAUDE_SETTINGS = os.path.expanduser("~/.claude/settings.json")
 
 
 def is_daemon_running(state_dir: str) -> bool:
@@ -62,7 +65,7 @@ def main(argv=None):
 
     if not args:
         print("Usage: drb <command>")
-        print("Commands: show, hide, stop, status, update, packs")
+        print("Commands: show, hide, stop, status, update, packs, uninstall")
         sys.exit(1)
 
     command = args[0]
@@ -109,6 +112,13 @@ def main(argv=None):
             if pack_name not in packs:
                 print(f"Pack '{pack_name}' not found.", file=sys.stderr)
                 sys.exit(1)
+            from drb.deps import check_pack_deps
+            errors = check_pack_deps(packs_dir, pack_name)
+            if errors:
+                print(f"Cannot switch to pack '{pack_name}' — missing dependencies:", file=sys.stderr)
+                for err in errors:
+                    print(f"  - {err}", file=sys.stderr)
+                sys.exit(1)
             sm = StateManager(state_dir)
             sm.active_pack = pack_name
             sm.current_problem_index = 0
@@ -120,6 +130,45 @@ def main(argv=None):
     elif command == "update":
         print("Pulling latest problems...")
         print("Update not yet implemented. Pull the repo manually.")
+
+    elif command == "uninstall":
+        # Stop daemon if running
+        try:
+            send_to_daemon(state_dir, "stop")
+        except (ConnectionRefusedError, FileNotFoundError):
+            pass
+
+        # Remove state directory
+        if os.path.isdir(state_dir):
+            shutil.rmtree(state_dir)
+            print(f"Removed {state_dir}")
+
+        # Remove symlink
+        symlink_path = os.path.join(DEFAULT_BIN_DIR, "drb")
+        if os.path.islink(symlink_path):
+            os.remove(symlink_path)
+            print(f"Removed {symlink_path}")
+
+        # Remove hooks from Claude settings
+        if os.path.isfile(CLAUDE_SETTINGS):
+            with open(CLAUDE_SETTINGS) as f:
+                settings = json.load(f)
+            hooks = settings.get("hooks", {})
+            changed = False
+            for event in list(hooks.keys()):
+                filtered = [h for h in hooks[event] if "drb" not in h.get("command", "")]
+                if len(filtered) != len(hooks[event]):
+                    changed = True
+                if filtered:
+                    hooks[event] = filtered
+                else:
+                    del hooks[event]
+            if changed:
+                with open(CLAUDE_SETTINGS, "w") as f:
+                    json.dump(settings, f, indent=2)
+                print(f"Removed drb hooks from {CLAUDE_SETTINGS}")
+
+        print("Uninstall complete.")
 
     else:
         print(f"Unknown command: {command}", file=sys.stderr)

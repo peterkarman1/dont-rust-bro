@@ -37,20 +37,37 @@ if ! python3 -c "import tkinter" &>/dev/null; then
     exit 1
 fi
 
-# Install or update
-if [ -d "$DRB_HOME/.git" ]; then
-    info "Updating existing installation..."
-    git -C "$DRB_HOME" pull --quiet
-else
-    info "Installing dont-rust-bro to ${DRB_HOME}..."
-    git clone --quiet "$DRB_REPO" "$DRB_HOME"
+# Clean install — always remove and re-clone
+if [ -d "$DRB_HOME" ]; then
+    info "Removing existing installation..."
+    rm -rf "$DRB_HOME"
 fi
 
-# Ensure pytest is available
-if ! python3 -c "import pytest" &>/dev/null; then
-    warn "pytest not found. Installing..."
-    python3 -m pip install --quiet pytest
-fi
+info "Installing dont-rust-bro to ${DRB_HOME}..."
+git clone --quiet "$DRB_REPO" "$DRB_HOME"
+
+# Check pack dependencies for the default pack
+info "Checking dependencies for default pack (python)..."
+python3 -c "
+import sys
+sys.path.insert(0, '$DRB_HOME')
+from drb.deps import check_core_deps, check_pack_deps
+
+errors = check_core_deps()
+errors += check_pack_deps('$DRB_HOME/packs', 'python')
+
+for e in errors:
+    print(f'  - {e}', file=sys.stderr)
+
+if errors:
+    sys.exit(1)
+" || {
+    # Try to auto-install pip-installable deps
+    if ! python3 -c "import pytest" &>/dev/null; then
+        warn "pytest not found. Installing..."
+        python3 -m pip install --quiet pytest
+    fi
+}
 
 # Create bin symlink
 BIN_DIR="${HOME}/.local/bin"

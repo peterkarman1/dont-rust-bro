@@ -34,6 +34,7 @@ State is saved, so if the window disappears mid-problem, your code is still ther
 | `drb packs use <name>` | Switch active pack |
 | `drb update` | Pull latest problems |
 | `drb stop` | Stop the daemon |
+| `drb uninstall` | Remove dont-rust-bro completely |
 
 ## Problem Packs
 
