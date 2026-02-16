@@ -1,0 +1,8 @@
+{
+  "id": "reverse_string",
+  "title": "Reverse String",
+  "difficulty": "easy",
+  "description": "Write a function that reverses a string in-place. The input is given as a list of characters.\n\nDo not allocate extra space for another array. You must do this by modifying the input list in-place with O(1) extra memory.\n\nExample:\n  Input: ['h', 'e', 'l', 'l', 'o']\n  Output: ['o', 'l', 'l', 'e', 'h']",
+  "skeleton": "def reverse_string(s: list[str]) -> None:\n    # your code here - modify s in-place\n    pass",
+  "test_code": "from solution import reverse_string\n\ndef test_hello():\n    s = ['h', 'e', 'l', 'l', 'o']\n    reverse_string(s)\n    assert s == ['o', 'l', 'l', 'e', 'h']\n\ndef test_hannah():\n    s = ['H', 'a', 'n', 'n', 'a', 'h']\n    reverse_string(s)\n    assert s == ['h', 'a', 'n', 'n', 'a', 'H']\n\ndef test_single():\n    s = ['a']\n    reverse_string(s)\n    assert s == ['a']\n"
+}

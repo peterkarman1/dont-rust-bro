@@ -1,0 +1,8 @@
+{
+  "id": "valid_palindrome",
+  "title": "Valid Palindrome",
+  "difficulty": "easy",
+  "description": "Given a string s, return True if it is a palindrome considering only alphanumeric characters and ignoring cases.\n\nExample:\n  Input: 'A man, a plan, a canal: Panama'\n  Output: True\n\n  Input: 'race a car'\n  Output: False",
+  "skeleton": "def is_palindrome(s: str) -> bool:\n    # your code here\n    pass",
+  "test_code": "from solution import is_palindrome\n\ndef test_panama():\n    assert is_palindrome('A man, a plan, a canal: Panama') is True\n\ndef test_race():\n    assert is_palindrome('race a car') is False\n\ndef test_empty():\n    assert is_palindrome(' ') is True\n\ndef test_symbols():\n    assert is_palindrome('.,') is True\n"
+}

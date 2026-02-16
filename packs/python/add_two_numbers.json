@@ -1,0 +1,8 @@
+{
+  "id": "add_two_numbers",
+  "title": "Add Two Numbers",
+  "difficulty": "easy",
+  "description": "Write a function that takes two integers and returns their sum.\n\nExample:\n  Input: a = 2, b = 3\n  Output: 5",
+  "skeleton": "def add(a: int, b: int) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import add\n\ndef test_positive():\n    assert add(2, 3) == 5\n\ndef test_negative():\n    assert add(-1, -2) == -3\n\ndef test_zero():\n    assert add(0, 0) == 0\n\ndef test_mixed():\n    assert add(-5, 10) == 5\n"
+}

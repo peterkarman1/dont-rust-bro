@@ -1,0 +1,7 @@
+{
+  "name": "python",
+  "language": "python",
+  "version": "1.0.0",
+  "description": "Python fundamentals and algorithms",
+  "problems": ["two_sum", "add_two_numbers", "reverse_string", "valid_palindrome", "fizzbuzz"]
+}
