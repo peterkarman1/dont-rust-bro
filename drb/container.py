@@ -1,3 +1,5 @@
+import json
+import os
 import shutil
 import subprocess
 
@@ -49,3 +51,18 @@ def run_in_container(engine: str, image: str, test_command: str,
         passed = False
 
     return {"passed": passed, "output": output.strip()}
+
+
+def load_config(config_path: str) -> dict:
+    """Load container config from JSON file."""
+    if not os.path.isfile(config_path):
+        return {}
+    with open(config_path) as f:
+        return json.load(f)
+
+
+def save_config(config_path: str, config: dict):
+    """Save container config to JSON file."""
+    os.makedirs(os.path.dirname(config_path), exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump(config, f, indent=2)

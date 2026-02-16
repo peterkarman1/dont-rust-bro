@@ -1,7 +1,8 @@
+import json
 import pytest
 import subprocess as subprocess_mod
 from unittest.mock import patch
-from drb.container import detect_engine, ensure_image, run_in_container
+from drb.container import detect_engine, ensure_image, run_in_container, load_config, save_config
 
 
 def test_detect_engine_podman_preferred():
@@ -89,3 +90,16 @@ def test_run_in_container_command_structure(tmp_path):
     assert "--rm" in captured_cmd
     assert "--network=none" in captured_cmd
     assert "--memory=256m" in captured_cmd
+
+
+def test_save_and_load_config(tmp_path):
+    config_path = str(tmp_path / "config.json")
+    save_config(config_path, {"engine": "podman"})
+    config = load_config(config_path)
+    assert config["engine"] == "podman"
+
+
+def test_load_config_missing(tmp_path):
+    config_path = str(tmp_path / "config.json")
+    config = load_config(config_path)
+    assert config == {}
