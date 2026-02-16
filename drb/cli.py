@@ -62,21 +62,20 @@ def main(argv=None):
 
     if not args:
         print("Usage: drb <command>")
-        print("Commands: show, hide, agent-stop, stop, status, update, packs")
+        print("Commands: show, hide, stop, status, update, packs")
         sys.exit(1)
 
     command = args[0]
 
-    if command in ("show", "hide", "agent-stop", "status"):
+    if command in ("show", "hide", "status"):
         if command == "show":
             ensure_daemon(state_dir)
         try:
             resp = send_to_daemon(state_dir, command)
             if command == "status":
-                print(f"Agents active: {resp.get('agents', 0)}")
                 print(f"Visible: {resp.get('visible', False)}")
         except (ConnectionRefusedError, FileNotFoundError):
-            if command in ("hide", "agent-stop"):
+            if command == "hide":
                 pass  # daemon not running, nothing to hide
             else:
                 print("Daemon is not running.", file=sys.stderr)

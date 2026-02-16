@@ -27,7 +27,7 @@ def send_command(sock_path: str, command: str) -> dict:
     return json.loads(data.decode())
 
 
-def test_show_increments_agent_count(daemon_dir):
+def test_show_makes_visible(daemon_dir):
     server = DaemonServer(daemon_dir, headless=True)
     t = threading.Thread(target=server.serve_forever, daemon=True)
     t.start()
@@ -36,57 +36,39 @@ def test_show_increments_agent_count(daemon_dir):
     try:
         resp = send_command(server.sock_path, "show")
         assert resp["status"] == "ok"
-        assert resp["agents"] == 1
-
-        resp = send_command(server.sock_path, "show")
-        assert resp["agents"] == 2
+        assert resp["visible"] is True
     finally:
         server.shutdown()
 
 
-def test_agent_stop_decrements(daemon_dir):
+def test_hide_makes_invisible(daemon_dir):
     server = DaemonServer(daemon_dir, headless=True)
     t = threading.Thread(target=server.serve_forever, daemon=True)
     t.start()
     time.sleep(0.2)
 
     try:
-        send_command(server.sock_path, "show")
-        send_command(server.sock_path, "show")
-        resp = send_command(server.sock_path, "agent-stop")
-        assert resp["agents"] == 1
-
-        resp = send_command(server.sock_path, "agent-stop")
-        assert resp["agents"] == 0
-    finally:
-        server.shutdown()
-
-
-def test_agent_stop_does_not_go_negative(daemon_dir):
-    server = DaemonServer(daemon_dir, headless=True)
-    t = threading.Thread(target=server.serve_forever, daemon=True)
-    t.start()
-    time.sleep(0.2)
-
-    try:
-        resp = send_command(server.sock_path, "agent-stop")
-        assert resp["agents"] == 0
-    finally:
-        server.shutdown()
-
-
-def test_hide_resets_counter(daemon_dir):
-    server = DaemonServer(daemon_dir, headless=True)
-    t = threading.Thread(target=server.serve_forever, daemon=True)
-    t.start()
-    time.sleep(0.2)
-
-    try:
-        send_command(server.sock_path, "show")
-        send_command(server.sock_path, "show")
         send_command(server.sock_path, "show")
         resp = send_command(server.sock_path, "hide")
-        assert resp["agents"] == 0
+        assert resp["status"] == "ok"
+        assert resp["visible"] is False
+    finally:
+        server.shutdown()
+
+
+def test_show_is_idempotent(daemon_dir):
+    server = DaemonServer(daemon_dir, headless=True)
+    t = threading.Thread(target=server.serve_forever, daemon=True)
+    t.start()
+    time.sleep(0.2)
+
+    try:
+        resp1 = send_command(server.sock_path, "show")
+        resp2 = send_command(server.sock_path, "show")
+        resp3 = send_command(server.sock_path, "show")
+        assert resp1["visible"] is True
+        assert resp2["visible"] is True
+        assert resp3["visible"] is True
     finally:
         server.shutdown()
 

@@ -6,13 +6,11 @@ import threading
 
 
 class DaemonServer:
-    """Unix socket server that manages agent count and GUI visibility."""
+    """Unix socket server that manages GUI visibility."""
 
     def __init__(self, state_dir: str, headless: bool = False):
         self._state_dir = state_dir
         self._headless = headless
-        self._agent_count = 0
-        self._lock = threading.Lock()
         self._running = False
         self._server_socket = None
         self._gui = None
@@ -30,33 +28,24 @@ class DaemonServer:
             os.remove(self._pid_path)
 
     def _handle_command(self, command: str) -> dict:
-        with self._lock:
-            if command == "show":
-                self._agent_count += 1
-                if self._gui and not self._headless:
-                    self._gui.show()
-                return {"status": "ok", "agents": self._agent_count}
-            elif command == "agent-stop":
-                self._agent_count = max(0, self._agent_count - 1)
-                if self._agent_count == 0 and self._gui and not self._headless:
-                    self._gui.hide()
-                return {"status": "ok", "agents": self._agent_count}
-            elif command == "hide":
-                self._agent_count = 0
-                if self._gui and not self._headless:
-                    self._gui.hide()
-                return {"status": "ok", "agents": 0}
-            elif command == "status":
-                return {
-                    "status": "ok",
-                    "agents": self._agent_count,
-                    "visible": self._gui.visible if self._gui else False,
-                }
-            elif command == "stop":
-                self._running = False
-                return {"status": "ok", "agents": 0}
-            else:
-                return {"status": "error", "message": f"Unknown command: {command}"}
+        if command == "show":
+            if self._gui and not self._headless:
+                self._gui.show()
+            return {"status": "ok", "visible": True}
+        elif command == "hide":
+            if self._gui and not self._headless:
+                self._gui.hide()
+            return {"status": "ok", "visible": False}
+        elif command == "status":
+            return {
+                "status": "ok",
+                "visible": self._gui.visible if self._gui else False,
+            }
+        elif command == "stop":
+            self._running = False
+            return {"status": "ok"}
+        else:
+            return {"status": "error", "message": f"Unknown command: {command}"}
 
     def _handle_client(self, conn: socket.socket):
         try:

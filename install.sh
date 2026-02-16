@@ -81,8 +81,7 @@ with open(settings_path) as f:
 hooks = settings.setdefault('hooks', {})
 
 drb_hooks = {
-    'SubagentStart': {'type': 'command', 'command': '${BIN_DIR}/drb show'},
-    'SubagentStop': {'type': 'command', 'command': '${BIN_DIR}/drb agent-stop'},
+    'UserPromptSubmit': {'type': 'command', 'command': '${BIN_DIR}/drb show'},
     'Stop': {'type': 'command', 'command': '${BIN_DIR}/drb hide'},
 }
 
@@ -101,8 +100,7 @@ else
 import json
 settings = {
     'hooks': {
-        'SubagentStart': [{'type': 'command', 'command': '${BIN_DIR}/drb show'}],
-        'SubagentStop': [{'type': 'command', 'command': '${BIN_DIR}/drb agent-stop'}],
+        'UserPromptSubmit': [{'type': 'command', 'command': '${BIN_DIR}/drb show'}],
         'Stop': [{'type': 'command', 'command': '${BIN_DIR}/drb hide'}],
     }
 }
@@ -118,4 +116,4 @@ info "  drb status     - Check daemon status"
 info "  drb packs list - List installed problem packs"
 info "  drb update     - Pull latest problems"
 info ""
-info "The practice window will appear automatically when Claude agents are working."
+info "The practice window will appear automatically when Claude starts working."

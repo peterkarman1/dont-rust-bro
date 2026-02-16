@@ -21,9 +21,9 @@ curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/ins
 
 ## How it works
 
-When Claude Code spawns subagents, a practice window pops up with a coding problem. Write your solution, click Run, see if you pass. The window automatically hides when Claude needs your attention — because the real work comes first.
+When you send Claude a prompt, a practice window pops up with a coding problem. Write your solution, click Run, see if you pass. The window automatically hides when Claude finishes — because the real work comes first.
 
-Multiple agents running? The window stays open until they're all done. State is saved, so if the window disappears mid-problem, your code is still there when it comes back.
+State is saved, so if the window disappears mid-problem, your code is still there when it comes back.
 
 ## Commands
 

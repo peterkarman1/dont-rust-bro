@@ -72,33 +72,29 @@ def test_full_lifecycle(env):
     time.sleep(0.2)
 
     try:
-        # 3 subagents start
+        # Show makes GUI visible
         resp = send_cmd(server.sock_path, "show")
-        assert resp["agents"] == 1
+        assert resp["visible"] is True
         assert gui.visible is True
 
-        send_cmd(server.sock_path, "show")
-        send_cmd(server.sock_path, "show")
+        # Show again is idempotent
+        resp = send_cmd(server.sock_path, "show")
+        assert resp["visible"] is True
+        assert gui.visible is True
 
-        # 1 finishes
-        resp = send_cmd(server.sock_path, "agent-stop")
-        assert resp["agents"] == 2
-        assert gui.visible is True  # still visible
-
-        # another finishes
-        send_cmd(server.sock_path, "agent-stop")
-        assert gui.visible is True  # still 1 agent
-
-        # last finishes
-        resp = send_cmd(server.sock_path, "agent-stop")
-        assert resp["agents"] == 0
+        # Hide makes GUI invisible
+        resp = send_cmd(server.sock_path, "hide")
+        assert resp["visible"] is False
         assert gui.visible is False
 
-        # Stop always resets
-        send_cmd(server.sock_path, "show")
-        send_cmd(server.sock_path, "show")
+        # Show again after hide works
+        resp = send_cmd(server.sock_path, "show")
+        assert resp["visible"] is True
+        assert gui.visible is True
+
+        # Hide again
         resp = send_cmd(server.sock_path, "hide")
-        assert resp["agents"] == 0
+        assert resp["visible"] is False
         assert gui.visible is False
     finally:
         server.shutdown()
