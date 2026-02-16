@@ -20,10 +20,14 @@ User sends prompt ──► UserPromptSubmit hook ──► `drb show`
                                                     │
                                     ┌───────────────┴───────────────┐
                                     │       PracticeWindow          │
-                                    │     (tkinter, gui.py)         │
+                                    │ (pywebview + HTML/CSS/JS)     │
                                     │                               │
                                     │   Problem display + editor    │
                                     │   Run button → runner.py      │
+                                    │                │              │
+                                    │                ▼              │
+                                    │         Container Runner      │
+                                    │   (docker/podman, temp dir)   │
                                     │   State persistence           │
                                     └───────────────────────────────┘
 
@@ -37,12 +41,13 @@ Claude finishes ──► Stop hook ──► `drb hide`
 | `bin/drb` | Bash entry point, execs `python3 -m drb.cli` |
 | `drb/cli.py` | CLI dispatcher: show, hide, stop, status, packs, update, uninstall |
 | `drb/daemon.py` | `DaemonServer` — Unix socket server, simple show/hide (no reference counting) |
-| `drb/daemon_main.py` | Entry point for daemon process — spawns server thread + tkinter GUI on main thread |
-| `drb/gui.py` | `PracticeWindow` — tkinter UI with code editor, problem display, test runner |
-| `drb/runner.py` | `run_tests()` — writes solution + tests to tempdir, runs `python3 -m pytest` |
+| `drb/daemon_main.py` | Entry point for daemon process — spawns server thread + pywebview GUI on main thread |
+| `drb/gui.py` | `PracticeWindow` — pywebview UI with HTML/CSS/JS code editor, problem display, test runner |
+| `drb/runner.py` | `run_tests()` — writes solution + tests to tempdir, runs in container |
+| `drb/container.py` | Container engine detection, image management, ephemeral test execution |
+| `drb/ui/index.html` | Web-based UI for the practice window |
 | `drb/problems.py` | `list_packs()`, `load_pack()`, `load_problem()` — JSON-based pack/problem loading |
 | `drb/state.py` | `StateManager` — persists active pack, problem index, user code to `state.json` |
-| `drb/deps.py` | Dependency checker — validates executables and Python modules per-pack |
 | `hooks/claude-code.json` | Hook config: `UserPromptSubmit` → show, `Stop` → hide |
 | `install.sh` | One-command installer: clean clone, dep check, symlink, hook registration |
 
@@ -50,8 +55,9 @@ Claude finishes ──► Stop hook ──► `drb hide`
 
 - **Problem packs** live in `packs/<name>/` with a `pack.json` manifest and per-problem JSON files
 - **State** persists to `~/.dont-rust-bro/state.json` (active pack, problem index, user code)
+- **Container config** persists to `~/.dont-rust-bro/config.json` (container engine preference)
 - **Daemon IPC** uses a Unix socket at `~/.dont-rust-bro/daemon.sock`
-- **Dependencies** declared in `pack.json` under `dependencies.executables` and `dependencies.python_modules`
+- **Container image** declared in `pack.json` under `image` and `test_command`
 
 ### Hook behavior
 
@@ -71,7 +77,8 @@ python3 -m pytest tests/ -v
 ### Project conventions
 
 - Python 3.9+ (system python on macOS)
-- tkinter for GUI (requires `brew install python-tk@3.12` on macOS)
+- pywebview for GUI (requires pywebview + pyobjc-framework-WebKit on macOS)
+- Docker or Podman for containerized test execution
 - pytest for testing
 - Tests use short `/tmp` symlinks to work around macOS AF_UNIX 104-byte path limit
 - GUI tests use `headless=True` to avoid requiring a display
