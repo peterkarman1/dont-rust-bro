@@ -26,16 +26,23 @@ for arg in "$@"; do
     esac
 done
 
-# Check dependencies
+# Check python3
 if ! command -v python3 &>/dev/null; then
     error "python3 is required but not found."
     exit 1
 fi
 
-if ! python3 -c "import tkinter" &>/dev/null; then
-    error "tkinter is required. Install with: brew install python-tk@3.12"
+# Detect container engine (prefer podman)
+ENGINE=""
+if command -v podman &>/dev/null; then
+    ENGINE="podman"
+elif command -v docker &>/dev/null; then
+    ENGINE="docker"
+else
+    error "docker or podman is required but neither was found."
     exit 1
 fi
+info "Using container engine: ${ENGINE}"
 
 # Clean install — always remove and re-clone
 if [ -d "$DRB_HOME" ]; then
@@ -46,28 +53,25 @@ fi
 info "Installing dont-rust-bro to ${DRB_HOME}..."
 git clone --quiet "$DRB_REPO" "$DRB_HOME"
 
-# Check pack dependencies for the default pack
-info "Checking dependencies for default pack (python)..."
+# Save engine config
 python3 -c "
-import sys
-sys.path.insert(0, '$DRB_HOME')
-from drb.deps import check_core_deps, check_pack_deps
+import json
+with open('$DRB_HOME/config.json', 'w') as f:
+    json.dump({'engine': '$ENGINE'}, f, indent=2)
+"
 
-errors = check_core_deps()
-errors += check_pack_deps('$DRB_HOME/packs', 'python')
+# Install pywebview
+info "Installing pywebview..."
+pip3 install --quiet pywebview
 
-for e in errors:
-    print(f'  - {e}', file=sys.stderr)
-
-if errors:
-    sys.exit(1)
-" || {
-    # Try to auto-install pip-installable deps
-    if ! python3 -c "import pytest" &>/dev/null; then
-        warn "pytest not found. Installing..."
-        python3 -m pip install --quiet pytest
-    fi
-}
+# Pull default container image
+DEFAULT_IMAGE=$(python3 -c "
+import json
+with open('$DRB_HOME/packs/python/pack.json') as f:
+    print(json.load(f)['image'])
+")
+info "Pulling container image: ${DEFAULT_IMAGE}..."
+$ENGINE pull "$DEFAULT_IMAGE"
 
 # Create bin symlink
 BIN_DIR="${HOME}/.local/bin"
@@ -129,9 +133,10 @@ fi
 
 info "Installation complete!"
 info ""
+info "Container engine: ${ENGINE}"
 info "Commands:"
 info "  drb status     - Check daemon status"
 info "  drb packs list - List installed problem packs"
-info "  drb update     - Pull latest problems"
+info "  drb uninstall  - Remove everything"
 info ""
 info "The practice window will appear automatically when Claude starts working."
