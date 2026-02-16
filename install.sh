@@ -98,16 +98,17 @@ with open(settings_path) as f:
 hooks = settings.setdefault('hooks', {})
 
 drb_hooks = {
-    'UserPromptSubmit': {'type': 'command', 'command': '${BIN_DIR}/drb show'},
-    'Stop': {'type': 'command', 'command': '${BIN_DIR}/drb hide'},
+    'UserPromptSubmit': {'hooks': [{'type': 'command', 'command': '${BIN_DIR}/drb show'}]},
+    'Stop': {'hooks': [{'type': 'command', 'command': '${BIN_DIR}/drb hide'}]},
 }
 
-for event, hook in drb_hooks.items():
-    event_hooks = hooks.setdefault(event, [])
-    # Remove existing drb hooks
-    event_hooks = [h for h in event_hooks if 'drb' not in h.get('command', '')]
-    event_hooks.append(hook)
-    hooks[event] = event_hooks
+for event, matcher_group in drb_hooks.items():
+    event_groups = hooks.setdefault(event, [])
+    # Remove existing drb matcher groups
+    event_groups = [g for g in event_groups
+                    if not any('drb' in h.get('command', '') for h in g.get('hooks', []))]
+    event_groups.append(matcher_group)
+    hooks[event] = event_groups
 
 with open(settings_path, 'w') as f:
     json.dump(settings, f, indent=2)
@@ -117,8 +118,8 @@ else
 import json
 settings = {
     'hooks': {
-        'UserPromptSubmit': [{'type': 'command', 'command': '${BIN_DIR}/drb show'}],
-        'Stop': [{'type': 'command', 'command': '${BIN_DIR}/drb hide'}],
+        'UserPromptSubmit': [{'hooks': [{'type': 'command', 'command': '${BIN_DIR}/drb show'}]}],
+        'Stop': [{'hooks': [{'type': 'command', 'command': '${BIN_DIR}/drb hide'}]}],
     }
 }
 with open('$CLAUDE_SETTINGS', 'w') as f:

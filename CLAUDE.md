@@ -58,6 +58,7 @@ Claude finishes ──► Stop hook ──► `drb hide`
 - **Show**: Fires on `UserPromptSubmit` (when user sends a prompt)
 - **Hide**: Fires on `Stop` (when Claude fully finishes)
 - No reference counting — simple boolean show/hide
+- Hooks use the **matcher group format**: `{"EventName": [{"hooks": [{"type": "command", "command": "..."}]}]}`
 
 ## Development
 

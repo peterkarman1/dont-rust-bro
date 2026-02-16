@@ -2,14 +2,22 @@
   "hooks": {
     "UserPromptSubmit": [
       {
-        "type": "command",
-        "command": "drb show"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "drb show"
+          }
+        ]
       }
     ],
     "Stop": [
       {
-        "type": "command",
-        "command": "drb hide"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "drb hide"
+          }
+        ]
       }
     ]
   }

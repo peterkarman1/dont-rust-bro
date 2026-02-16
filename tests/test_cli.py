@@ -69,15 +69,15 @@ def test_uninstall_removes_artifacts(tmp_path):
     symlink = os.path.join(bin_dir, "drb")
     os.symlink("/fake/target", symlink)
 
-    # Set up fake Claude settings with drb hooks
+    # Set up fake Claude settings with drb hooks (new matcher group format)
     settings = {
         "hooks": {
             "UserPromptSubmit": [
-                {"type": "command", "command": "/path/to/drb show"},
-                {"type": "command", "command": "other-tool start"},
+                {"hooks": [{"type": "command", "command": "/path/to/drb show"}]},
+                {"hooks": [{"type": "command", "command": "other-tool start"}]},
             ],
             "Stop": [
-                {"type": "command", "command": "/path/to/drb hide"},
+                {"hooks": [{"type": "command", "command": "/path/to/drb hide"}]},
             ],
         }
     }
@@ -99,7 +99,7 @@ def test_uninstall_removes_artifacts(tmp_path):
         updated = json.load(f)
     assert "Stop" not in updated["hooks"]
     assert len(updated["hooks"]["UserPromptSubmit"]) == 1
-    assert "other-tool" in updated["hooks"]["UserPromptSubmit"][0]["command"]
+    assert "other-tool" in updated["hooks"]["UserPromptSubmit"][0]["hooks"][0]["command"]
 
 
 def test_packs_use_rejects_missing_deps(tmp_path):

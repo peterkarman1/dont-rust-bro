@@ -156,7 +156,11 @@ def main(argv=None):
             hooks = settings.get("hooks", {})
             changed = False
             for event in list(hooks.keys()):
-                filtered = [h for h in hooks[event] if "drb" not in h.get("command", "")]
+                # New format: each entry is a matcher group with a "hooks" array
+                filtered = [
+                    g for g in hooks[event]
+                    if not any("drb" in h.get("command", "") for h in g.get("hooks", []))
+                ]
                 if len(filtered) != len(hooks[event]):
                     changed = True
                 if filtered:
