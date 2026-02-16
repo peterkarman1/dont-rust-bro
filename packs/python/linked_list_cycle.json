@@ -1,0 +1,8 @@
+{
+  "id": "linked_list_cycle",
+  "title": "Linked List Cycle",
+  "difficulty": "easy",
+  "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.\n\nThere is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer.\n\nReturn true if there is a cycle, otherwise return false.\n\nExample:\n  Input: head = [3,2,0,-4], pos = 1 (tail connects to node at index 1)\n  Output: true",
+  "skeleton": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef has_cycle(head: ListNode) -> bool:\n    # your code here\n    pass",
+  "test_code": "from solution import ListNode, has_cycle\n\ndef test_cycle():\n    n1 = ListNode(3)\n    n2 = ListNode(2)\n    n3 = ListNode(0)\n    n4 = ListNode(-4)\n    n1.next = n2\n    n2.next = n3\n    n3.next = n4\n    n4.next = n2\n    assert has_cycle(n1) == True\n\ndef test_no_cycle():\n    n1 = ListNode(1)\n    n2 = ListNode(2)\n    n1.next = n2\n    assert has_cycle(n1) == False\n\ndef test_single():\n    assert has_cycle(ListNode(1)) == False\n"
+}

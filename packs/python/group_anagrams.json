@@ -1,0 +1,8 @@
+{
+  "id": "group_anagrams",
+  "title": "Group Anagrams",
+  "difficulty": "medium",
+  "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.\n\nAn anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.\n\nExample:\n  Input: strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\n  Output: [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]\n\nNote: The output groups can be in any order, and anagrams within each group can be in any order.",
+  "skeleton": "def group_anagrams(strs: list[str]) -> list[list[str]]:\n    # your code here\n    pass",
+  "test_code": "from solution import group_anagrams\n\ndef test_basic():\n    result = group_anagrams([\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"])\n    result = [sorted(g) for g in result]\n    result.sort()\n    assert result == [[\"ate\",\"eat\",\"tea\"],[\"bat\"],[\"nat\",\"tan\"]]\n\ndef test_empty_string():\n    assert group_anagrams([\"\"]) == [[\"\"]]\n\ndef test_single():\n    assert group_anagrams([\"a\"]) == [[\"a\"]]\n"
+}

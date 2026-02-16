@@ -1,0 +1,8 @@
+{
+  "id": "longest_consecutive_sequence",
+  "title": "Longest Consecutive Sequence",
+  "difficulty": "medium",
+  "description": "Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.\n\nYou must write an algorithm that runs in O(n) time.\n\nExample:\n  Input: nums = [100, 4, 200, 1, 3, 2]\n  Output: 4\n  Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.\n\n  Input: nums = [0, 3, 7, 2, 5, 8, 4, 6, 0, 1]\n  Output: 9",
+  "skeleton": "def longest_consecutive(nums: list[int]) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import longest_consecutive\n\ndef test_basic():\n    assert longest_consecutive([100, 4, 200, 1, 3, 2]) == 4\n\ndef test_longer():\n    assert longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]) == 9\n\ndef test_empty():\n    assert longest_consecutive([]) == 0\n"
+}

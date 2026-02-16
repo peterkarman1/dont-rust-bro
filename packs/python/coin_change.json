@@ -1,0 +1,8 @@
+{
+  "id": "coin_change",
+  "title": "Coin Change",
+  "difficulty": "medium",
+  "description": "You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.\n\nReturn the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.\n\nYou may assume that you have an infinite number of each kind of coin.\n\nExample:\n  Input: coins = [1, 2, 5], amount = 11\n  Output: 3\n  Explanation: 11 = 5 + 5 + 1",
+  "skeleton": "def coin_change(coins: list[int], amount: int) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import coin_change\n\ndef test_basic():\n    assert coin_change([1, 2, 5], 11) == 3\n\ndef test_impossible():\n    assert coin_change([2], 3) == -1\n\ndef test_zero_amount():\n    assert coin_change([1], 0) == 0\n"
+}

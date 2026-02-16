@@ -1,0 +1,8 @@
+{
+  "id": "merge_k_sorted_lists",
+  "title": "Merge k Sorted Lists",
+  "difficulty": "hard",
+  "description": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.\n\nMerge all the linked-lists into one sorted linked-list and return it.\n\nExample:\n  Input: lists = [[1,4,5],[1,3,4],[2,6]]\n  Output: [1,1,2,3,4,4,5,6]",
+  "skeleton": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef merge_k_lists(lists: list) -> ListNode:\n    # your code here\n    pass",
+  "test_code": "from solution import ListNode, merge_k_lists\n\ndef to_linked(lst):\n    head = None\n    for v in reversed(lst):\n        head = ListNode(v, head)\n    return head\n\ndef to_list(head):\n    result = []\n    while head:\n        result.append(head.val)\n        head = head.next\n    return result\n\ndef test_basic():\n    lists = [to_linked([1,4,5]), to_linked([1,3,4]), to_linked([2,6])]\n    assert to_list(merge_k_lists(lists)) == [1,1,2,3,4,4,5,6]\n\ndef test_empty():\n    assert merge_k_lists([]) is None\n\ndef test_single_empty():\n    assert merge_k_lists([None]) is None\n"
+}

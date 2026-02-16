@@ -1,0 +1,8 @@
+{
+  "id": "merge_two_sorted_lists",
+  "title": "Merge Two Sorted Lists",
+  "difficulty": "easy",
+  "description": "Given the heads of two sorted linked lists list1 and list2, merge the two lists into one sorted list.\n\nThe list should be made by splicing together the nodes of the first two lists. Return the head of the merged linked list.\n\nExample:\n  Input: list1 = [1,2,4], list2 = [1,3,4]\n  Output: [1,1,2,3,4,4]",
+  "skeleton": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef merge_two_lists(list1: ListNode, list2: ListNode) -> ListNode:\n    # your code here\n    pass",
+  "test_code": "from solution import ListNode, merge_two_lists\n\ndef to_linked(lst):\n    head = None\n    for v in reversed(lst):\n        head = ListNode(v, head)\n    return head\n\ndef to_list(head):\n    result = []\n    while head:\n        result.append(head.val)\n        head = head.next\n    return result\n\ndef test_basic():\n    assert to_list(merge_two_lists(to_linked([1,2,4]), to_linked([1,3,4]))) == [1,1,2,3,4,4]\n\ndef test_empty():\n    assert to_list(merge_two_lists(None, None)) == []\n\ndef test_one_empty():\n    assert to_list(merge_two_lists(None, to_linked([0]))) == [0]\n"
+}

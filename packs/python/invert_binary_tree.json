@@ -1,0 +1,8 @@
+{
+  "id": "invert_binary_tree",
+  "title": "Invert Binary Tree",
+  "difficulty": "easy",
+  "description": "Given the root of a binary tree, invert the tree, and return its root.\n\nInverting a binary tree means swapping the left and right children of every node.\n\nExample:\n  Input: root = [4,2,7,1,3,6,9]\n  Output: [4,7,2,9,6,3,1]",
+  "skeleton": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef invert_tree(root: TreeNode) -> TreeNode:\n    # your code here\n    pass",
+  "test_code": "from solution import TreeNode, invert_tree\n\ndef test_basic():\n    root = TreeNode(4, TreeNode(2, TreeNode(1), TreeNode(3)), TreeNode(7, TreeNode(6), TreeNode(9)))\n    result = invert_tree(root)\n    assert result.val == 4\n    assert result.left.val == 7\n    assert result.right.val == 2\n    assert result.left.left.val == 9\n    assert result.right.right.val == 1\n\ndef test_simple():\n    root = TreeNode(2, TreeNode(1), TreeNode(3))\n    result = invert_tree(root)\n    assert result.left.val == 3\n    assert result.right.val == 1\n\ndef test_empty():\n    assert invert_tree(None) is None\n"
+}

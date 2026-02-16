@@ -1,0 +1,8 @@
+{
+  "id": "maximum_depth_of_binary_tree",
+  "title": "Maximum Depth of Binary Tree",
+  "difficulty": "easy",
+  "description": "Given the root of a binary tree, return its maximum depth.\n\nA binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.\n\nExample:\n  Input: root = [3,9,20,null,null,15,7]\n  Output: 3",
+  "skeleton": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef max_depth(root: TreeNode) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import TreeNode, max_depth\n\ndef test_basic():\n    root = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))\n    assert max_depth(root) == 3\n\ndef test_simple():\n    root = TreeNode(1, None, TreeNode(2))\n    assert max_depth(root) == 2\n\ndef test_empty():\n    assert max_depth(None) == 0\n"
+}

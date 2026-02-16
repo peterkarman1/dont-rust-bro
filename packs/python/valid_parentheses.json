@@ -1,0 +1,8 @@
+{
+  "id": "valid_parentheses",
+  "title": "Valid Parentheses",
+  "difficulty": "easy",
+  "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.\n3. Every close bracket has a corresponding open bracket of the same type.\n\nExample:\n  Input: s = \"()\"\n  Output: true\n\nExample 2:\n  Input: s = \"()[]{}\"\n  Output: true\n\nExample 3:\n  Input: s = \"(]\"\n  Output: false",
+  "skeleton": "def is_valid(s: str) -> bool:\n    # your code here\n    pass",
+  "test_code": "from solution import is_valid\n\ndef test_basic():\n    assert is_valid(\"()\") == True\n\ndef test_multiple():\n    assert is_valid(\"()[]{}\") == True\n\ndef test_wrong_order():\n    assert is_valid(\"(]\") == False\n\ndef test_nested():\n    assert is_valid(\"([])\") == True\n\ndef test_unmatched():\n    assert is_valid(\"([)]\") == False\n"
+}

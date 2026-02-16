@@ -1,0 +1,8 @@
+{
+  "id": "best_time_to_buy_and_sell_stock",
+  "title": "Best Time to Buy and Sell Stock",
+  "difficulty": "easy",
+  "description": "Given an array prices where prices[i] is the price of a given stock on the ith day.\n\nYou want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.\n\nReturn the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.\n\nExample:\n  Input: prices = [7,1,5,3,6,4]\n  Output: 5\n  Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.",
+  "skeleton": "def max_profit(prices: list[int]) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import max_profit\n\ndef test_basic():\n    assert max_profit([7,1,5,3,6,4]) == 5\n\ndef test_no_profit():\n    assert max_profit([7,6,4,3,1]) == 0\n\ndef test_small():\n    assert max_profit([2,4,1]) == 2\n"
+}

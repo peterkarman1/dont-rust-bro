@@ -1,0 +1,8 @@
+{
+  "id": "reverse_linked_list",
+  "title": "Reverse Linked List",
+  "difficulty": "easy",
+  "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.\n\nExample:\n  Input: head = [1,2,3,4,5]\n  Output: [5,4,3,2,1]",
+  "skeleton": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef reverse_list(head: ListNode) -> ListNode:\n    # your code here\n    pass",
+  "test_code": "from solution import ListNode, reverse_list\n\ndef to_linked(lst):\n    head = None\n    for v in reversed(lst):\n        head = ListNode(v, head)\n    return head\n\ndef to_list(head):\n    result = []\n    while head:\n        result.append(head.val)\n        head = head.next\n    return result\n\ndef test_basic():\n    assert to_list(reverse_list(to_linked([1,2,3,4,5]))) == [5,4,3,2,1]\n\ndef test_two():\n    assert to_list(reverse_list(to_linked([1,2]))) == [2,1]\n\ndef test_empty():\n    assert reverse_list(None) is None\n"
+}

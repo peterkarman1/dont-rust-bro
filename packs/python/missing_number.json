@@ -1,0 +1,8 @@
+{
+  "id": "missing_number",
+  "title": "Missing Number",
+  "difficulty": "easy",
+  "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.\n\nExample:\n  Input: nums = [3,0,1]\n  Output: 2\n  Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number.",
+  "skeleton": "def missing_number(nums: list[int]) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import missing_number\n\ndef test_basic():\n    assert missing_number([3,0,1]) == 2\n\ndef test_small():\n    assert missing_number([0,1]) == 2\n\ndef test_large():\n    assert missing_number([9,6,4,2,3,5,7,0,1]) == 8\n"
+}

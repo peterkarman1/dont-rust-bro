@@ -1,0 +1,8 @@
+{
+  "id": "counting_bits",
+  "title": "Counting Bits",
+  "difficulty": "easy",
+  "description": "Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.\n\nExample:\n  Input: n = 2\n  Output: [0,1,1]\n  Explanation: 0 --> 0, 1 --> 1, 2 --> 10",
+  "skeleton": "def count_bits(n: int) -> list[int]:\n    # your code here\n    pass",
+  "test_code": "from solution import count_bits\n\ndef test_small():\n    assert count_bits(2) == [0,1,1]\n\ndef test_medium():\n    assert count_bits(5) == [0,1,1,2,1,2]\n\ndef test_zero():\n    assert count_bits(0) == [0]\n"
+}

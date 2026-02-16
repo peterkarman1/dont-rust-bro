@@ -1,0 +1,8 @@
+{
+  "id": "find_median_from_data_stream",
+  "title": "Find Median from Data Stream",
+  "difficulty": "hard",
+  "description": "The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.\n\nImplement the MedianFinder class:\n- MedianFinder() initializes the MedianFinder object.\n- void addNum(int num) adds the integer num from the data stream to the data structure.\n- double findMedian() returns the median of all elements so far.\n\nExample:\n  MedianFinder mf = new MedianFinder();\n  mf.addNum(1);\n  mf.addNum(2);\n  mf.findMedian(); // return 1.5\n  mf.addNum(3);\n  mf.findMedian(); // return 2.0",
+  "skeleton": "class MedianFinder:\n    def __init__(self):\n        # your code here\n        pass\n\n    def addNum(self, num: int) -> None:\n        # your code here\n        pass\n\n    def findMedian(self) -> float:\n        # your code here\n        pass",
+  "test_code": "from solution import MedianFinder\n\ndef test_basic():\n    mf = MedianFinder()\n    mf.addNum(1)\n    mf.addNum(2)\n    assert mf.findMedian() == 1.5\n    mf.addNum(3)\n    assert mf.findMedian() == 2.0\n\ndef test_single():\n    mf = MedianFinder()\n    mf.addNum(5)\n    assert mf.findMedian() == 5.0\n\ndef test_even():\n    mf = MedianFinder()\n    mf.addNum(1)\n    mf.addNum(2)\n    mf.addNum(3)\n    mf.addNum(4)\n    assert mf.findMedian() == 2.5\n"
+}

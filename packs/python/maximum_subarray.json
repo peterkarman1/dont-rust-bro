@@ -1,0 +1,8 @@
+{
+  "id": "maximum_subarray",
+  "title": "Maximum Subarray",
+  "difficulty": "medium",
+  "description": "Given an integer array nums, find the subarray with the largest sum, and return its sum.\n\nA subarray is a contiguous non-empty sequence of elements within an array.\n\nExample:\n  Input: nums = [-2,1,-3,4,-1,2,1,-5,4]\n  Output: 6\n  Explanation: The subarray [4,-1,2,1] has the largest sum 6.",
+  "skeleton": "def max_sub_array(nums: list[int]) -> int:\n    # your code here\n    pass",
+  "test_code": "from solution import max_sub_array\n\ndef test_mixed():\n    assert max_sub_array([-2,1,-3,4,-1,2,1,-5,4]) == 6\n\ndef test_single():\n    assert max_sub_array([1]) == 1\n\ndef test_positive():\n    assert max_sub_array([5,4,-1,7,8]) == 23\n"
+}
