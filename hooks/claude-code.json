@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "type": "command",
+        "command": "drb show"
+      }
+    ],
+    "SubagentStop": [
+      {
+        "type": "command",
+        "command": "drb agent-stop"
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "drb hide"
+      }
+    ]
+  }
+}
