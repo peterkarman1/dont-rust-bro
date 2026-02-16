@@ -1,10 +1,17 @@
 # dont-rust-bro
 
-Don't let your skills get rusty. Practice coding while your agent does the real work.
+> Don't let your skills get rusty. Practice coding while your agent does the real work.
 
-## What is this?
+Your AI agent writes the code that ships to production. But companies still want you to reverse a linked list on a whiteboard in 8 minutes. Make it make sense.
 
-A coding practice popup that shows leetcode-style problems while AI coding agents are working. Instead of watching your agent think, sharpen your skills with bite-sized coding challenges.
+**dont-rust-bro** pops up leetcode-style coding challenges while your AI agent is busy thinking, so you can grind algorithms during the downtime. Your agent handles the real work. You handle the interview prep. Everybody wins — except maybe the interviewers who think this is how they find good engineers.
+
+## Why?
+
+- AI agents do the actual engineering now
+- Companies still interview like it's 2015
+- You have dead time while your agent thinks
+- Might as well get good at the game they make you play
 
 ## Install
 
@@ -14,7 +21,9 @@ curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/ins
 
 ## How it works
 
-When Claude Code spawns subagents, a practice window pops up with a coding problem. Write your solution and click Run to test it. The window automatically hides when Claude is ready for your input.
+When Claude Code spawns subagents, a practice window pops up with a coding problem. Write your solution, click Run, see if you pass. The window automatically hides when Claude needs your attention — because the real work comes first.
+
+Multiple agents running? The window stays open until they're all done. State is saved, so if the window disappears mid-problem, your code is still there when it comes back.
 
 ## Commands
 
@@ -28,5 +37,11 @@ When Claude Code spawns subagents, a practice window pops up with a coding probl
 
 ## Problem Packs
 
-- **python** - Python fundamentals and algorithms (default)
+- **python** — Python fundamentals and algorithms (default)
 - More coming soon (JavaScript, Rust, Go...)
+
+## Philosophy
+
+Your agent is better at writing production code than you are. That's fine. But until the industry catches up, you still need to prove you can implement Two Sum in under 5 minutes. So let your agent do the work that matters, and use the spare cycles to stay sharp on the stuff that gets you hired.
+
+Don't rust, bro.
