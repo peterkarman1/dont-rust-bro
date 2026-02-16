@@ -16,21 +16,19 @@ def setup_env(tmp_path):
 
     with open(os.path.join(python_dir, "pack.json"), "w") as f:
         json.dump({
-            "name": "python",
-            "language": "python",
-            "version": "1.0.0",
-            "description": "Test pack",
-            "problems": ["add"]
+            "name": "python", "language": "python",
+            "version": "1.0.0", "description": "Test pack",
+            "image": "python:3.12-slim",
+            "test_command": "pytest test_solution.py --tb=short -q",
+            "problems": ["add"],
         }, f)
 
     with open(os.path.join(python_dir, "add.json"), "w") as f:
         json.dump({
-            "id": "add",
-            "title": "Add",
-            "difficulty": "easy",
+            "id": "add", "title": "Add", "difficulty": "easy",
             "description": "Add two numbers.",
             "skeleton": "def add(a, b):\n    pass",
-            "test_code": "from solution import add\ndef test_add():\n    assert add(1,2)==3\n"
+            "test_code": "from solution import add\ndef test_add():\n    assert add(1,2)==3\n",
         }, f)
 
     return state_dir, packs_dir
@@ -59,3 +57,21 @@ def test_show_hide_state(setup_env):
     assert pw.visible is True
     pw.hide()
     assert pw.visible is False
+
+
+def test_api_get_problem(setup_env):
+    state_dir, packs_dir = setup_env
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+    api = pw.api
+    problem = api.get_problem()
+    assert problem["title"] == "Add"
+    assert problem["skeleton"] == "def add(a, b):\n    pass"
+    assert problem["counter"] == "1/1"
+
+
+def test_api_save_code(setup_env):
+    state_dir, packs_dir = setup_env
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+    api = pw.api
+    api.save_code("def add(a,b): return a+b")
+    assert pw.state.current_code == "def add(a,b): return a+b"
