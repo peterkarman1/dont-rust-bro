@@ -17,7 +17,7 @@
     "merge_k_sorted_lists", "top_k_frequent_elements", "find_median_from_data_stream"
   ],
   "image": "drb-javascript",
-  "test_command": "npx jest test_solution.js --verbose 2>&1",
+  "test_command": "jest --config '{}' --verbose test_solution.js 2>&1",
   "solution_file": "solution.js",
   "test_file": "test_solution.js"
 }
