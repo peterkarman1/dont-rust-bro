@@ -58,6 +58,10 @@ Claude finishes ──► Stop hook ──► `drb hide`
 - **Container config** persists to `~/.dont-rust-bro/config.json` (container engine preference)
 - **Daemon IPC** uses a Unix socket at `~/.dont-rust-bro/daemon.sock`
 - **Container image** declared in `pack.json` under `image` and `test_command`
+- **Per-pack Dockerfiles** live in `packs/<name>/Dockerfile` — deps (e.g. pytest) are pre-baked into the image at install time
+- `ensure_image()` builds from Dockerfile if present in the pack dir, otherwise pulls from registry
+- At install, `install.sh` runs `$ENGINE build -t <image> $DRB_HOME/packs/<name>/`
+- At runtime, `drb packs use <name>` resolves `packs_dir` relative to `__file__` (dev) or falls back to `$state_dir/packs/` (installed at `~/.dont-rust-bro/packs/`)
 
 ### Hook behavior
 
