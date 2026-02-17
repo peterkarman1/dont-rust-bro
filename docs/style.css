@@ -53,11 +53,7 @@ a:hover {
 
 /* ---------- Alpha banner ---------- */
 .alpha-banner {
-  position: fixed;
-  top: 3.5rem; /* sits right below the nav */
-  left: 0;
-  right: 0;
-  z-index: 99;
+  margin-top: 3.5rem; /* clear the fixed nav */
   background: #2d1b00;
   border-bottom: 1px solid var(--yellow);
   color: var(--yellow);
@@ -177,7 +173,7 @@ nav .nav-links a:hover {
 
 /* ---------- Hero ---------- */
 .hero {
-  padding: 12rem 0 5rem; /* extra top padding for fixed nav + alpha banner */
+  padding: 6rem 0 5rem;
   text-align: center;
 }
 
