@@ -26,13 +26,12 @@ for arg in "$@"; do
     esac
 done
 
-# Check python3 and resolve absolute path (survives asdf/pyenv directory changes)
+# Check python3
 if ! command -v python3 &>/dev/null; then
     error "python3 is required but not found."
     exit 1
 fi
-PYTHON_PATH="$(python3 -c "import sys; print(sys.executable)")"
-info "Using Python: ${PYTHON_PATH}"
+info "Using Python: $(python3 --version)"
 
 # Detect container engine (prefer podman)
 ENGINE=""
@@ -55,23 +54,24 @@ fi
 info "Installing dont-rust-bro to ${DRB_HOME}..."
 git clone --quiet "$DRB_REPO" "$DRB_HOME"
 
-# Pin the resolved python path into bin/drb
-sed -i.bak "s|PYTHON=\"\${DRB_PYTHON:-python3}\"|PYTHON=\"\${DRB_PYTHON:-${PYTHON_PATH}}\"|" "$DRB_HOME/bin/drb"
-rm -f "$DRB_HOME/bin/drb.bak"
+# Create venv with all dependencies
+info "Creating virtual environment..."
+python3 -m venv "$DRB_HOME/venv"
+VENV_PYTHON="$DRB_HOME/venv/bin/python"
+VENV_PIP="$DRB_HOME/venv/bin/pip"
+
+info "Installing pywebview..."
+"$VENV_PIP" install --quiet pywebview
 
 # Save engine config
-"$PYTHON_PATH" -c "
+"$VENV_PYTHON" -c "
 import json
 with open('$DRB_HOME/config.json', 'w') as f:
     json.dump({'engine': '$ENGINE'}, f, indent=2)
 "
 
-# Install pywebview
-info "Installing pywebview..."
-"$PYTHON_PATH" -m pip install --quiet pywebview
-
 # Build default container image
-DEFAULT_IMAGE=$("$PYTHON_PATH" -c "
+DEFAULT_IMAGE=$("$VENV_PYTHON" -c "
 import json
 with open('$DRB_HOME/packs/python/pack.json') as f:
     print(json.load(f)['image'])
@@ -80,7 +80,7 @@ info "Building container image: ${DEFAULT_IMAGE}..."
 $ENGINE build -t "$DEFAULT_IMAGE" "$DRB_HOME/packs/python/"
 
 # Build JavaScript container image
-JS_IMAGE=$("$PYTHON_PATH" -c "
+JS_IMAGE=$("$VENV_PYTHON" -c "
 import json
 with open('$DRB_HOME/packs/javascript/pack.json') as f:
     print(json.load(f)['image'])
@@ -130,7 +130,7 @@ mkdir -p "$(dirname "$CLAUDE_SETTINGS")"
 
 if [ -f "$CLAUDE_SETTINGS" ]; then
     # Merge hooks into existing settings using python
-    "$PYTHON_PATH" -c "
+    "$VENV_PYTHON" -c "
 import json, sys
 
 settings_path = '$CLAUDE_SETTINGS'
@@ -156,7 +156,7 @@ with open(settings_path, 'w') as f:
     json.dump(settings, f, indent=2)
 "
 else
-    "$PYTHON_PATH" -c "
+    "$VENV_PYTHON" -c "
 import json
 settings = {
     'hooks': {
