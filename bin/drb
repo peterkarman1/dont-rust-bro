@@ -5,4 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DRB_ROOT="$(dirname "$SCRIPT_DIR")"
 
-exec python3 -m drb.cli "$@"
+# Use pinned python if set by installer, otherwise fall back to python3
+PYTHON="${DRB_PYTHON:-python3}"
+
+exec "$PYTHON" -m drb.cli "$@"
