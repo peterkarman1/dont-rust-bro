@@ -51,6 +51,38 @@ a:hover {
   text-decoration: underline;
 }
 
+/* ---------- Alpha banner ---------- */
+.alpha-banner {
+  background: #2d1b00;
+  border-bottom: 1px solid var(--yellow);
+  color: var(--yellow);
+  text-align: center;
+  padding: .6rem 1rem;
+  font-size: .9rem;
+}
+.alpha-banner a {
+  color: var(--yellow);
+  text-decoration: underline;
+}
+
+/* ---------- Requirements list ---------- */
+.requirements-list {
+  list-style: none;
+  margin: 1rem 0 2rem;
+  padding: 0;
+}
+.requirements-list li {
+  color: var(--text);
+  padding: .3rem 0;
+  font-size: 1rem;
+}
+.requirements-list li::before {
+  content: "\2713 ";
+  color: var(--accent);
+  font-weight: bold;
+  margin-right: .4rem;
+}
+
 /* ---------- Layout helpers ---------- */
 .container {
   max-width: var(--max-w);
