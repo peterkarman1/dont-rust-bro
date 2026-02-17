@@ -88,7 +88,6 @@ def test_run_in_container_command_structure(tmp_path):
     assert captured_cmd[0] == "docker"
     assert "run" in captured_cmd
     assert "--rm" in captured_cmd
-    assert "--network=none" in captured_cmd
     assert "--memory=256m" in captured_cmd
 
 

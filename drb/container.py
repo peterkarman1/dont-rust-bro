@@ -35,7 +35,7 @@ def run_in_container(engine: str, image: str, test_command: str,
     Returns dict with 'passed' (bool) and 'output' (str).
     """
     cmd = [
-        engine, "run", "--rm", "--network=none",
+        engine, "run", "--rm",
         "-v", f"{work_dir}:/work", "-w", "/work",
         "--memory=256m", "--cpus=1",
         image, "sh", "-c", test_command,

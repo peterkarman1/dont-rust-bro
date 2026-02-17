@@ -49,7 +49,7 @@ class Api:
 
         return run_tests(code, self._pw.current_problem["test_code"],
                          engine=engine, image=image,
-                         test_command=test_command)
+                         test_command=test_command, timeout=30)
 
 
 class PracticeWindow:
