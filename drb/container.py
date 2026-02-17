@@ -14,17 +14,27 @@ def detect_engine() -> str:
     )
 
 
-def ensure_image(engine: str, image: str):
-    """Pull image if not already present locally."""
+def ensure_image(engine: str, image: str, dockerfile_dir: str = None):
+    """Build or pull image if not already present locally.
+
+    If dockerfile_dir is provided and contains a Dockerfile, builds the image.
+    Otherwise falls back to pulling from a registry.
+    """
     result = subprocess.run(
         [engine, "image", "inspect", image],
         capture_output=True, timeout=10,
     )
     if result.returncode != 0:
-        subprocess.run(
-            [engine, "pull", image],
-            capture_output=True, timeout=300,
-        )
+        if dockerfile_dir and os.path.isfile(os.path.join(dockerfile_dir, "Dockerfile")):
+            subprocess.run(
+                [engine, "build", "-t", image, dockerfile_dir],
+                capture_output=True, timeout=300,
+            )
+        else:
+            subprocess.run(
+                [engine, "pull", image],
+                capture_output=True, timeout=300,
+            )
 
 
 def run_in_container(engine: str, image: str, test_command: str,

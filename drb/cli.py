@@ -117,10 +117,11 @@ def main(argv=None):
             pack_data = load_pack(packs_dir, pack_name)
             config = load_config(os.path.join(state_dir, "config.json"))
             engine = config.get("engine", "docker")
+            pack_dir = os.path.join(packs_dir, pack_name)
             try:
-                ensure_image(engine, pack_data["image"])
+                ensure_image(engine, pack_data["image"], dockerfile_dir=pack_dir)
             except Exception as e:
-                print(f"Failed to pull image '{pack_data['image']}': {e}", file=sys.stderr)
+                print(f"Failed to build/pull image '{pack_data['image']}': {e}", file=sys.stderr)
                 sys.exit(1)
             sm = StateManager(state_dir)
             sm.active_pack = pack_name

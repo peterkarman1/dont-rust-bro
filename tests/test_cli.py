@@ -141,4 +141,8 @@ def test_packs_use_pulls_image(tmp_path):
          patch("drb.cli.os.path.isdir", side_effect=fake_isdir), \
          patch("drb.container.ensure_image") as mock_ensure:
         main(["packs", "use", "testpack"])
-        mock_ensure.assert_called_once_with("docker", "python:3.12-slim")
+        mock_ensure.assert_called_once()
+        call_args = mock_ensure.call_args
+        assert call_args[0][0] == "docker"
+        assert call_args[0][1] == "python:3.12-slim"
+        assert "dockerfile_dir" in call_args[1]

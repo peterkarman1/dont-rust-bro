@@ -43,6 +43,25 @@ def test_ensure_image_pulls_missing():
     assert call_count[0] == 2  # inspect + pull
 
 
+def test_ensure_image_builds_from_dockerfile(tmp_path):
+    dockerfile = tmp_path / "Dockerfile"
+    dockerfile.write_text("FROM python:3.12-slim\n")
+
+    cmds = []
+    def side_effect(cmd, **kwargs):
+        cmds.append(cmd)
+        r = type("R", (), {"returncode": 0 if "build" in cmd else 1, "stdout": "", "stderr": ""})()
+        if "inspect" in cmd:
+            r.returncode = 1
+        return r
+
+    with patch("subprocess.run", side_effect=side_effect):
+        ensure_image("docker", "drb-python", dockerfile_dir=str(tmp_path))
+
+    assert any("build" in cmd for cmd in cmds)
+    assert not any("pull" in cmd for cmd in cmds)
+
+
 def test_run_in_container_passing(tmp_path):
     def mock_run(cmd, **kwargs):
         return type("R", (), {"returncode": 0, "stdout": "1 passed", "stderr": ""})()

@@ -16,6 +16,6 @@
     "maximum_depth_of_binary_tree", "invert_binary_tree", "validate_binary_search_tree",
     "merge_k_sorted_lists", "top_k_frequent_elements", "find_median_from_data_stream"
   ],
-  "image": "python:3.12-slim",
-  "test_command": "pip install pytest -q 2>/dev/null && python -m pytest test_solution.py --tb=short -q -s"
+  "image": "drb-python",
+  "test_command": "python -m pytest test_solution.py --tb=short -q -s"
 }

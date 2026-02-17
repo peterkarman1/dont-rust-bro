@@ -64,14 +64,14 @@ with open('$DRB_HOME/config.json', 'w') as f:
 info "Installing pywebview..."
 pip3 install --quiet pywebview
 
-# Pull default container image
+# Build default container image
 DEFAULT_IMAGE=$(python3 -c "
 import json
 with open('$DRB_HOME/packs/python/pack.json') as f:
     print(json.load(f)['image'])
 ")
-info "Pulling container image: ${DEFAULT_IMAGE}..."
-$ENGINE pull "$DEFAULT_IMAGE"
+info "Building container image: ${DEFAULT_IMAGE}..."
+$ENGINE build -t "$DEFAULT_IMAGE" "$DRB_HOME/packs/python/"
 
 # Create bin symlink
 BIN_DIR="${HOME}/.local/bin"
