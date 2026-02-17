@@ -47,9 +47,13 @@ class Api:
         image = pack.get("image", "python:3.12-slim")
         test_command = pack.get("test_command", "pytest test_solution.py --tb=short -q")
 
+        solution_file = pack.get("solution_file", "solution.py")
+        test_file = pack.get("test_file", "test_solution.py")
+
         return run_tests(code, self._pw.current_problem["test_code"],
                          engine=engine, image=image,
-                         test_command=test_command, timeout=30)
+                         test_command=test_command, timeout=30,
+                         solution_file=solution_file, test_file=test_file)
 
 
 class PracticeWindow:

@@ -48,3 +48,17 @@ def test_files_written_to_tmpdir():
     with patch("drb.runner.run_in_container", side_effect=mock_run_in_container):
         run_tests("code", "test_code", engine="docker", image="img",
                   test_command="pytest test_solution.py")
+
+
+def test_custom_filenames():
+    written_files = []
+    def mock_run_in_container(engine, image, test_command, work_dir, timeout=10):
+        written_files.append(os.listdir(work_dir))
+        assert os.path.isfile(os.path.join(work_dir, "solution.js"))
+        assert os.path.isfile(os.path.join(work_dir, "test_solution.js"))
+        return {"passed": True, "output": "ok"}
+
+    with patch("drb.runner.run_in_container", side_effect=mock_run_in_container):
+        run_tests("code", "test_code", engine="docker", image="img",
+                  test_command="jest", solution_file="solution.js",
+                  test_file="test_solution.js")

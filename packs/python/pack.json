@@ -17,5 +17,7 @@
     "merge_k_sorted_lists", "top_k_frequent_elements", "find_median_from_data_stream"
   ],
   "image": "drb-python",
-  "test_command": "python -m pytest test_solution.py --tb=short -q -s"
+  "test_command": "python -m pytest test_solution.py --tb=short -q -s",
+  "solution_file": "solution.py",
+  "test_file": "test_solution.py"
 }
