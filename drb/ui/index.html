@@ -46,6 +46,8 @@
     min-height: 80px; max-height: 140px; overflow-y: auto;
     white-space: pre-wrap; word-wrap: break-word; border: 1px solid #333;
   }
+  #output.passed { border-color: #2d6a4f; }
+  #output.failed { border-color: #9b2226; }
 
   .buttons {
     display: flex; gap: 10px; margin-top: 12px; padding-top: 10px;
@@ -89,7 +91,9 @@
     document.getElementById("counter").textContent = data.counter;
     document.getElementById("description").textContent = data.description;
     document.getElementById("code").value = data.code;
-    document.getElementById("output").textContent = "";
+    const out = document.getElementById("output");
+    out.textContent = "";
+    out.className = "";
   }
 
   async function onPrev() {
@@ -110,7 +114,11 @@
     const code = document.getElementById("code").value;
     try {
       const result = await window.pywebview.api.run_tests(code);
-      document.getElementById("output").textContent = result.output || "";
+      const el = document.getElementById("output");
+      const status = result.passed ? "PASSED" : "FAILED";
+      const output = result.output || "(no output)";
+      el.textContent = status + "\n\n" + output;
+      el.className = result.passed ? "passed" : "failed";
     } catch (e) {
       document.getElementById("output").textContent = "Error: " + e;
     }

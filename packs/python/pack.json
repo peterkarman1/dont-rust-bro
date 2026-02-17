@@ -17,5 +17,5 @@
     "merge_k_sorted_lists", "top_k_frequent_elements", "find_median_from_data_stream"
   ],
   "image": "python:3.12-slim",
-  "test_command": "pip install pytest -q 2>/dev/null && python -m pytest test_solution.py --tb=short -q"
+  "test_command": "pip install pytest -q 2>/dev/null && python -m pytest test_solution.py --tb=short -q -s"
 }
