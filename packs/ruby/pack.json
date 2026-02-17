@@ -1,0 +1,23 @@
+{
+  "name": "ruby",
+  "language": "ruby",
+  "version": "1.0.0",
+  "description": "Ruby fundamentals and algorithms",
+  "problems": [
+    "two_sum", "add_two_numbers", "reverse_string", "valid_palindrome", "fizzbuzz",
+    "best_time_to_buy_and_sell_stock", "contains_duplicate", "maximum_subarray",
+    "number_of_1_bits", "counting_bits", "missing_number",
+    "climbing_stairs", "coin_change", "house_robber",
+    "number_of_islands", "course_schedule", "longest_consecutive_sequence",
+    "insert_interval", "merge_intervals", "non_overlapping_intervals",
+    "reverse_linked_list", "merge_two_sorted_lists", "linked_list_cycle",
+    "set_matrix_zeroes", "spiral_matrix", "rotate_image",
+    "valid_anagram", "group_anagrams", "valid_parentheses",
+    "maximum_depth_of_binary_tree", "invert_binary_tree", "validate_binary_search_tree",
+    "merge_k_sorted_lists", "top_k_frequent_elements", "find_median_from_data_stream"
+  ],
+  "image": "drb-ruby",
+  "test_command": "ruby test_solution.rb 2>&1",
+  "solution_file": "solution.rb",
+  "test_file": "test_solution.rb"
+}

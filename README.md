@@ -51,6 +51,7 @@ State is saved, so if the window disappears mid-problem, your code is still ther
 
 - **python** — Python fundamentals and algorithms (default)
 - **javascript** — JavaScript fundamentals and algorithms
+- **ruby** — Ruby fundamentals and algorithms
 - More coming soon (Rust, Go...)
 
 ## Philosophy

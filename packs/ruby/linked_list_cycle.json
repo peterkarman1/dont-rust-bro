@@ -1,0 +1,8 @@
+{
+  "id": "linked_list_cycle",
+  "title": "Linked List Cycle",
+  "difficulty": "easy",
+  "description": "Given the head of a linked list, determine if the linked list has a cycle in it. A cycle exists if some node in the list can be reached again by continuously following the next_node pointer.\n\nReturn true if there is a cycle, false otherwise.\n\nConstraints:\n- The number of nodes in the list is in the range [0, 10000]\n- -100000 <= Node.val <= 100000",
+  "skeleton": "class ListNode\n  attr_accessor :val, :next_node\n  def initialize(val = 0, next_node = nil)\n    @val = val\n    @next_node = next_node\n  end\nend\n\ndef has_cycle(head)\n  # your code here\nend\n",
+  "test_code": "require 'minitest/autorun'\nrequire_relative 'solution'\n\nclass TestLinkedListCycle < Minitest::Test\n  def test_has_cycle\n    n1 = ListNode.new(3)\n    n2 = ListNode.new(2)\n    n3 = ListNode.new(0)\n    n4 = ListNode.new(-4)\n    n1.next_node = n2\n    n2.next_node = n3\n    n3.next_node = n4\n    n4.next_node = n2\n    assert_equal true, has_cycle(n1)\n  end\n  def test_no_cycle\n    n1 = ListNode.new(1)\n    n2 = ListNode.new(2)\n    n3 = ListNode.new(3)\n    n1.next_node = n2\n    n2.next_node = n3\n    assert_equal false, has_cycle(n1)\n  end\n  def test_single_node\n    n1 = ListNode.new(1)\n    assert_equal false, has_cycle(n1)\n  end\n  def test_empty\n    assert_equal false, has_cycle(nil)\n  end\nend\n"
+}

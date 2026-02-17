@@ -53,3 +53,22 @@ def test_load_javascript_problem():
     assert problem["id"] == "two_sum"
     assert "module.exports" in problem["skeleton"]
     assert "require('./solution')" in problem["test_code"]
+
+
+def test_list_packs_includes_ruby():
+    packs = list_packs(PACKS_DIR)
+    assert "ruby" in packs
+
+
+def test_load_ruby_pack():
+    pack = load_pack(PACKS_DIR, "ruby")
+    assert pack["name"] == "ruby"
+    assert pack["language"] == "ruby"
+    assert len(pack["problems"]) == 35
+
+
+def test_load_ruby_problem():
+    problem = load_problem(PACKS_DIR, "ruby", "two_sum")
+    assert problem["id"] == "two_sum"
+    assert "def two_sum" in problem["skeleton"]
+    assert "require_relative" in problem["test_code"]

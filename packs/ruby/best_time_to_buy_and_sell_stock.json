@@ -1,0 +1,8 @@
+{
+  "id": "best_time_to_buy_and_sell_stock",
+  "title": "Best Time to Buy and Sell Stock",
+  "difficulty": "easy",
+  "description": "You are given an array prices where prices[i] is the price of a given stock on the ith day.\n\nYou want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.\n\nReturn the maximum profit you can achieve. If no profit is possible, return 0.\n\nExample:\n  Input: prices = [7, 1, 5, 3, 6, 4]\n  Output: 5",
+  "skeleton": "def max_profit(prices)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal 5, max_profit([7, 1, 5, 3, 6, 4])\n  end\n\n  def test_no_profit\n    assert_equal 0, max_profit([7, 6, 4, 3, 1])\n  end\n\n  def test_small\n    assert_equal 2, max_profit([2, 4, 1])\n  end\nend"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "missing_number",
+  "title": "Missing Number",
+  "difficulty": "easy",
+  "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.\n\nExample:\n  Input: nums = [3, 0, 1]\n  Output: 2",
+  "skeleton": "def missing_number(nums)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal 2, missing_number([3, 0, 1])\n  end\n\n  def test_small\n    assert_equal 2, missing_number([0, 1])\n  end\n\n  def test_large\n    assert_equal 8, missing_number([9, 6, 4, 2, 3, 5, 7, 0, 1])\n  end\nend"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "reverse_linked_list",
+  "title": "Reverse Linked List",
+  "difficulty": "easy",
+  "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.\n\nExample:\n  Input: 1 -> 2 -> 3 -> 4 -> 5\n  Output: 5 -> 4 -> 3 -> 2 -> 1\n\nConstraints:\n- The number of nodes in the list is in the range [0, 5000]\n- -5000 <= Node.val <= 5000",
+  "skeleton": "class ListNode\n  attr_accessor :val, :next_node\n  def initialize(val = 0, next_node = nil)\n    @val = val\n    @next_node = next_node\n  end\nend\n\ndef reverse_list(head)\n  # your code here\nend\n",
+  "test_code": "require 'minitest/autorun'\nrequire_relative 'solution'\n\ndef to_linked(arr)\n  head = nil\n  arr.reverse.each { |v| head = ListNode.new(v, head) }\n  head\nend\n\ndef to_array(head)\n  result = []\n  while head\n    result << head.val\n    head = head.next_node\n  end\n  result\nend\n\nclass TestReverseLinkedList < Minitest::Test\n  def test_basic\n    assert_equal [5,4,3,2,1], to_array(reverse_list(to_linked([1,2,3,4,5])))\n  end\n  def test_two\n    assert_equal [2,1], to_array(reverse_list(to_linked([1,2])))\n  end\n  def test_empty\n    assert_nil reverse_list(nil)\n  end\nend\n"
+}

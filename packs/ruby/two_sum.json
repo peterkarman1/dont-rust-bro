@@ -1,0 +1,8 @@
+{
+  "id": "two_sum",
+  "title": "Two Sum",
+  "difficulty": "easy",
+  "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input has exactly one solution, and you may not use the same element twice.\n\nExample:\n  Input: nums = [2, 7, 11, 15], target = 9\n  Output: [0, 1]",
+  "skeleton": "def two_sum(nums, target)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal [0, 1], two_sum([2, 7, 11, 15], 9).sort\n  end\n\n  def test_middle\n    assert_equal [1, 2], two_sum([3, 2, 4], 6).sort\n  end\n\n  def test_negative\n    assert_equal [2, 4], two_sum([-1, -2, -3, -4, -5], -8).sort\n  end\nend"
+}

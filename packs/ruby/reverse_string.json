@@ -1,0 +1,8 @@
+{
+  "id": "reverse_string",
+  "title": "Reverse String",
+  "difficulty": "easy",
+  "description": "Write a function that reverses an array of characters in place.\n\nThe input is given as an array of characters. You must modify the input array in place with O(1) extra memory.\n\nExample:\n  Input: ['h', 'e', 'l', 'l', 'o']\n  Output: ['o', 'l', 'l', 'e', 'h']",
+  "skeleton": "def reverse_string(s)\n  # modify s in place\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_hello\n    s = ['h', 'e', 'l', 'l', 'o']\n    reverse_string(s)\n    assert_equal ['o', 'l', 'l', 'e', 'h'], s\n  end\n\n  def test_hannah\n    s = ['H', 'a', 'n', 'n', 'a', 'h']\n    reverse_string(s)\n    assert_equal ['h', 'a', 'n', 'n', 'a', 'H'], s\n  end\nend"
+}

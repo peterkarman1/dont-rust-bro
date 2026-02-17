@@ -1,0 +1,8 @@
+{
+  "id": "valid_anagram",
+  "title": "Valid Anagram",
+  "difficulty": "medium",
+  "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.\n\nAn anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.\n\nExample:\n  Input: s = \"anagram\", t = \"nagaram\"\n  Output: true\n\nExample 2:\n  Input: s = \"rat\", t = \"car\"\n  Output: false",
+  "skeleton": "def is_anagram(s, t)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal true, is_anagram(\"anagram\", \"nagaram\")\n  end\n\n  def test_not_anagram\n    assert_equal false, is_anagram(\"rat\", \"car\")\n  end\n\n  def test_single_char\n    assert_equal true, is_anagram(\"a\", \"a\")\n  end\n\n  def test_different_lengths\n    assert_equal false, is_anagram(\"ab\", \"a\")\n  end\nend"
+}

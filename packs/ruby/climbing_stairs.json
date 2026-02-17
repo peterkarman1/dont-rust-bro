@@ -1,0 +1,8 @@
+{
+  "id": "climbing_stairs",
+  "title": "Climbing Stairs",
+  "difficulty": "easy",
+  "description": "You are climbing a staircase. It takes n steps to reach the top.\n\nEach time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?\n\nExample:\n  Input: n = 2\n  Output: 2\n  Explanation: 1+1 or 2",
+  "skeleton": "def climb_stairs(n)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_two\n    assert_equal 2, climb_stairs(2)\n  end\n\n  def test_three\n    assert_equal 3, climb_stairs(3)\n  end\n\n  def test_five\n    assert_equal 8, climb_stairs(5)\n  end\nend"
+}

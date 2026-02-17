@@ -1,0 +1,8 @@
+{
+  "id": "course_schedule",
+  "title": "Course Schedule",
+  "difficulty": "medium",
+  "description": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\nFor example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.\n\nReturn true if you can finish all courses. Otherwise, return false.\n\nExample:\n  Input: numCourses = 2, prerequisites = [[1,0]]\n  Output: true\n  Explanation: There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.",
+  "skeleton": "def can_finish(num_courses, prerequisites)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal true, can_finish(2, [[1, 0]])\n  end\n\n  def test_cycle\n    assert_equal false, can_finish(2, [[1, 0], [0, 1]])\n  end\n\n  def test_single_course\n    assert_equal true, can_finish(1, [])\n  end\nend"
+}

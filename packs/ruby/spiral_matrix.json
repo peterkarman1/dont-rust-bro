@@ -1,0 +1,8 @@
+{
+  "id": "spiral_matrix",
+  "title": "Spiral Matrix",
+  "difficulty": "medium",
+  "description": "Given an m x n matrix, return all elements of the matrix in spiral order.\n\nExample:\n  Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]\n  Output: [1,2,3,6,9,8,7,4,5]\n\nExample 2:\n  Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]\n  Output: [1,2,3,4,8,12,11,10,9,5,6,7]",
+  "skeleton": "def spiral_order(matrix)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal [1, 2, 3, 6, 9, 8, 7, 4, 5], spiral_order([[1, 2, 3], [4, 5, 6], [7, 8, 9]])\n  end\n\n  def test_rectangle\n    assert_equal [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7], spiral_order([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])\n  end\n\n  def test_single_row\n    assert_equal [1, 2, 3, 4], spiral_order([[1, 2, 3, 4]])\n  end\n\n  def test_single_column\n    assert_equal [1, 2, 3, 4], spiral_order([[1], [2], [3], [4]])\n  end\nend"
+}

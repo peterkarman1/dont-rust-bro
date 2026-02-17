@@ -88,6 +88,15 @@ with open('$DRB_HOME/packs/javascript/pack.json') as f:
 info "Building container image: ${JS_IMAGE}..."
 $ENGINE build -t "$JS_IMAGE" "$DRB_HOME/packs/javascript/"
 
+# Build Ruby container image
+RUBY_IMAGE=$("$VENV_PYTHON" -c "
+import json
+with open('$DRB_HOME/packs/ruby/pack.json') as f:
+    print(json.load(f)['image'])
+")
+info "Building container image: ${RUBY_IMAGE}..."
+$ENGINE build -t "$RUBY_IMAGE" "$DRB_HOME/packs/ruby/"
+
 # Create bin symlink
 BIN_DIR="${HOME}/.local/bin"
 mkdir -p "$BIN_DIR"

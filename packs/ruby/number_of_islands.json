@@ -1,0 +1,8 @@
+{
+  "id": "number_of_islands",
+  "title": "Number of Islands",
+  "difficulty": "medium",
+  "description": "Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.\n\nAn island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.\n\nExample:\n  Input: grid = [\n    [\"1\",\"1\",\"1\",\"1\",\"0\"],\n    [\"1\",\"1\",\"0\",\"1\",\"0\"],\n    [\"1\",\"1\",\"0\",\"0\",\"0\"],\n    [\"0\",\"0\",\"0\",\"0\",\"0\"]\n  ]\n  Output: 1",
+  "skeleton": "def num_islands(grid)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_single_island\n    grid = [\n      [\"1\",\"1\",\"1\",\"1\",\"0\"],\n      [\"1\",\"1\",\"0\",\"1\",\"0\"],\n      [\"1\",\"1\",\"0\",\"0\",\"0\"],\n      [\"0\",\"0\",\"0\",\"0\",\"0\"]\n    ]\n    assert_equal 1, num_islands(grid)\n  end\n\n  def test_multiple_islands\n    grid = [\n      [\"1\",\"1\",\"0\",\"0\",\"0\"],\n      [\"1\",\"1\",\"0\",\"0\",\"0\"],\n      [\"0\",\"0\",\"1\",\"0\",\"0\"],\n      [\"0\",\"0\",\"0\",\"1\",\"1\"]\n    ]\n    assert_equal 3, num_islands(grid)\n  end\nend"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "group_anagrams",
+  "title": "Group Anagrams",
+  "difficulty": "medium",
+  "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.\n\nAn anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.\n\nExample:\n  Input: strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\n  Output: [[\"bat\"],[\"nat\",\"tan\"],[\"ate\",\"eat\",\"tea\"]]\n\nNote: The output groups can be in any order, and anagrams within each group can be in any order.",
+  "skeleton": "def group_anagrams(strs)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    result = group_anagrams([\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"])\n    result = result.map { |g| g.sort }.sort\n    assert_equal [[\"ate\", \"eat\", \"tea\"], [\"bat\"], [\"nat\", \"tan\"]], result\n  end\n\n  def test_empty_string\n    assert_equal [[\"\"]], group_anagrams([\"\"])\n  end\n\n  def test_single\n    assert_equal [[\"a\"]], group_anagrams([\"a\"])\n  end\nend"
+}

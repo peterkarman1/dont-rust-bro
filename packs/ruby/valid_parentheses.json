@@ -1,0 +1,8 @@
+{
+  "id": "valid_parentheses",
+  "title": "Valid Parentheses",
+  "difficulty": "easy",
+  "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n  1. Open brackets must be closed by the same type of brackets.\n  2. Open brackets must be closed in the correct order.\n  3. Every close bracket has a corresponding open bracket of the same type.\n\nExample:\n  Input: s = '()'\n  Output: true",
+  "skeleton": "def is_valid(s)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_simple\n    assert_equal true, is_valid('()')\n  end\n\n  def test_multiple\n    assert_equal true, is_valid('()[]{}')\n  end\n\n  def test_mismatch\n    assert_equal false, is_valid('(]')\n  end\n\n  def test_nested\n    assert_equal true, is_valid('([])')\n  end\n\n  def test_interleaved\n    assert_equal false, is_valid('([)]')\n  end\nend"
+}

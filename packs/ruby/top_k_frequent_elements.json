@@ -1,0 +1,8 @@
+{
+  "id": "top_k_frequent_elements",
+  "title": "Top K Frequent Elements",
+  "difficulty": "medium",
+  "description": "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.\n\nExample:\n  Input: nums = [1,1,1,2,2,3], k = 2\n  Output: [1,2]\n\nExample:\n  Input: nums = [1], k = 1\n  Output: [1]",
+  "skeleton": "def top_k_frequent(nums, k)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    result = top_k_frequent([1, 1, 1, 2, 2, 3], 2)\n    assert_equal [1, 2], result.sort\n  end\n\n  def test_single\n    assert_equal [1], top_k_frequent([1], 1)\n  end\n\n  def test_all_same\n    assert_equal [3], top_k_frequent([3, 3, 3], 1)\n  end\nend"
+}

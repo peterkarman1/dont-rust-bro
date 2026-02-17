@@ -1,0 +1,8 @@
+{
+  "id": "invert_binary_tree",
+  "title": "Invert Binary Tree",
+  "difficulty": "easy",
+  "description": "Given the root of a binary tree, invert the tree, and return its root. Inverting a binary tree means swapping every left node with its corresponding right node.\n\nExample:\n  Input: root = [4,2,7,1,3,6,9]\n  Output: [4,7,2,9,6,3,1]\n\nConstraints:\n- The number of nodes in the tree is in the range [0, 100]\n- -100 <= Node.val <= 100",
+  "skeleton": "class TreeNode\n  attr_accessor :val, :left, :right\n  def initialize(val = 0, left = nil, right = nil)\n    @val = val\n    @left = left\n    @right = right\n  end\nend\n\ndef invert_tree(root)\n  # your code here\nend\n",
+  "test_code": "require 'minitest/autorun'\nrequire_relative 'solution'\n\nclass TestInvertBinaryTree < Minitest::Test\n  def test_full_tree\n    root = TreeNode.new(4,\n      TreeNode.new(2, TreeNode.new(1), TreeNode.new(3)),\n      TreeNode.new(7, TreeNode.new(6), TreeNode.new(9))\n    )\n    result = invert_tree(root)\n    assert_equal 4, result.val\n    assert_equal 7, result.left.val\n    assert_equal 2, result.right.val\n    assert_equal 9, result.left.left.val\n    assert_equal 6, result.left.right.val\n    assert_equal 3, result.right.left.val\n    assert_equal 1, result.right.right.val\n  end\n  def test_simple\n    root = TreeNode.new(2, TreeNode.new(1), TreeNode.new(3))\n    result = invert_tree(root)\n    assert_equal 3, result.left.val\n    assert_equal 1, result.right.val\n  end\n  def test_empty\n    assert_nil invert_tree(nil)\n  end\nend\n"
+}

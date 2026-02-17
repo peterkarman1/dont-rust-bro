@@ -1,0 +1,8 @@
+{
+  "id": "non_overlapping_intervals",
+  "title": "Non-overlapping Intervals",
+  "difficulty": "medium",
+  "description": "Given an array of intervals, return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.\n\nNote: Intervals that touch at a single point are considered non-overlapping.\n\nExample:\n  Input: [[1,2],[2,3],[3,4],[1,3]]\n  Output: 1 (remove [1,3])",
+  "skeleton": "def erase_overlap_intervals(intervals)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_basic\n    assert_equal 1, erase_overlap_intervals([[1, 2], [2, 3], [3, 4], [1, 3]])\n  end\n\n  def test_all_overlap\n    assert_equal 2, erase_overlap_intervals([[1, 2], [1, 2], [1, 2]])\n  end\n\n  def test_no_overlap\n    assert_equal 0, erase_overlap_intervals([[1, 2], [2, 3]])\n  end\nend"
+}

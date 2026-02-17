@@ -1,0 +1,8 @@
+{
+  "id": "valid_palindrome",
+  "title": "Valid Palindrome",
+  "difficulty": "easy",
+  "description": "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward.\n\nGiven a string s, return true if it is a palindrome, or false otherwise.\n\nExample:\n  Input: s = 'A man, a plan, a canal: Panama'\n  Output: true",
+  "skeleton": "def is_palindrome(s)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_panama\n    assert_equal true, is_palindrome('A man, a plan, a canal: Panama')\n  end\n\n  def test_race\n    assert_equal false, is_palindrome('race a car')\n  end\n\n  def test_space\n    assert_equal true, is_palindrome(' ')\n  end\n\n  def test_punctuation\n    assert_equal true, is_palindrome('.,')\n  end\nend"
+}

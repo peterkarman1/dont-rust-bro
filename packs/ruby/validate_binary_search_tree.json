@@ -1,0 +1,8 @@
+{
+  "id": "validate_binary_search_tree",
+  "title": "Validate Binary Search Tree",
+  "difficulty": "medium",
+  "description": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\n\nA valid BST is defined as follows:\n- The left subtree of a node contains only nodes with keys less than the node's key.\n- The right subtree of a node contains only nodes with keys greater than the node's key.\n- Both the left and right subtrees must also be binary search trees.\n\nExample:\n  Input: root = [2,1,3]\n  Output: true",
+  "skeleton": "class TreeNode\n  attr_accessor :val, :left, :right\n  def initialize(val = 0, left = nil, right = nil)\n    @val = val\n    @left = left\n    @right = right\n  end\nend\n\ndef is_valid_bst(root)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_valid\n    root = TreeNode.new(2, TreeNode.new(1), TreeNode.new(3))\n    assert_equal true, is_valid_bst(root)\n  end\n\n  def test_invalid\n    root = TreeNode.new(5, TreeNode.new(1), TreeNode.new(4, TreeNode.new(3), TreeNode.new(6)))\n    assert_equal false, is_valid_bst(root)\n  end\n\n  def test_single\n    assert_equal true, is_valid_bst(TreeNode.new(1))\n  end\nend"
+}

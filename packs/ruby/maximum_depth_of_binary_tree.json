@@ -1,0 +1,8 @@
+{
+  "id": "maximum_depth_of_binary_tree",
+  "title": "Maximum Depth of Binary Tree",
+  "difficulty": "easy",
+  "description": "Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.\n\nExample:\n  Input: root = [3,9,20,null,null,15,7]\n  Output: 3\n\nConstraints:\n- The number of nodes in the tree is in the range [0, 10000]\n- -100 <= Node.val <= 100",
+  "skeleton": "class TreeNode\n  attr_accessor :val, :left, :right\n  def initialize(val = 0, left = nil, right = nil)\n    @val = val\n    @left = left\n    @right = right\n  end\nend\n\ndef max_depth(root)\n  # your code here\nend\n",
+  "test_code": "require 'minitest/autorun'\nrequire_relative 'solution'\n\nclass TestMaximumDepthOfBinaryTree < Minitest::Test\n  def test_basic\n    root = TreeNode.new(3, TreeNode.new(9), TreeNode.new(20, TreeNode.new(15), TreeNode.new(7)))\n    assert_equal 3, max_depth(root)\n  end\n  def test_two_levels\n    root = TreeNode.new(1, nil, TreeNode.new(2))\n    assert_equal 2, max_depth(root)\n  end\n  def test_empty\n    assert_equal 0, max_depth(nil)\n  end\n  def test_single_node\n    assert_equal 1, max_depth(TreeNode.new(1))\n  end\nend\n"
+}

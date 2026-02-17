@@ -1,0 +1,8 @@
+{
+  "id": "counting_bits",
+  "title": "Counting Bits",
+  "difficulty": "easy",
+  "description": "Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.\n\nExample:\n  Input: n = 2\n  Output: [0, 1, 1]",
+  "skeleton": "def count_bits(n)\n  # your code here\nend",
+  "test_code": "require_relative './solution'\nrequire 'minitest/autorun'\n\nclass TestSolution < Minitest::Test\n  def test_two\n    assert_equal [0, 1, 1], count_bits(2)\n  end\n\n  def test_five\n    assert_equal [0, 1, 1, 2, 1, 2], count_bits(5)\n  end\n\n  def test_zero\n    assert_equal [0], count_bits(0)\n  end\nend"
+}
