@@ -8,4 +8,5 @@ DRB_ROOT="$(dirname "$SCRIPT_DIR")"
 # Use pinned python if set by installer, otherwise fall back to python3
 PYTHON="${DRB_PYTHON:-python3}"
 
+export PYTHONPATH="${DRB_ROOT}${PYTHONPATH:+:$PYTHONPATH}"
 exec "$PYTHON" -m drb.cli "$@"
