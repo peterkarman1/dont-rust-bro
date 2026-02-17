@@ -46,7 +46,8 @@ State is saved, so if the window disappears mid-problem, your code is still ther
 ## Problem Packs
 
 - **python** — Python fundamentals and algorithms (default)
-- More coming soon (JavaScript, Rust, Go...)
+- **javascript** — JavaScript fundamentals and algorithms
+- More coming soon (Rust, Go...)
 
 ## Philosophy
 

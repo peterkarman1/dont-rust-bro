@@ -73,6 +73,15 @@ with open('$DRB_HOME/packs/python/pack.json') as f:
 info "Building container image: ${DEFAULT_IMAGE}..."
 $ENGINE build -t "$DEFAULT_IMAGE" "$DRB_HOME/packs/python/"
 
+# Build JavaScript container image
+JS_IMAGE=$(python3 -c "
+import json
+with open('$DRB_HOME/packs/javascript/pack.json') as f:
+    print(json.load(f)['image'])
+")
+info "Building container image: ${JS_IMAGE}..."
+$ENGINE build -t "$JS_IMAGE" "$DRB_HOME/packs/javascript/"
+
 # Create bin symlink
 BIN_DIR="${HOME}/.local/bin"
 mkdir -p "$BIN_DIR"

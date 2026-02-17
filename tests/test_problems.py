@@ -34,3 +34,22 @@ def test_load_problem_not_found():
 def test_load_pack_not_found():
     with pytest.raises(FileNotFoundError):
         load_pack(PACKS_DIR, "nonexistent")
+
+
+def test_list_packs_includes_javascript():
+    packs = list_packs(PACKS_DIR)
+    assert "javascript" in packs
+
+
+def test_load_javascript_pack():
+    pack = load_pack(PACKS_DIR, "javascript")
+    assert pack["name"] == "javascript"
+    assert pack["language"] == "javascript"
+    assert len(pack["problems"]) == 35
+
+
+def test_load_javascript_problem():
+    problem = load_problem(PACKS_DIR, "javascript", "two_sum")
+    assert problem["id"] == "two_sum"
+    assert "module.exports" in problem["skeleton"]
+    assert "require('./solution')" in problem["test_code"]
