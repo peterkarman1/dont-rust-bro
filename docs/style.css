@@ -371,7 +371,6 @@ nav .nav-links a:hover {
 .video-container {
   position: relative;
   width: 100%;
-  max-width: 720px;
   margin: 2rem auto 0;
   padding-bottom: 56.25%; /* 16:9 */
   border-radius: 10px;
