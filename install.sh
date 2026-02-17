@@ -79,11 +79,34 @@ mkdir -p "$BIN_DIR"
 chmod +x "${DRB_HOME}/bin/drb"
 ln -sf "${DRB_HOME}/bin/drb" "${BIN_DIR}/drb"
 
-# Check PATH
+# Ensure PATH includes BIN_DIR
 if [[ ":$PATH:" != *":${BIN_DIR}:"* ]]; then
-    warn "${BIN_DIR} is not in your PATH."
-    warn "Add this to your shell profile:"
-    warn "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+    # Detect shell profile
+    SHELL_NAME="$(basename "$SHELL")"
+    case "$SHELL_NAME" in
+        zsh)  PROFILE="${HOME}/.zshrc" ;;
+        bash)
+            if [ -f "${HOME}/.bash_profile" ]; then
+                PROFILE="${HOME}/.bash_profile"
+            else
+                PROFILE="${HOME}/.bashrc"
+            fi
+            ;;
+        *)    PROFILE="${HOME}/.profile" ;;
+    esac
+
+    PATH_LINE='export PATH="$HOME/.local/bin:$PATH"'
+
+    # Only add if not already present
+    if ! grep -qF '.local/bin' "$PROFILE" 2>/dev/null; then
+        info "Adding ${BIN_DIR} to PATH in ${PROFILE}..."
+        echo "" >> "$PROFILE"
+        echo "# Added by dont-rust-bro" >> "$PROFILE"
+        echo "$PATH_LINE" >> "$PROFILE"
+        info "Run 'source ${PROFILE}' or open a new terminal for PATH changes to take effect."
+    else
+        info "${BIN_DIR} already referenced in ${PROFILE}."
+    fi
 fi
 
 # Register Claude Code hooks
