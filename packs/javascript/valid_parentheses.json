@@ -1,0 +1,8 @@
+{
+  "id": "valid_parentheses",
+  "title": "Valid Parentheses",
+  "difficulty": "easy",
+  "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.\n3. Every close bracket has a corresponding open bracket of the same type.\n\nExample:\n  Input: s = \"()\"\n  Output: true\n\nExample 2:\n  Input: s = \"()[]{}\"\n  Output: true\n\nExample 3:\n  Input: s = \"(]\"\n  Output: false",
+  "skeleton": "function isValid(s) {\n    // your code here\n}\n\nmodule.exports = { isValid };",
+  "test_code": "const { isValid } = require('./solution');\n\ntest('basic', () => {\n    expect(isValid('()')).toBe(true);\n});\n\ntest('multiple', () => {\n    expect(isValid('()[]{}')).toBe(true);\n});\n\ntest('wrong order', () => {\n    expect(isValid('(]')).toBe(false);\n});\n\ntest('nested', () => {\n    expect(isValid('([])')).toBe(true);\n});\n\ntest('unmatched', () => {\n    expect(isValid('([)]')).toBe(false);\n});"
+}

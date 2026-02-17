@@ -1,0 +1,8 @@
+{
+  "id": "linked_list_cycle",
+  "title": "Linked List Cycle",
+  "difficulty": "easy",
+  "description": "Given the head of a linked list, determine if the linked list has a cycle in it. A cycle exists if some node in the list can be reached again by continuously following the next pointer.\n\nReturn true if there is a cycle, false otherwise.\n\nA ListNode class is provided for you.\n\nExample:\n  Input: 1 -> 2 -> 3 -> 4 -> 2 (cycle back to node 2)\n  Output: true\n\nExample:\n  Input: 1 -> 2 (no cycle)\n  Output: false\n\nExample:\n  Input: 1 (single node, no cycle)\n  Output: false",
+  "skeleton": "class ListNode {\n    constructor(val = 0, next = null) {\n        this.val = val;\n        this.next = next;\n    }\n}\n\nfunction hasCycle(head) {\n    // your code here\n}\n\nmodule.exports = { ListNode, hasCycle };",
+  "test_code": "const { ListNode, hasCycle } = require('./solution');\n\ntest('has cycle', () => {\n    const n1 = new ListNode(1);\n    const n2 = new ListNode(2);\n    const n3 = new ListNode(3);\n    const n4 = new ListNode(4);\n    n1.next = n2;\n    n2.next = n3;\n    n3.next = n4;\n    n4.next = n2;\n    expect(hasCycle(n1)).toBe(true);\n});\n\ntest('no cycle', () => {\n    const n1 = new ListNode(1);\n    const n2 = new ListNode(2);\n    n1.next = n2;\n    expect(hasCycle(n1)).toBe(false);\n});\n\ntest('single node', () => {\n    const n1 = new ListNode(1);\n    expect(hasCycle(n1)).toBe(false);\n});"
+}

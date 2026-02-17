@@ -1,0 +1,8 @@
+{
+  "id": "find_median_from_data_stream",
+  "title": "Find Median from Data Stream",
+  "difficulty": "hard",
+  "description": "The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.\n\nImplement the MedianFinder class:\n  - MedianFinder() initializes the MedianFinder object.\n  - addNum(num) adds the integer num to the data structure.\n  - findMedian() returns the median of all elements so far.\n\nExample:\n  addNum(1), addNum(2), findMedian() -> 1.5\n  addNum(3), findMedian() -> 2.0\n\nExample:\n  addNum(5), findMedian() -> 5.0\n\nExample:\n  addNum(1), addNum(2), addNum(3), addNum(4), findMedian() -> 2.5",
+  "skeleton": "class MedianFinder {\n    constructor() {\n        // your code here\n    }\n\n    addNum(num) {\n        // your code here\n    }\n\n    findMedian() {\n        // your code here\n    }\n}\n\nmodule.exports = { MedianFinder };",
+  "test_code": "const { MedianFinder } = require('./solution');\n\ntest('basic sequence', () => {\n    const mf = new MedianFinder();\n    mf.addNum(1);\n    mf.addNum(2);\n    expect(mf.findMedian()).toBeCloseTo(1.5);\n    mf.addNum(3);\n    expect(mf.findMedian()).toBeCloseTo(2.0);\n});\n\ntest('single element', () => {\n    const mf = new MedianFinder();\n    mf.addNum(5);\n    expect(mf.findMedian()).toBeCloseTo(5.0);\n});\n\ntest('even count', () => {\n    const mf = new MedianFinder();\n    mf.addNum(1);\n    mf.addNum(2);\n    mf.addNum(3);\n    mf.addNum(4);\n    expect(mf.findMedian()).toBeCloseTo(2.5);\n});"
+}

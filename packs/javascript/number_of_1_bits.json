@@ -1,0 +1,8 @@
+{
+  "id": "number_of_1_bits",
+  "title": "Number of 1 Bits",
+  "difficulty": "easy",
+  "description": "Given a positive integer n, return the number of set bits in its binary representation (also known as the Hamming weight).\n\nExample:\n  Input: n = 11\n  Output: 3\n  Explanation: The binary representation of 11 is 1011, which has three 1 bits.",
+  "skeleton": "function hammingWeight(n) {\n    // your code here\n}\n\nmodule.exports = { hammingWeight };",
+  "test_code": "const { hammingWeight } = require('./solution');\n\ntest('basic', () => {\n    expect(hammingWeight(11)).toBe(3);\n});\n\ntest('power of two', () => {\n    expect(hammingWeight(128)).toBe(1);\n});\n\ntest('large', () => {\n    expect(hammingWeight(2147483645)).toBe(30);\n});"
+}

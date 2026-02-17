@@ -1,0 +1,8 @@
+{
+  "id": "valid_anagram",
+  "title": "Valid Anagram",
+  "difficulty": "medium",
+  "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise.\n\nAn anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.\n\nExample:\n  Input: s = \"anagram\", t = \"nagaram\"\n  Output: true",
+  "skeleton": "function isAnagram(s, t) {\n    // your code here\n}\n\nmodule.exports = { isAnagram };",
+  "test_code": "const { isAnagram } = require('./solution');\n\ntest('valid anagram', () => {\n    expect(isAnagram('anagram', 'nagaram')).toBe(true);\n});\n\ntest('not an anagram', () => {\n    expect(isAnagram('rat', 'car')).toBe(false);\n});\n\ntest('single character match', () => {\n    expect(isAnagram('a', 'a')).toBe(true);\n});\n\ntest('different lengths', () => {\n    expect(isAnagram('ab', 'a')).toBe(false);\n});"
+}

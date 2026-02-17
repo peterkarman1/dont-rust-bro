@@ -1,0 +1,8 @@
+{
+  "id": "validate_binary_search_tree",
+  "title": "Validate Binary Search Tree",
+  "difficulty": "medium",
+  "description": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\n\nA valid BST is defined as follows:\n- The left subtree of a node contains only nodes with keys less than the node's key.\n- The right subtree of a node contains only nodes with keys greater than the node's key.\n- Both the left and right subtrees must also be binary search trees.\n\nExample:\n  Input: root = [2, 1, 3] (2 is root, 1 is left, 3 is right)\n  Output: true",
+  "skeleton": "class TreeNode {\n    constructor(val = 0, left = null, right = null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n\nfunction isValidBST(root) {\n    // your code here\n}\n\nmodule.exports = { TreeNode, isValidBST };",
+  "test_code": "const { TreeNode, isValidBST } = require('./solution');\n\ntest('valid BST', () => {\n    const root = new TreeNode(2, new TreeNode(1), new TreeNode(3));\n    expect(isValidBST(root)).toBe(true);\n});\n\ntest('invalid BST', () => {\n    const root = new TreeNode(5,\n        new TreeNode(1),\n        new TreeNode(4, new TreeNode(3), new TreeNode(6))\n    );\n    expect(isValidBST(root)).toBe(false);\n});\n\ntest('single node', () => {\n    const root = new TreeNode(1);\n    expect(isValidBST(root)).toBe(true);\n});"
+}

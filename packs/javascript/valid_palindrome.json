@@ -1,0 +1,8 @@
+{
+  "id": "valid_palindrome",
+  "title": "Valid Palindrome",
+  "difficulty": "easy",
+  "description": "Given a string s, return true if it is a palindrome considering only alphanumeric characters and ignoring cases.\n\nExample:\n  Input: 'A man, a plan, a canal: Panama'\n  Output: true\n\n  Input: 'race a car'\n  Output: false",
+  "skeleton": "function isPalindrome(s) {\n    // your code here\n}\n\nmodule.exports = { isPalindrome };",
+  "test_code": "const { isPalindrome } = require('./solution');\n\ntest('panama', () => {\n    expect(isPalindrome('A man, a plan, a canal: Panama')).toBe(true);\n});\n\ntest('race', () => {\n    expect(isPalindrome('race a car')).toBe(false);\n});\n\ntest('empty', () => {\n    expect(isPalindrome(' ')).toBe(true);\n});\n\ntest('symbols', () => {\n    expect(isPalindrome('.,')).toBe(true);\n});"
+}

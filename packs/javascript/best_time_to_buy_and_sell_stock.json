@@ -1,0 +1,8 @@
+{
+  "id": "best_time_to_buy_and_sell_stock",
+  "title": "Best Time to Buy and Sell Stock",
+  "difficulty": "easy",
+  "description": "Given an array prices where prices[i] is the price of a given stock on the ith day.\n\nYou want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.\n\nReturn the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.\n\nExample:\n  Input: prices = [7,1,5,3,6,4]\n  Output: 5\n  Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.",
+  "skeleton": "function maxProfit(prices) {\n    // your code here\n}\n\nmodule.exports = { maxProfit };",
+  "test_code": "const { maxProfit } = require('./solution');\n\ntest('basic', () => {\n    expect(maxProfit([7, 1, 5, 3, 6, 4])).toBe(5);\n});\n\ntest('no profit', () => {\n    expect(maxProfit([7, 6, 4, 3, 1])).toBe(0);\n});\n\ntest('small', () => {\n    expect(maxProfit([2, 4, 1])).toBe(2);\n});"
+}

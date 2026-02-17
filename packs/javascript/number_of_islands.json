@@ -1,0 +1,8 @@
+{
+  "id": "number_of_islands",
+  "title": "Number of Islands",
+  "difficulty": "medium",
+  "description": "Given an m x n 2D grid which represents a map of '1's (land) and '0's (water), return the number of islands.\n\nAn island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are surrounded by water.\n\nExample:\n  Input: grid = [\n    ['1','1','1','1','0'],\n    ['1','1','0','1','0'],\n    ['1','1','0','0','0'],\n    ['0','0','0','0','0']\n  ]\n  Output: 1",
+  "skeleton": "function numIslands(grid) {\n    // your code here\n}\n\nmodule.exports = { numIslands };",
+  "test_code": "const { numIslands } = require('./solution');\n\ntest('single island', () => {\n    const grid = [\n        ['1','1','1','1','0'],\n        ['1','1','0','1','0'],\n        ['1','1','0','0','0'],\n        ['0','0','0','0','0']\n    ];\n    expect(numIslands(grid)).toBe(1);\n});\n\ntest('multiple islands', () => {\n    const grid = [\n        ['1','1','0','0','0'],\n        ['1','1','0','0','0'],\n        ['0','0','1','0','0'],\n        ['0','0','0','1','1']\n    ];\n    expect(numIslands(grid)).toBe(3);\n});"
+}

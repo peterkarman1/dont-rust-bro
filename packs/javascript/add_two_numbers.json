@@ -1,0 +1,8 @@
+{
+  "id": "add_two_numbers",
+  "title": "Add Two Numbers",
+  "difficulty": "easy",
+  "description": "Write a function that takes two integers and returns their sum.\n\nExample:\n  Input: a = 2, b = 3\n  Output: 5",
+  "skeleton": "function add(a, b) {\n    // your code here\n}\n\nmodule.exports = { add };",
+  "test_code": "const { add } = require('./solution');\n\ntest('positive', () => {\n    expect(add(2, 3)).toBe(5);\n});\n\ntest('negative', () => {\n    expect(add(-1, -2)).toBe(-3);\n});\n\ntest('zero', () => {\n    expect(add(0, 0)).toBe(0);\n});\n\ntest('mixed', () => {\n    expect(add(-5, 10)).toBe(5);\n});"
+}

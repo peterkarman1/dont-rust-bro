@@ -1,0 +1,8 @@
+{
+  "id": "reverse_string",
+  "title": "Reverse String",
+  "difficulty": "easy",
+  "description": "Write a function that reverses a string. The input string is given as an array of characters s. Modify the array in place.\n\nDo not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.\n\nExample:\n  Input: ['h', 'e', 'l', 'l', 'o']\n  Output: ['o', 'l', 'l', 'e', 'h']",
+  "skeleton": "function reverseString(s) {\n    // your code here - modify s in-place\n}\n\nmodule.exports = { reverseString };",
+  "test_code": "const { reverseString } = require('./solution');\n\ntest('hello', () => {\n    const s = ['h', 'e', 'l', 'l', 'o'];\n    reverseString(s);\n    expect(s).toEqual(['o', 'l', 'l', 'e', 'h']);\n});\n\ntest('hannah', () => {\n    const s = ['H', 'a', 'n', 'n', 'a', 'h'];\n    reverseString(s);\n    expect(s).toEqual(['h', 'a', 'n', 'n', 'a', 'H']);\n});\n\ntest('single', () => {\n    const s = ['a'];\n    reverseString(s);\n    expect(s).toEqual(['a']);\n});"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "reverse_linked_list",
+  "title": "Reverse Linked List",
+  "difficulty": "easy",
+  "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.\n\nA ListNode class is provided for you.\n\nExample:\n  Input: [1, 2, 3, 4, 5]\n  Output: [5, 4, 3, 2, 1]\n\nExample:\n  Input: [1, 2]\n  Output: [2, 1]\n\nExample:\n  Input: []\n  Output: []",
+  "skeleton": "class ListNode {\n    constructor(val = 0, next = null) {\n        this.val = val;\n        this.next = next;\n    }\n}\n\nfunction reverseList(head) {\n    // your code here\n}\n\nmodule.exports = { ListNode, reverseList };",
+  "test_code": "const { ListNode, reverseList } = require('./solution');\n\nfunction toLinked(arr) {\n    let head = null;\n    for (let i = arr.length - 1; i >= 0; i--) {\n        head = new ListNode(arr[i], head);\n    }\n    return head;\n}\n\nfunction toArray(head) {\n    const result = [];\n    while (head) {\n        result.push(head.val);\n        head = head.next;\n    }\n    return result;\n}\n\ntest('basic', () => {\n    expect(toArray(reverseList(toLinked([1,2,3,4,5])))).toEqual([5,4,3,2,1]);\n});\n\ntest('two', () => {\n    expect(toArray(reverseList(toLinked([1,2])))).toEqual([2,1]);\n});\n\ntest('empty', () => {\n    expect(reverseList(null)).toBeNull();\n});"
+}

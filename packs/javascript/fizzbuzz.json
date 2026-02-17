@@ -1,0 +1,8 @@
+{
+  "id": "fizzbuzz",
+  "title": "FizzBuzz",
+  "difficulty": "easy",
+  "description": "Given an integer n, return an array of strings where:\n- answer[i] == 'FizzBuzz' if i+1 is divisible by 3 and 5\n- answer[i] == 'Fizz' if i+1 is divisible by 3\n- answer[i] == 'Buzz' if i+1 is divisible by 5\n- answer[i] == String(i+1) otherwise\n\nExample:\n  Input: n = 5\n  Output: ['1', '2', 'Fizz', '4', 'Buzz']",
+  "skeleton": "function fizzbuzz(n) {\n    // your code here\n}\n\nmodule.exports = { fizzbuzz };",
+  "test_code": "const { fizzbuzz } = require('./solution');\n\ntest('five', () => {\n    expect(fizzbuzz(5)).toEqual(['1', '2', 'Fizz', '4', 'Buzz']);\n});\n\ntest('fifteen', () => {\n    const result = fizzbuzz(15);\n    expect(result[14]).toBe('FizzBuzz');\n    expect(result[2]).toBe('Fizz');\n    expect(result[4]).toBe('Buzz');\n});\n\ntest('one', () => {\n    expect(fizzbuzz(1)).toEqual(['1']);\n});"
+}

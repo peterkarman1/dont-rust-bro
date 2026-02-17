@@ -1,0 +1,8 @@
+{
+  "id": "maximum_depth_of_binary_tree",
+  "title": "Maximum Depth of Binary Tree",
+  "difficulty": "easy",
+  "description": "Given the root of a binary tree, return its maximum depth. A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.\n\nA TreeNode class is provided for you.\n\nExample:\n  Input: root = [3, 9, 20, null, null, 15, 7]\n  Output: 3\n\nExample:\n  Input: root = [1, null, 2]\n  Output: 2\n\nExample:\n  Input: root = null\n  Output: 0",
+  "skeleton": "class TreeNode {\n    constructor(val = 0, left = null, right = null) {\n        this.val = val;\n        this.left = left;\n        this.right = right;\n    }\n}\n\nfunction maxDepth(root) {\n    // your code here\n}\n\nmodule.exports = { TreeNode, maxDepth };",
+  "test_code": "const { TreeNode, maxDepth } = require('./solution');\n\ntest('depth three', () => {\n    const root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));\n    expect(maxDepth(root)).toBe(3);\n});\n\ntest('depth two', () => {\n    const root = new TreeNode(1, null, new TreeNode(2));\n    expect(maxDepth(root)).toBe(2);\n});\n\ntest('null root', () => {\n    expect(maxDepth(null)).toBe(0);\n});"
+}

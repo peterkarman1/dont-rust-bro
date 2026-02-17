@@ -1,0 +1,8 @@
+{
+  "id": "maximum_subarray",
+  "title": "Maximum Subarray",
+  "difficulty": "medium",
+  "description": "Given an integer array nums, find the subarray with the largest sum, and return its sum.\n\nA subarray is a contiguous non-empty sequence of elements within an array.\n\nExample:\n  Input: nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n  Output: 6\n  Explanation: The subarray [4, -1, 2, 1] has the largest sum 6.",
+  "skeleton": "function maxSubArray(nums) {\n    // your code here\n}\n\nmodule.exports = { maxSubArray };",
+  "test_code": "const { maxSubArray } = require('./solution');\n\ntest('mixed positive and negative', () => {\n    expect(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4])).toBe(6);\n});\n\ntest('single element', () => {\n    expect(maxSubArray([1])).toBe(1);\n});\n\ntest('all positive', () => {\n    expect(maxSubArray([5, 4, -1, 7, 8])).toBe(23);\n});"
+}

@@ -1,0 +1,8 @@
+{
+  "id": "two_sum",
+  "title": "Two Sum",
+  "difficulty": "easy",
+  "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n\nYou may assume that each input has exactly one solution, and you may not use the same element twice.\n\nExample:\n  Input: nums = [2, 7, 11, 15], target = 9\n  Output: [0, 1]",
+  "skeleton": "function twoSum(nums, target) {\n    // your code here\n}\n\nmodule.exports = { twoSum };",
+  "test_code": "const { twoSum } = require('./solution');\n\ntest('basic', () => {\n    expect(twoSum([2, 7, 11, 15], 9).sort()).toEqual([0, 1]);\n});\n\ntest('middle', () => {\n    expect(twoSum([3, 2, 4], 6).sort()).toEqual([1, 2]);\n});\n\ntest('negative', () => {\n    expect(twoSum([-1, -2, -3, -4, -5], -8).sort()).toEqual([2, 4]);\n});"
+}

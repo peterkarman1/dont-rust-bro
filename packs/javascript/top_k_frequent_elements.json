@@ -1,0 +1,8 @@
+{
+  "id": "top_k_frequent_elements",
+  "title": "Top K Frequent Elements",
+  "difficulty": "medium",
+  "description": "Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.\n\nExample:\n  Input: nums = [1, 1, 1, 2, 2, 3], k = 2\n  Output: [1, 2]",
+  "skeleton": "function topKFrequent(nums, k) {\n    // your code here\n}\n\nmodule.exports = { topKFrequent };",
+  "test_code": "const { topKFrequent } = require('./solution');\n\ntest('top 2 frequent', () => {\n    expect(topKFrequent([1, 1, 1, 2, 2, 3], 2).sort()).toEqual([1, 2]);\n});\n\ntest('single element', () => {\n    expect(topKFrequent([1], 1)).toEqual([1]);\n});\n\ntest('all same', () => {\n    expect(topKFrequent([3, 3, 3], 1)).toEqual([3]);\n});"
+}

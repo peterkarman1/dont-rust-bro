@@ -1,0 +1,8 @@
+{
+  "id": "longest_consecutive_sequence",
+  "title": "Longest Consecutive Sequence",
+  "difficulty": "medium",
+  "description": "Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.\n\nYou must write an algorithm that runs in O(n) time.\n\nExample:\n  Input: nums = [100, 4, 200, 1, 3, 2]\n  Output: 4\n  Explanation: The longest consecutive sequence is [1, 2, 3, 4]. Its length is 4.",
+  "skeleton": "function longestConsecutive(nums) {\n    // your code here\n}\n\nmodule.exports = { longestConsecutive };",
+  "test_code": "const { longestConsecutive } = require('./solution');\n\ntest('basic case', () => {\n    expect(longestConsecutive([100, 4, 200, 1, 3, 2])).toBe(4);\n});\n\ntest('longer sequence', () => {\n    expect(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1])).toBe(9);\n});\n\ntest('empty array', () => {\n    expect(longestConsecutive([])).toBe(0);\n});"
+}

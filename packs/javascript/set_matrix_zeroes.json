@@ -1,0 +1,8 @@
+{
+  "id": "set_matrix_zeroes",
+  "title": "Set Matrix Zeroes",
+  "difficulty": "medium",
+  "description": "Given an m x n integer matrix, if an element is 0, set its entire row and column to 0's.\n\nYou must do it in place (modify the input matrix directly, do not return a new matrix).\n\nExample:\n  Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]\n  Output: [[1,0,1],[0,0,0],[1,0,1]]",
+  "skeleton": "function setZeroes(matrix) {\n    // your code here — modify matrix in place\n}\n\nmodule.exports = { setZeroes };",
+  "test_code": "const { setZeroes } = require('./solution');\n\ntest('3x3 matrix with center zero', () => {\n    const matrix = [[1,1,1],[1,0,1],[1,1,1]];\n    setZeroes(matrix);\n    expect(matrix).toEqual([[1,0,1],[0,0,0],[1,0,1]]);\n});\n\ntest('3x4 matrix with corner zeroes', () => {\n    const matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]];\n    setZeroes(matrix);\n    expect(matrix).toEqual([[0,0,0,0],[0,4,5,0],[0,3,1,0]]);\n});"
+}

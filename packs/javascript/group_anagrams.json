@@ -1,0 +1,8 @@
+{
+  "id": "group_anagrams",
+  "title": "Group Anagrams",
+  "difficulty": "medium",
+  "description": "Given an array of strings strs, group the anagrams together. You can return the answer in any order.\n\nAn anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.\n\nExample:\n  Input: strs = [\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"]\n  Output: [[\"ate\",\"eat\",\"tea\"],[\"bat\"],[\"nat\",\"tan\"]]",
+  "skeleton": "function groupAnagrams(strs) {\n    // your code here\n}\n\nmodule.exports = { groupAnagrams };",
+  "test_code": "const { groupAnagrams } = require('./solution');\n\nfunction sortGroups(groups) {\n    return groups.map(g => g.slice().sort()).sort((a, b) => a[0].localeCompare(b[0]));\n}\n\ntest('multiple groups', () => {\n    const result = groupAnagrams(['eat','tea','tan','ate','nat','bat']);\n    expect(sortGroups(result)).toEqual(sortGroups([['ate','eat','tea'],['bat'],['nat','tan']]));\n});\n\ntest('empty string', () => {\n    const result = groupAnagrams(['']);\n    expect(result).toEqual([['']]);\n});\n\ntest('single element', () => {\n    const result = groupAnagrams(['a']);\n    expect(result).toEqual([['a']]);\n});"
+}

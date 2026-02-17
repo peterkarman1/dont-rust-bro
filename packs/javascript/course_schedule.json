@@ -1,0 +1,8 @@
+{
+  "id": "course_schedule",
+  "title": "Course Schedule",
+  "difficulty": "medium",
+  "description": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.\n\nReturn true if you can finish all courses, otherwise return false.\n\nExample:\n  Input: numCourses = 2, prerequisites = [[1, 0]]\n  Output: true\n  Explanation: You can take course 0 first, then course 1.",
+  "skeleton": "function canFinish(numCourses, prerequisites) {\n    // your code here\n}\n\nmodule.exports = { canFinish };",
+  "test_code": "const { canFinish } = require('./solution');\n\ntest('possible schedule', () => {\n    expect(canFinish(2, [[1, 0]])).toBe(true);\n});\n\ntest('cycle detected', () => {\n    expect(canFinish(2, [[1, 0], [0, 1]])).toBe(false);\n});\n\ntest('no prerequisites', () => {\n    expect(canFinish(1, [])).toBe(true);\n});"
+}

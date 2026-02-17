@@ -1,0 +1,8 @@
+{
+  "id": "merge_intervals",
+  "title": "Merge Intervals",
+  "difficulty": "medium",
+  "description": "Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.\n\nExample:\n  Input: intervals = [[1,3],[2,6],[8,10],[15,18]]\n  Output: [[1,6],[8,10],[15,18]]\n  Explanation: Since intervals [1,3] and [2,6] overlap, merge them into [1,6].",
+  "skeleton": "function merge(intervals) {\n    // your code here\n}\n\nmodule.exports = { merge };",
+  "test_code": "const { merge } = require('./solution');\n\ntest('overlapping intervals', () => {\n    expect(merge([[1,3],[2,6],[8,10],[15,18]])).toEqual([[1,6],[8,10],[15,18]]);\n});\n\ntest('touching intervals', () => {\n    expect(merge([[1,4],[4,5]])).toEqual([[1,5]]);\n});\n\ntest('single interval', () => {\n    expect(merge([[1,4]])).toEqual([[1,4]]);\n});"
+}

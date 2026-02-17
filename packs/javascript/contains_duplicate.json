@@ -1,0 +1,8 @@
+{
+  "id": "contains_duplicate",
+  "title": "Contains Duplicate",
+  "difficulty": "easy",
+  "description": "Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.\n\nExample:\n  Input: nums = [1,2,3,1]\n  Output: true\n\nExample:\n  Input: nums = [1,2,3,4]\n  Output: false",
+  "skeleton": "function containsDuplicate(nums) {\n    // your code here\n}\n\nmodule.exports = { containsDuplicate };",
+  "test_code": "const { containsDuplicate } = require('./solution');\n\ntest('has duplicate', () => {\n    expect(containsDuplicate([1, 2, 3, 1])).toBe(true);\n});\n\ntest('no duplicate', () => {\n    expect(containsDuplicate([1, 2, 3, 4])).toBe(false);\n});\n\ntest('many duplicates', () => {\n    expect(containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2])).toBe(true);\n});"
+}

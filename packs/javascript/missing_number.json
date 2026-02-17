@@ -1,0 +1,8 @@
+{
+  "id": "missing_number",
+  "title": "Missing Number",
+  "difficulty": "easy",
+  "description": "Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.\n\nExample:\n  Input: nums = [3,0,1]\n  Output: 2\n  Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number.",
+  "skeleton": "function missingNumber(nums) {\n    // your code here\n}\n\nmodule.exports = { missingNumber };",
+  "test_code": "const { missingNumber } = require('./solution');\n\ntest('basic', () => {\n    expect(missingNumber([3, 0, 1])).toBe(2);\n});\n\ntest('small', () => {\n    expect(missingNumber([0, 1])).toBe(2);\n});\n\ntest('large', () => {\n    expect(missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1])).toBe(8);\n});"
+}
