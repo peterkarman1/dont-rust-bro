@@ -97,11 +97,13 @@
   }
 
   async function onPrev() {
+    if (!confirm("Switching problems will erase your progress on the current one. Continue?")) return;
     const data = await window.pywebview.api.prev_problem();
     populate(data);
   }
 
   async function onNext() {
+    if (!confirm("Switching problems will erase your progress on the current one. Continue?")) return;
     const data = await window.pywebview.api.next_problem();
     populate(data);
   }
