@@ -153,50 +153,10 @@
   <div class="container">
     <div class="section-label">// live demo</div>
     <h2 class="section-title">What it looks like</h2>
-    <p class="demo-intro">This is the popup that appears while your agent thinks.</p>
+    <p class="demo-intro">Watch it in action &mdash; the practice window pops up while Claude thinks.</p>
 
-    <div class="editor-window">
-      <div class="editor-titlebar">
-        <div class="terminal-dot red"></div>
-        <div class="terminal-dot yellow"></div>
-        <div class="terminal-dot green"></div>
-        <span class="tab active">dont-rust-bro</span>
-      </div>
-      <div class="editor-split">
-        <!-- Left: problem description -->
-        <div class="editor-problem">
-          <h3>Two Sum</h3>
-          <span class="difficulty">Easy</span>
-          <p>
-            Given an array of integers <code class="text-heading">nums</code> and an integer
-            <code class="text-heading">target</code>, return indices of the two numbers
-            such that they add up to <code class="text-heading">target</code>.
-          </p>
-          <p>You may assume each input has exactly one solution, and you may not use the same element twice.</p>
-          <pre>Input:  nums = [2,7,11,15], target = 9
-Output: [0, 1]
-Explanation: nums[0] + nums[1] == 9</pre>
-          <pre>Input:  nums = [3,2,4], target = 6
-Output: [1, 2]</pre>
-        </div>
-        <!-- Right: code editor -->
-        <div class="editor-code">
-          <div class="editor-code-area">
-            <div><span class="line-num">1</span><span class="kw">def</span> <span class="fn">two_sum</span>(nums, target):</div>
-            <div><span class="line-num">2</span>    seen = {}</div>
-            <div><span class="line-num">3</span>    <span class="kw">for</span> i, n <span class="kw">in</span> <span class="fn">enumerate</span>(nums):</div>
-            <div><span class="line-num">4</span>        diff = target - n</div>
-            <div><span class="line-num">5</span>        <span class="kw">if</span> diff <span class="kw">in</span> seen:</div>
-            <div><span class="line-num">6</span>            <span class="ret">return</span> [seen[diff], i]</div>
-            <div><span class="line-num">7</span>        seen[n] = i</div>
-            <div><span class="line-num">8</span></div>
-          </div>
-          <div class="editor-toolbar">
-            <span class="test-result" id="demo-result"></span>
-            <button class="run-btn" id="demo-run">Run</button>
-          </div>
-        </div>
-      </div>
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/71oPOum87IU" title="dont-rust-bro demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
 </section>
@@ -413,22 +373,6 @@ Output: [1, 2]</pre>
       btn.textContent = orig;
       btn.classList.remove('copied');
     }, 1800);
-  }
-
-  /* ---- Fake "Run" button in demo ---- */
-  var runBtn = document.getElementById('demo-run');
-  var result = document.getElementById('demo-result');
-  if (runBtn && result) {
-    runBtn.addEventListener('click', function () {
-      result.textContent = 'Running...';
-      result.style.color = 'var(--text-dim)';
-      runBtn.disabled = true;
-      setTimeout(function () {
-        result.style.color = 'var(--accent)';
-        result.textContent = '2/2 tests passed';
-        runBtn.disabled = false;
-      }, 900);
-    });
   }
 
   /* ---- Smooth-scroll for nav links (fallback for older Safari) ---- */

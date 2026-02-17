@@ -26,6 +26,10 @@ Your AI agent writes the code that ships to production. But companies still want
 curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/install.sh | bash
 ```
 
+## Demo
+
+[![dont-rust-bro demo](https://img.youtube.com/vi/71oPOum87IU/maxresdefault.jpg)](https://www.youtube.com/watch?v=71oPOum87IU)
+
 ## How it works
 
 When you send Claude a prompt, a practice window pops up with a coding problem. Write your solution, click Run, see if you pass. The window automatically hides when Claude finishes — because the real work comes first.
