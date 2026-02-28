@@ -214,6 +214,8 @@
     });
   });
 
+  // --- Tutor panel ---
+
   function openTutor() {
     document.getElementById("tutorPanel").classList.add("open");
     document.body.classList.add("tutor-open");
@@ -229,45 +231,48 @@
     closeTutor();
   }
 
-  function addHintBlock(text) {
+  function appendToTutor(block) {
     const body = document.getElementById("tutorBody");
-    const block = document.createElement("div");
-    block.className = "hint-block";
-    const label = document.createElement("div");
-    label.className = "hint-label";
-    const hintCount = body.querySelectorAll(".hint-block").length + 1;
-    label.textContent = "Hint " + hintCount;
-    block.appendChild(label);
-    const content = document.createElement("div");
-    content.textContent = text;
-    block.appendChild(content);
     body.appendChild(block);
     body.scrollTop = body.scrollHeight;
+  }
+
+  function createLabeledBlock(className, labelClassName, labelText, contentText) {
+    const block = document.createElement("div");
+    block.className = className;
+    const label = document.createElement("div");
+    label.className = labelClassName;
+    label.textContent = labelText;
+    block.appendChild(label);
+    const content = document.createElement("div");
+    content.textContent = contentText;
+    block.appendChild(content);
+    return block;
+  }
+
+  function addHintBlock(text) {
+    const hintCount = document.getElementById("tutorBody").querySelectorAll(".hint-block").length + 1;
+    appendToTutor(createLabeledBlock("hint-block", "hint-label", "Hint " + hintCount, text));
   }
 
   function addSolutionBlock(text) {
-    const body = document.getElementById("tutorBody");
+    appendToTutor(createLabeledBlock("solution-block", "solution-label", "Solution", text));
+  }
+
+  function addErrorBlock(text) {
     const block = document.createElement("div");
-    block.className = "solution-block";
-    const label = document.createElement("div");
-    label.className = "solution-label";
-    label.textContent = "Solution";
-    block.appendChild(label);
-    const content = document.createElement("div");
-    content.textContent = text;
-    block.appendChild(content);
-    body.appendChild(block);
-    body.scrollTop = body.scrollHeight;
+    block.className = "hint-block";
+    block.style.borderLeft = "3px solid #9b2226";
+    block.textContent = text;
+    appendToTutor(block);
   }
 
   function showThinking() {
-    const body = document.getElementById("tutorBody");
     const el = document.createElement("div");
     el.className = "tutor-thinking";
     el.id = "tutorThinking";
     el.textContent = "Thinking...";
-    body.appendChild(el);
-    body.scrollTop = body.scrollHeight;
+    appendToTutor(el);
   }
 
   function hideThinking() {
@@ -275,57 +280,49 @@
     if (el) el.remove();
   }
 
-  function addErrorBlock(text) {
-    const body = document.getElementById("tutorBody");
-    const block = document.createElement("div");
-    block.className = "hint-block";
-    block.style.borderLeft = "3px solid #9b2226";
-    block.textContent = text;
-    body.appendChild(block);
-    body.scrollTop = body.scrollHeight;
-  }
-
-  async function onHint() {
-    const btn = document.getElementById("hintBtn");
+  async function tutorRequest(btnId, apiCall, onSuccess) {
+    const btn = document.getElementById(btnId);
     btn.disabled = true;
     openTutor();
     showThinking();
+    try {
+      const result = await apiCall();
+      hideThinking();
+      if (result.error) {
+        addErrorBlock(result.error);
+      } else {
+        onSuccess(result);
+      }
+    } catch (e) {
+      hideThinking();
+      addErrorBlock("Error: " + e);
+    }
+    btn.disabled = false;
+  }
+
+  function onHint() {
     const code = document.getElementById("code").value;
     const output = document.getElementById("output").textContent;
-    try {
-      const result = await window.pywebview.api.get_hint(code, output);
-      hideThinking();
-      if (result.error) {
-        addErrorBlock(result.error);
-      } else {
-        addHintBlock(result.hint);
-      }
-    } catch (e) {
-      hideThinking();
-      addErrorBlock("Error: " + e);
-    }
-    btn.disabled = false;
+    return tutorRequest("hintBtn",
+      () => window.pywebview.api.get_hint(code, output),
+      (result) => addHintBlock(result.hint)
+    );
   }
 
-  async function onSolution() {
-    const btn = document.getElementById("solutionBtn");
-    btn.disabled = true;
-    openTutor();
-    showThinking();
+  function onSolution() {
     const code = document.getElementById("code").value;
-    try {
-      const result = await window.pywebview.api.get_solution(code);
-      hideThinking();
-      if (result.error) {
-        addErrorBlock(result.error);
-      } else {
-        addSolutionBlock(result.solution);
-      }
-    } catch (e) {
-      hideThinking();
-      addErrorBlock("Error: " + e);
+    return tutorRequest("solutionBtn",
+      () => window.pywebview.api.get_solution(code),
+      (result) => addSolutionBlock(result.solution)
+    );
+  }
+
+  function enableTutorButtons() {
+    for (const id of ["hintBtn", "solutionBtn"]) {
+      const btn = document.getElementById(id);
+      btn.disabled = false;
+      btn.title = "";
     }
-    btn.disabled = false;
   }
 
   window.addEventListener("pywebviewready", async () => {
@@ -333,10 +330,7 @@
     populate(data);
     const tutorEnabled = await window.pywebview.api.is_tutor_enabled();
     if (tutorEnabled) {
-      document.getElementById("hintBtn").disabled = false;
-      document.getElementById("hintBtn").title = "";
-      document.getElementById("solutionBtn").disabled = false;
-      document.getElementById("solutionBtn").title = "";
+      enableTutorButtons();
     }
   });
 </script>

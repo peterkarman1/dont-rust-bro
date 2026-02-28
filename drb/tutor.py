@@ -49,28 +49,31 @@ HINT_SYSTEM_PROMPT = (
 )
 
 
-def _extract_last_code_and_output(history: list) -> tuple:
+def _extract_fenced_block(text: str) -> str:
+    """Extract the first fenced code block from text, or empty string."""
+    parts = text.split("```")
+    if len(parts) >= 3:
+        return parts[1].strip()
+    return ""
+
+
+def _extract_last_code_and_output(history: list) -> tuple[str, str]:
     """Extract code and output from the last user message in history."""
     for msg in reversed(history):
-        if msg["role"] == "user":
-            content = msg["content"]
-            code = ""
-            if "```" in content:
-                parts = content.split("```")
-                if len(parts) >= 3:
-                    code = parts[1].strip()
-            output = ""
-            if "Test output:" in content:
-                output_part = content.split("Test output:")[-1].strip()
-                if "```" in output_part:
-                    output_parts = output_part.split("```")
-                    if len(output_parts) >= 2:
-                        output = output_parts[1].strip()
-                elif output_part.startswith("(not run yet)"):
-                    output = ""
-                else:
-                    output = output_part
-            return code, output
+        if msg["role"] != "user":
+            continue
+
+        content = msg["content"]
+        code = _extract_fenced_block(content)
+
+        output = ""
+        if "Test output:" in content:
+            output_section = content.split("Test output:")[-1].strip()
+            if not output_section.startswith("(not run yet)"):
+                output = _extract_fenced_block(output_section) or output_section
+
+        return code, output
+
     return "", ""
 
 
@@ -92,7 +95,7 @@ def _build_user_message(problem: dict, user_code: str, test_output: str,
 
 
 def get_hint(problem: dict, user_code: str, test_output: str,
-             hint_history: list, config: dict) -> tuple:
+             hint_history: list, config: dict) -> tuple[str, list]:
     """Get a progressive hint from the LLM.
 
     Returns (hint_text, updated_history).

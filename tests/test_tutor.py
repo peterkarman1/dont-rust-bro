@@ -1,7 +1,16 @@
 import json
+import urllib.error
+
 import pytest
 from unittest.mock import patch, MagicMock
-from drb.tutor import call_openrouter
+
+from drb.tutor import (
+    call_openrouter,
+    get_hint,
+    get_solution,
+    HINT_SYSTEM_PROMPT,
+    SOLUTION_SYSTEM_PROMPT,
+)
 
 
 def test_call_openrouter_success():
@@ -23,7 +32,6 @@ def test_call_openrouter_success():
 
 def test_call_openrouter_http_error():
     """Test HTTP error raises RuntimeError."""
-    import urllib.error
     error = urllib.error.HTTPError(
         url="https://openrouter.ai/api/v1/chat/completions",
         code=401,
@@ -47,9 +55,6 @@ def test_call_openrouter_timeout():
                 messages=[{"role": "user", "content": "help"}],
                 config={"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"},
             )
-
-
-from drb.tutor import get_hint, HINT_SYSTEM_PROMPT
 
 
 def test_get_hint_first_call():
@@ -107,9 +112,6 @@ def test_get_hint_no_changes():
 
     assert len(history) == 5
     assert "No changes since last hint" in history[3]["content"]
-
-
-from drb.tutor import get_solution, SOLUTION_SYSTEM_PROMPT
 
 
 def test_get_solution():
