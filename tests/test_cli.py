@@ -146,3 +146,62 @@ def test_packs_use_pulls_image(tmp_path):
         assert call_args[0][0] == "docker"
         assert call_args[0][1] == "python:3.12-slim"
         assert "dockerfile_dir" in call_args[1]
+
+
+def test_tutor_on_saves_config(tmp_path):
+    """Test that tutor on saves key and model to config."""
+    state_dir = str(tmp_path / "state")
+    os.makedirs(state_dir)
+
+    with patch("drb.cli.DEFAULT_STATE_DIR", state_dir):
+        main(["tutor", "on", "--key", "sk-or-test-123"])
+
+    config_path = os.path.join(state_dir, "config.json")
+    with open(config_path) as f:
+        config = json.load(f)
+    assert config["tutor_enabled"] is True
+    assert config["tutor_api_key"] == "sk-or-test-123"
+    assert config["tutor_model"] == "qwen/qwen3.5-27b"
+
+
+def test_tutor_on_custom_model(tmp_path):
+    """Test that tutor on accepts custom model."""
+    state_dir = str(tmp_path / "state")
+    os.makedirs(state_dir)
+
+    with patch("drb.cli.DEFAULT_STATE_DIR", state_dir):
+        main(["tutor", "on", "--key", "sk-test", "--model", "anthropic/claude-sonnet-4"])
+
+    config_path = os.path.join(state_dir, "config.json")
+    with open(config_path) as f:
+        config = json.load(f)
+    assert config["tutor_model"] == "anthropic/claude-sonnet-4"
+
+
+def test_tutor_off(tmp_path):
+    """Test that tutor off disables but preserves key/model."""
+    state_dir = str(tmp_path / "state")
+    os.makedirs(state_dir)
+
+    config_path = os.path.join(state_dir, "config.json")
+    os.makedirs(state_dir, exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+
+    with patch("drb.cli.DEFAULT_STATE_DIR", state_dir):
+        main(["tutor", "off"])
+
+    with open(config_path) as f:
+        config = json.load(f)
+    assert config["tutor_enabled"] is False
+    assert config["tutor_api_key"] == "sk-test"  # preserved
+
+
+def test_tutor_on_requires_key(tmp_path):
+    """Test that tutor on without key and no existing key fails."""
+    state_dir = str(tmp_path / "state")
+    os.makedirs(state_dir)
+
+    with patch("drb.cli.DEFAULT_STATE_DIR", state_dir):
+        with pytest.raises(SystemExit):
+            main(["tutor", "on"])

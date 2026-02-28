@@ -65,7 +65,7 @@ def main(argv=None):
 
     if not args:
         print("Usage: drb <command>")
-        print("Commands: show, hide, stop, status, update, packs, uninstall")
+        print("Commands: show, hide, stop, status, update, packs, tutor, uninstall")
         sys.exit(1)
 
     command = args[0]
@@ -177,6 +177,56 @@ def main(argv=None):
                 print(f"Removed drb hooks from {CLAUDE_SETTINGS}")
 
         print("Uninstall complete.")
+
+    elif command == "tutor":
+        from drb.container import load_config, save_config
+        config_path = os.path.join(state_dir, "config.json")
+        config = load_config(config_path)
+
+        sub = args[1] if len(args) > 1 else "status"
+
+        if sub == "on":
+            key = None
+            model = "qwen/qwen3.5-27b"
+            i = 2
+            while i < len(args):
+                if args[i] == "--key" and i + 1 < len(args):
+                    key = args[i + 1]
+                    i += 2
+                elif args[i] == "--model" and i + 1 < len(args):
+                    model = args[i + 1]
+                    i += 2
+                else:
+                    i += 1
+
+            if not key:
+                key = config.get("tutor_api_key")
+            if not key:
+                print("Error: --key is required (no existing key found).", file=sys.stderr)
+                sys.exit(1)
+
+            config["tutor_enabled"] = True
+            config["tutor_api_key"] = key
+            config["tutor_model"] = model
+            save_config(config_path, config)
+            print(f"Tutor enabled. Model: {model}")
+
+        elif sub == "off":
+            config["tutor_enabled"] = False
+            save_config(config_path, config)
+            print("Tutor disabled.")
+
+        elif sub == "status":
+            enabled = config.get("tutor_enabled", False)
+            model = config.get("tutor_model", "qwen/qwen3.5-27b")
+            has_key = bool(config.get("tutor_api_key"))
+            key_display = "configured" if has_key else "not set"
+            print(f"Tutor: {'enabled' if enabled else 'disabled'}")
+            print(f"Model: {model}")
+            print(f"API key: {key_display}")
+
+        else:
+            print("Usage: drb tutor [on|off|status] [--key KEY] [--model MODEL]")
 
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
