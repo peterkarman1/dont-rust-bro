@@ -91,7 +91,7 @@ def test_api_is_tutor_enabled_when_configured(setup_env):
     config_path = os.path.join(state_dir, "config.json")
     os.makedirs(state_dir, exist_ok=True)
     with open(config_path, "w") as f:
-        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}, f)
 
     pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
     assert pw.api.is_tutor_enabled() is True
@@ -103,7 +103,7 @@ def test_api_get_hint(setup_env):
     config_path = os.path.join(state_dir, "config.json")
     os.makedirs(state_dir, exist_ok=True)
     with open(config_path, "w") as f:
-        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}, f)
 
     pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
 
@@ -121,7 +121,7 @@ def test_api_get_hint_error(setup_env):
     config_path = os.path.join(state_dir, "config.json")
     os.makedirs(state_dir, exist_ok=True)
     with open(config_path, "w") as f:
-        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}, f)
 
     pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
 
@@ -139,7 +139,7 @@ def test_api_get_solution(setup_env):
     config_path = os.path.join(state_dir, "config.json")
     os.makedirs(state_dir, exist_ok=True)
     with open(config_path, "w") as f:
-        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}, f)
 
     pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
 
@@ -156,7 +156,7 @@ def test_hint_history_resets_on_navigation(setup_env):
     config_path = os.path.join(state_dir, "config.json")
     os.makedirs(state_dir, exist_ok=True)
     with open(config_path, "w") as f:
-        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}, f)
 
     pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
     pw._hint_history = [{"role": "system", "content": "test"}]

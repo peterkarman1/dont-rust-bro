@@ -52,7 +52,7 @@ drb tutor status       # check configuration
 drb tutor on --model anthropic/claude-sonnet-4  # use a different model
 ```
 
-Default model: `qwen/qwen3.5-27b` (free tier on OpenRouter). Works with any OpenRouter-supported model.
+Default model: `qwen/qwen3.5-122b-a10b` (free tier on OpenRouter). Works with any OpenRouter-supported model.
 
 ## Commands
 

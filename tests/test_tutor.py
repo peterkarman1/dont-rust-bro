@@ -25,7 +25,7 @@ def test_call_openrouter_success():
     with patch("drb.tutor.urllib.request.urlopen", return_value=mock_response):
         result = call_openrouter(
             messages=[{"role": "user", "content": "help"}],
-            config={"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"},
+            config={"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"},
         )
     assert result == "Think about hash maps."
 
@@ -43,7 +43,7 @@ def test_call_openrouter_http_error():
         with pytest.raises(RuntimeError, match="401"):
             call_openrouter(
                 messages=[{"role": "user", "content": "help"}],
-                config={"tutor_api_key": "bad-key", "tutor_model": "qwen/qwen3.5-27b"},
+                config={"tutor_api_key": "bad-key", "tutor_model": "qwen/qwen3.5-122b-a10b"},
             )
 
 
@@ -53,14 +53,14 @@ def test_call_openrouter_timeout():
         with pytest.raises(TimeoutError):
             call_openrouter(
                 messages=[{"role": "user", "content": "help"}],
-                config={"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"},
+                config={"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"},
             )
 
 
 def test_get_hint_first_call():
     """First hint builds initial messages with problem + code."""
     problem = {"title": "Two Sum", "description": "Find two numbers that add up to target."}
-    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}
+    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}
 
     with patch("drb.tutor.call_openrouter", return_value="Think about hash maps.") as mock_call:
         hint, history = get_hint(problem, "def two_sum():\n    pass", "", [], config)
@@ -80,7 +80,7 @@ def test_get_hint_first_call():
 def test_get_hint_subsequent_with_code_change():
     """Subsequent hint with changed code appends new user message."""
     problem = {"title": "Two Sum", "description": "Find two numbers."}
-    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}
+    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}
     existing_history = [
         {"role": "system", "content": HINT_SYSTEM_PROMPT},
         {"role": "user", "content": "Problem: Two Sum\n\nMy code:\n```\npass\n```\n\nTest output: (not run yet)"},
@@ -100,7 +100,7 @@ def test_get_hint_subsequent_with_code_change():
 def test_get_hint_no_changes():
     """Hint with no code/output changes sends 'no changes' message."""
     problem = {"title": "Two Sum", "description": "Find two numbers."}
-    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}
+    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}
     existing_history = [
         {"role": "system", "content": HINT_SYSTEM_PROMPT},
         {"role": "user", "content": "Problem: Two Sum\n\nMy code:\n```\npass\n```\n\nTest output: (not run yet)"},
@@ -117,7 +117,7 @@ def test_get_hint_no_changes():
 def test_get_solution():
     """Solution call sends problem + code + hint context."""
     problem = {"title": "Two Sum", "description": "Find two numbers."}
-    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}
+    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}
     hint_history = [
         {"role": "system", "content": HINT_SYSTEM_PROMPT},
         {"role": "user", "content": "Problem: Two Sum..."},
@@ -136,7 +136,7 @@ def test_get_solution():
 def test_get_solution_no_hint_history():
     """Solution works even without any prior hints."""
     problem = {"title": "Two Sum", "description": "Find two numbers."}
-    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}
+    config = {"tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}
 
     with patch("drb.tutor.call_openrouter", return_value="def two_sum(nums, target):\n    # solution"):
         solution = get_solution(problem, "pass", [], config)

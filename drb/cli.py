@@ -190,7 +190,7 @@ def main(argv=None):
 
         if sub == "on":
             key = None
-            model = "qwen/qwen3.5-27b"
+            model = "qwen/qwen3.5-122b-a10b"
             i = 2
             while i < len(args):
                 if args[i] == "--key" and i + 1 < len(args):
@@ -221,7 +221,7 @@ def main(argv=None):
 
         elif sub == "status":
             enabled = config.get("tutor_enabled", False)
-            model = config.get("tutor_model", "qwen/qwen3.5-27b")
+            model = config.get("tutor_model", "qwen/qwen3.5-122b-a10b")
             has_key = bool(config.get("tutor_api_key"))
             key_display = "configured" if has_key else "not set"
             print(f"Tutor: {'enabled' if enabled else 'disabled'}")

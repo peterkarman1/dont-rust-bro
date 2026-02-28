@@ -3,7 +3,7 @@ import urllib.request
 import urllib.error
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "qwen/qwen3.5-27b"
+DEFAULT_MODEL = "qwen/qwen3.5-122b-a10b"
 
 
 def call_openrouter(messages: list, config: dict) -> str:

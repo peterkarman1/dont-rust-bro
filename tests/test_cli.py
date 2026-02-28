@@ -183,7 +183,7 @@ def test_tutor_on_saves_config(tmp_path):
         config = json.load(f)
     assert config["tutor_enabled"] is True
     assert config["tutor_api_key"] == "sk-or-test-123"
-    assert config["tutor_model"] == "qwen/qwen3.5-27b"
+    assert config["tutor_model"] == "qwen/qwen3.5-122b-a10b"
 
 
 def test_tutor_on_custom_model(tmp_path):
@@ -208,7 +208,7 @@ def test_tutor_off(tmp_path):
     config_path = os.path.join(state_dir, "config.json")
     os.makedirs(state_dir, exist_ok=True)
     with open(config_path, "w") as f:
-        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-122b-a10b"}, f)
 
     with patch("drb.cli.DEFAULT_STATE_DIR", state_dir):
         main(["tutor", "off"])
