@@ -122,9 +122,10 @@ def get_hint(problem: dict, user_code: str, test_output: str,
 
 SOLUTION_SYSTEM_PROMPT = (
     "You are a coding tutor. The student has asked for the full solution. "
-    "Provide a complete, working solution to the problem. "
-    "Add a comment on every significant line explaining the reasoning and approach. "
-    "Make sure the solution is correct and handles edge cases."
+    "Respond with ONLY valid, runnable source code. No markdown fences, no prose, "
+    "no explanation outside of code comments. The response will be placed directly "
+    "into a code editor. Add a comment on every significant line explaining the "
+    "reasoning and approach. Make sure the solution is correct and handles edge cases."
 )
 
 

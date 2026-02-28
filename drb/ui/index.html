@@ -313,25 +313,32 @@
     const code = document.getElementById("code").value;
     return tutorRequest("solutionBtn",
       () => window.pywebview.api.get_solution(code),
-      (result) => addSolutionBlock(result.solution)
+      (result) => {
+        const editor = document.getElementById("code");
+        editor.value = result.solution;
+        onCodeInput();
+        addSolutionBlock("Solution loaded into editor.");
+      }
     );
   }
 
-  function enableTutorButtons() {
+  async function refreshTutorButtons() {
+    const enabled = await window.pywebview.api.is_tutor_enabled();
     for (const id of ["hintBtn", "solutionBtn"]) {
       const btn = document.getElementById(id);
-      btn.disabled = false;
-      btn.title = "";
+      btn.disabled = !enabled;
+      btn.title = enabled ? "" : "Enable with: drb tutor on --key YOUR_KEY";
     }
   }
 
   window.addEventListener("pywebviewready", async () => {
     const data = await window.pywebview.api.get_problem();
     populate(data);
-    const tutorEnabled = await window.pywebview.api.is_tutor_enabled();
-    if (tutorEnabled) {
-      enableTutorButtons();
-    }
+    await refreshTutorButtons();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refreshTutorButtons();
   });
 </script>
 </body>

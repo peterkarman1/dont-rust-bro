@@ -56,8 +56,12 @@ class Api:
                          test_command=test_command, timeout=30,
                          solution_file=solution_file, test_file=test_file)
 
+    def _reload_tutor_config(self) -> dict:
+        self._pw._tutor_config = load_config(self._pw._config_path)
+        return self._pw._tutor_config
+
     def is_tutor_enabled(self) -> bool:
-        config = self._pw._tutor_config
+        config = self._reload_tutor_config()
         return bool(
             config.get("tutor_enabled")
             and config.get("tutor_api_key")
@@ -66,7 +70,7 @@ class Api:
     def get_hint(self, code: str, test_output: str) -> dict:
         from drb.tutor import get_hint
 
-        config = self._pw._tutor_config
+        config = self._reload_tutor_config()
         problem = self._pw.current_problem
         try:
             hint, history = get_hint(
@@ -81,7 +85,7 @@ class Api:
     def get_solution(self, code: str) -> dict:
         from drb.tutor import get_solution
 
-        config = self._pw._tutor_config
+        config = self._reload_tutor_config()
         problem = self._pw.current_problem
         try:
             solution = get_solution(
@@ -108,8 +112,8 @@ class PracticeWindow:
         self.api = Api(self)
         self._window = None
         self._hint_history = []
-        config_path = os.path.join(state_dir, "config.json")
-        self._tutor_config = load_config(config_path)
+        self._config_path = os.path.join(state_dir, "config.json")
+        self._tutor_config = load_config(self._config_path)
 
     def _load_current_problem(self):
         idx = self.state.current_problem_index

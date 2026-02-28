@@ -142,8 +142,11 @@ def main(argv=None):
         except (ConnectionRefusedError, FileNotFoundError):
             pass
 
-        # Remove state directory
-        if os.path.isdir(state_dir):
+        # Remove state directory (or symlink to it)
+        if os.path.islink(state_dir):
+            os.remove(state_dir)
+            print(f"Removed symlink {state_dir}")
+        elif os.path.isdir(state_dir):
             shutil.rmtree(state_dir)
             print(f"Removed {state_dir}")
 

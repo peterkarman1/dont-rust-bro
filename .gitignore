@@ -1,0 +1,7 @@
+venv/
+config.json
+state.json
+daemon.pid
+daemon.sock
+__pycache__/
+*.pyc

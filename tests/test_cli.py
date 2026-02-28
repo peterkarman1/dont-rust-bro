@@ -102,6 +102,28 @@ def test_uninstall_removes_artifacts(tmp_path):
     assert "other-tool" in updated["hooks"]["UserPromptSubmit"][0]["hooks"][0]["command"]
 
 
+def test_uninstall_removes_symlinked_state(tmp_path):
+    """Test that uninstall removes symlink to state dir without deleting target."""
+    real_dir = str(tmp_path / "real")
+    os.makedirs(real_dir)
+    (tmp_path / "real" / "state.json").write_text("{}")
+
+    state_link = str(tmp_path / "state")
+    os.symlink(real_dir, state_link)
+
+    with patch("drb.cli.DEFAULT_STATE_DIR", state_link), \
+         patch("drb.cli.DEFAULT_BIN_DIR", str(tmp_path / "bin")), \
+         patch("drb.cli.CLAUDE_SETTINGS", str(tmp_path / "nosettings.json")), \
+         patch("drb.cli.send_to_daemon", side_effect=ConnectionRefusedError):
+        main(["uninstall"])
+
+    # Symlink removed
+    assert not os.path.islink(state_link)
+    # Original directory preserved
+    assert os.path.isdir(real_dir)
+    assert os.path.isfile(os.path.join(real_dir, "state.json"))
+
+
 def test_packs_use_pulls_image(tmp_path):
     """Test that packs use calls ensure_image for the pack's container image."""
     state_dir = str(tmp_path / "state")

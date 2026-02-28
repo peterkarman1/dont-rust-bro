@@ -36,6 +36,24 @@ When you send Claude a prompt, a practice window pops up with a coding problem. 
 
 State is saved, so if the window disappears mid-problem, your code is still there when it comes back.
 
+## AI Tutor Mode
+
+Stuck on a problem? Enable the optional AI tutor for progressive hints and full solutions powered by [OpenRouter](https://openrouter.ai/).
+
+```bash
+drb tutor on --key YOUR_OPENROUTER_KEY
+```
+
+Click **Hint** for a Socratic nudge toward the next step. Click **Solution** for a fully commented answer. The tutor remembers your conversation — each hint builds on the last, and it notices when you update your code.
+
+```bash
+drb tutor off          # disable (keeps your key)
+drb tutor status       # check configuration
+drb tutor on --model anthropic/claude-sonnet-4  # use a different model
+```
+
+Default model: `qwen/qwen3.5-27b` (free tier on OpenRouter). Works with any OpenRouter-supported model.
+
 ## Commands
 
 | Command | Description |
@@ -43,6 +61,9 @@ State is saved, so if the window disappears mid-problem, your code is still ther
 | `drb status` | Check daemon status |
 | `drb packs list` | List installed problem packs |
 | `drb packs use <name>` | Switch active pack |
+| `drb tutor on --key KEY` | Enable AI tutor with OpenRouter API key |
+| `drb tutor off` | Disable AI tutor |
+| `drb tutor status` | Check tutor configuration |
 | `drb update` | Pull latest problems |
 | `drb stop` | Stop the daemon |
 | `drb uninstall` | Remove dont-rust-bro completely |
