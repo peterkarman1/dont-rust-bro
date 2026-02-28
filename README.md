@@ -30,6 +30,10 @@ curl -fsSL https://raw.githubusercontent.com/peterkarman1/dont-rust-bro/main/ins
 
 [![dont-rust-bro demo](https://img.youtube.com/vi/71oPOum87IU/maxresdefault.jpg)](https://www.youtube.com/watch?v=71oPOum87IU)
 
+### AI Tutor Demo
+
+[![AI tutor demo](https://img.youtube.com/vi/QkIMfUms4LM/maxresdefault.jpg)](https://www.youtube.com/watch?v=QkIMfUms4LM)
+
 ## How it works
 
 When you send Claude a prompt, a practice window pops up with a coding problem. Write your solution, click Run, see if you pass. The window automatically hides when Claude finishes — because the real work comes first.
