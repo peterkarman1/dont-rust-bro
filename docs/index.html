@@ -24,6 +24,7 @@
       <li><a href="#how">How It Works</a></li>
       <li><a href="#demo">Demo</a></li>
       <li><a href="#features">Features</a></li>
+      <li><a href="#tutor">AI Tutor</a></li>
       <li><a href="#install">Install</a></li>
       <li><a href="https://github.com/peterkarman1/dont-rust-bro" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
@@ -189,8 +190,59 @@
         <p>Modern HTML/CSS/JS interface powered by pywebview. Fast, clean, responsive.</p>
       </div>
       <div class="feature-card">
+        <h3>AI tutor mode</h3>
+        <p>Stuck? Get progressive Socratic hints or a fully commented solution from an LLM, right in the practice window.</p>
+      </div>
+      <div class="feature-card">
         <h3>Claude Code hooks</h3>
         <p>Integrates via Claude Code's hook system. One install command and you're set.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 5b. AI Tutor ========== -->
+<section id="tutor">
+  <div class="container">
+    <div class="section-label">// ai tutor</div>
+    <h2 class="section-title">Stuck? Get a nudge.</h2>
+    <p class="section-intro">
+      Enable the optional AI tutor for progressive hints and full solutions, powered by
+      <a href="https://openrouter.ai/" target="_blank" rel="noopener">OpenRouter</a>.
+      The tutor is Socratic &mdash; it guides you toward the answer without giving it away.
+      When you're truly stuck, ask for the full solution with line-by-line comments.
+    </p>
+
+    <div class="terminal-box">
+      <div class="terminal-titlebar">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span>Terminal</span>
+      </div>
+      <div class="terminal-body">
+        <div class="copy-wrap">
+          <button class="copy-btn" data-copy="drb tutor on --key YOUR_OPENROUTER_KEY">Copy</button>
+          <span class="prompt">$ </span><span class="command">drb tutor on --key YOUR_OPENROUTER_KEY</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reasons-grid" style="margin-top: 2rem;">
+      <div class="reason-card">
+        <div class="icon">&#128161;</div>
+        <h3>Progressive hints</h3>
+        <p>Each hint builds on the last. The tutor notices when you update your code and adjusts.</p>
+      </div>
+      <div class="reason-card">
+        <div class="icon">&#128221;</div>
+        <h3>Full solutions</h3>
+        <p>Get a complete, working solution with a comment on every significant line.</p>
+      </div>
+      <div class="reason-card">
+        <div class="icon">&#9881;</div>
+        <h3>Any model</h3>
+        <p>Default: <code>qwen/qwen3.5-27b</code> (free). Works with any OpenRouter-supported model.</p>
       </div>
     </div>
   </div>
@@ -269,6 +321,9 @@
         <tr><td><code>drb status</code></td><td>Check daemon status</td></tr>
         <tr><td><code>drb packs list</code></td><td>List installed problem packs</td></tr>
         <tr><td><code>drb packs use &lt;name&gt;</code></td><td>Switch active pack</td></tr>
+        <tr><td><code>drb tutor on --key KEY</code></td><td>Enable AI tutor with OpenRouter API key</td></tr>
+        <tr><td><code>drb tutor off</code></td><td>Disable AI tutor</td></tr>
+        <tr><td><code>drb tutor status</code></td><td>Check tutor configuration</td></tr>
         <tr><td><code>drb update</code></td><td>Pull latest problems</td></tr>
         <tr><td><code>drb stop</code></td><td>Stop the daemon</td></tr>
         <tr><td><code>drb uninstall</code></td><td>Remove dont-rust-bro completely</td></tr>

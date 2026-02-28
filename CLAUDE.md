@@ -39,10 +39,11 @@ Claude finishes ──► Stop hook ──► `drb hide`
 | File | Purpose |
 |------|---------|
 | `bin/drb` | Bash entry point, execs `python3 -m drb.cli` |
-| `drb/cli.py` | CLI dispatcher: show, hide, stop, status, packs, update, uninstall |
+| `drb/cli.py` | CLI dispatcher: show, hide, stop, status, packs, tutor, update, uninstall |
 | `drb/daemon.py` | `DaemonServer` — Unix socket server, simple show/hide (no reference counting) |
 | `drb/daemon_main.py` | Entry point for daemon process — spawns server thread + pywebview GUI on main thread |
-| `drb/gui.py` | `PracticeWindow` — pywebview UI with HTML/CSS/JS code editor, problem display, test runner |
+| `drb/gui.py` | `PracticeWindow` — pywebview UI with HTML/CSS/JS code editor, problem display, test runner, tutor API |
+| `drb/tutor.py` | `get_hint()`, `get_solution()` — OpenRouter LLM integration for progressive hints |
 | `drb/runner.py` | `run_tests()` — writes solution + tests to tempdir, runs in container |
 | `drb/container.py` | Container engine detection, image management, ephemeral test execution |
 | `drb/ui/index.html` | Web-based UI for the practice window |
@@ -55,7 +56,9 @@ Claude finishes ──► Stop hook ──► `drb hide`
 
 - **Problem packs** live in `packs/<name>/` with a `pack.json` manifest and per-problem JSON files
 - **State** persists to `~/.dont-rust-bro/state.json` (active pack, problem index, user code)
-- **Container config** persists to `~/.dont-rust-bro/config.json` (container engine preference)
+- **Container config** persists to `~/.dont-rust-bro/config.json` (container engine, tutor settings)
+- **Tutor config** stored in `config.json` (tutor_enabled, tutor_api_key, tutor_model)
+- **Hint history** held in memory per session (resets on problem navigation)
 - **Daemon IPC** uses a Unix socket at `~/.dont-rust-bro/daemon.sock`
 - **Container image** declared in `pack.json` under `image` and `test_command`
 - **Per-pack Dockerfiles** live in `packs/<name>/Dockerfile` — deps (e.g. pytest) are pre-baked into the image at install time

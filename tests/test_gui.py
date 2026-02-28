@@ -1,6 +1,7 @@
 import json
 import os
 import pytest
+from unittest.mock import patch
 
 from drb.gui import PracticeWindow
 
@@ -75,3 +76,90 @@ def test_api_save_code(setup_env):
     api = pw.api
     api.save_code("def add(a,b): return a+b")
     assert pw.state.current_code == "def add(a,b): return a+b"
+
+
+def test_api_is_tutor_enabled_default(setup_env):
+    """Tutor disabled by default when no config."""
+    state_dir, packs_dir = setup_env
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+    assert pw.api.is_tutor_enabled() is False
+
+
+def test_api_is_tutor_enabled_when_configured(setup_env):
+    """Tutor enabled when config has tutor_enabled=True and a key."""
+    state_dir, packs_dir = setup_env
+    config_path = os.path.join(state_dir, "config.json")
+    os.makedirs(state_dir, exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+    assert pw.api.is_tutor_enabled() is True
+
+
+def test_api_get_hint(setup_env):
+    """get_hint returns hint dict and updates history."""
+    state_dir, packs_dir = setup_env
+    config_path = os.path.join(state_dir, "config.json")
+    os.makedirs(state_dir, exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+
+    with patch("drb.tutor.call_openrouter", return_value="Try a hash map."):
+        result = pw.api.get_hint("def add(a, b):\n    pass", "")
+
+    assert result["hint"] == "Try a hash map."
+    assert result["error"] is None
+    assert len(pw._hint_history) == 3  # system + user + assistant
+
+
+def test_api_get_hint_error(setup_env):
+    """get_hint returns error on failure."""
+    state_dir, packs_dir = setup_env
+    config_path = os.path.join(state_dir, "config.json")
+    os.makedirs(state_dir, exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+
+    with patch("drb.tutor.call_openrouter", side_effect=RuntimeError("API error (401): Invalid key")):
+        result = pw.api.get_hint("code", "")
+
+    assert result["hint"] is None
+    assert "401" in result["error"]
+    assert len(pw._hint_history) == 0  # history not corrupted
+
+
+def test_api_get_solution(setup_env):
+    """get_solution returns solution dict."""
+    state_dir, packs_dir = setup_env
+    config_path = os.path.join(state_dir, "config.json")
+    os.makedirs(state_dir, exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+
+    with patch("drb.tutor.call_openrouter", return_value="def add(a, b):\n    # Add two numbers\n    return a + b"):
+        result = pw.api.get_solution("def add(a, b):\n    pass")
+
+    assert result["solution"] is not None
+    assert result["error"] is None
+
+
+def test_hint_history_resets_on_navigation(setup_env):
+    """Hint history clears when navigating to new problem."""
+    state_dir, packs_dir = setup_env
+    config_path = os.path.join(state_dir, "config.json")
+    os.makedirs(state_dir, exist_ok=True)
+    with open(config_path, "w") as f:
+        json.dump({"tutor_enabled": True, "tutor_api_key": "sk-test", "tutor_model": "qwen/qwen3.5-27b"}, f)
+
+    pw = PracticeWindow(state_dir=state_dir, packs_dir=packs_dir, headless=True)
+    pw._hint_history = [{"role": "system", "content": "test"}]
+
+    pw.next_problem()
+    assert pw._hint_history == []
