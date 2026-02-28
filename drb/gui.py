@@ -1,5 +1,6 @@
 import os
 
+from drb.container import load_config
 from drb.problems import load_pack, load_problem
 from drb.state import StateManager
 
@@ -55,6 +56,41 @@ class Api:
                          test_command=test_command, timeout=30,
                          solution_file=solution_file, test_file=test_file)
 
+    def is_tutor_enabled(self) -> bool:
+        config = self._pw._tutor_config
+        return bool(
+            config.get("tutor_enabled")
+            and config.get("tutor_api_key")
+        )
+
+    def get_hint(self, code: str, test_output: str) -> dict:
+        from drb.tutor import get_hint
+
+        config = self._pw._tutor_config
+        problem = self._pw.current_problem
+        try:
+            hint, history = get_hint(
+                problem, code, test_output,
+                self._pw._hint_history, config,
+            )
+            self._pw._hint_history = history
+            return {"hint": hint, "error": None}
+        except Exception as e:
+            return {"hint": None, "error": str(e)}
+
+    def get_solution(self, code: str) -> dict:
+        from drb.tutor import get_solution
+
+        config = self._pw._tutor_config
+        problem = self._pw.current_problem
+        try:
+            solution = get_solution(
+                problem, code, self._pw._hint_history, config,
+            )
+            return {"solution": solution, "error": None}
+        except Exception as e:
+            return {"solution": None, "error": str(e)}
+
 
 class PracticeWindow:
     def __init__(self, state_dir: str, packs_dir: str, headless: bool = False):
@@ -71,6 +107,9 @@ class PracticeWindow:
 
         self.api = Api(self)
         self._window = None
+        self._hint_history = []
+        config_path = os.path.join(state_dir, "config.json")
+        self._tutor_config = load_config(config_path)
 
     def _load_current_problem(self):
         idx = self.state.current_problem_index
@@ -91,12 +130,14 @@ class PracticeWindow:
         self.state.current_problem_index = (self.state.current_problem_index + 1) % len(self._problem_ids)
         self.state.save()
         self._load_current_problem()
+        self._hint_history = []
 
     def prev_problem(self):
         self.state.current_code = ""
         self.state.current_problem_index = (self.state.current_problem_index - 1) % len(self._problem_ids)
         self.state.save()
         self._load_current_problem()
+        self._hint_history = []
 
     def show(self):
         self.visible = True
