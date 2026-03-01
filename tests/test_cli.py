@@ -1,24 +1,34 @@
 import json
 import os
 import socket
+import sys
 import threading
-import time
 import pytest
 from unittest.mock import patch
 from drb.cli import send_to_daemon, is_daemon_running, main
 
 
+def _can_symlink():
+    """Check if the current process can create symlinks."""
+    if sys.platform != "win32":
+        return True
+    import tempfile
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            os.symlink(td, os.path.join(td, "_test_link"))
+        return True
+    except OSError:
+        return False
+
+
+needs_symlink = pytest.mark.skipif(
+    not _can_symlink(), reason="symlinks require admin on Windows"
+)
+
+
 @pytest.fixture
 def daemon_dir(tmp_path):
-    # On macOS, AF_UNIX socket paths have a short max length (~104 chars).
-    # Use a symlink to shorten the path if needed.
-    short = "/tmp/_drb_test"
-    target = str(tmp_path)
-    if os.path.islink(short) or os.path.exists(short):
-        os.remove(short)
-    os.symlink(target, short)
-    yield short
-    os.remove(short)
+    return str(tmp_path)
 
 
 def test_is_daemon_running_false(daemon_dir):
@@ -33,11 +43,17 @@ def test_is_daemon_running_with_stale_pid(daemon_dir):
 
 
 def test_send_to_daemon(daemon_dir):
-    """Start a minimal socket server and test send_to_daemon talks to it."""
-    sock_path = os.path.join(daemon_dir, "daemon.sock")
-    server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server.bind(sock_path)
+    """Start a minimal TCP server and test send_to_daemon talks to it."""
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server.bind(("127.0.0.1", 0))
+    port = server.getsockname()[1]
     server.listen(1)
+
+    # Write port file so send_to_daemon can find it
+    port_path = os.path.join(daemon_dir, "daemon.port")
+    with open(port_path, "w") as f:
+        f.write(str(port))
 
     def handle():
         conn, _ = server.accept()
@@ -54,6 +70,7 @@ def test_send_to_daemon(daemon_dir):
     server.close()
 
 
+@needs_symlink
 def test_uninstall_removes_artifacts(tmp_path):
     """Test that uninstall removes state dir, symlink, and hooks."""
     state_dir = str(tmp_path / "state")
@@ -102,6 +119,7 @@ def test_uninstall_removes_artifacts(tmp_path):
     assert "other-tool" in updated["hooks"]["UserPromptSubmit"][0]["hooks"][0]["command"]
 
 
+@needs_symlink
 def test_uninstall_removes_symlinked_state(tmp_path):
     """Test that uninstall removes symlink to state dir without deleting target."""
     real_dir = str(tmp_path / "real")

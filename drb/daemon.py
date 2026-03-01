@@ -1,12 +1,11 @@
 import json
 import os
-import signal
 import socket
 import threading
 
 
 class DaemonServer:
-    """Unix socket server that manages GUI visibility."""
+    """TCP localhost server that manages GUI visibility."""
 
     def __init__(self, state_dir: str, headless: bool = False):
         self._state_dir = state_dir
@@ -14,10 +13,15 @@ class DaemonServer:
         self._running = False
         self._server_socket = None
         self._gui = None
+        self._port = None
 
         os.makedirs(state_dir, exist_ok=True)
-        self.sock_path = os.path.join(state_dir, "daemon.sock")
+        self._port_path = os.path.join(state_dir, "daemon.port")
         self._pid_path = os.path.join(state_dir, "daemon.pid")
+
+    @property
+    def port(self):
+        return self._port
 
     def _write_pidfile(self):
         with open(self._pid_path, "w") as f:
@@ -65,11 +69,14 @@ class DaemonServer:
         self._gui = gui
 
     def serve_forever(self):
-        if os.path.exists(self.sock_path):
-            os.remove(self.sock_path)
+        self._server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self._server_socket.bind(("127.0.0.1", 0))
+        self._port = self._server_socket.getsockname()[1]
 
-        self._server_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self._server_socket.bind(self.sock_path)
+        with open(self._port_path, "w") as f:
+            f.write(str(self._port))
+
         self._server_socket.listen(5)
         self._server_socket.settimeout(0.5)
         self._running = True
@@ -86,8 +93,8 @@ class DaemonServer:
                     continue
         finally:
             self._server_socket.close()
-            if os.path.exists(self.sock_path):
-                os.remove(self.sock_path)
+            if os.path.isfile(self._port_path):
+                os.remove(self._port_path)
             self._remove_pidfile()
 
     def shutdown(self):

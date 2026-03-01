@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 
 
 def detect_engine() -> str:
@@ -44,9 +45,10 @@ def run_in_container(engine: str, image: str, test_command: str,
     Mounts work_dir to /work inside the container.
     Returns dict with 'passed' (bool) and 'output' (str).
     """
+    mount_path = work_dir.replace("\\", "/") if sys.platform == "win32" else work_dir
     cmd = [
         engine, "run", "--rm",
-        "-v", f"{work_dir}:/work", "-w", "/work",
+        "-v", f"{mount_path}:/work", "-w", "/work",
         "--memory=256m", "--cpus=1",
         image, "sh", "-c", test_command,
     ]
