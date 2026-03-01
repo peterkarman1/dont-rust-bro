@@ -63,6 +63,11 @@ def launch_daemon(state_dir: str):
 def ensure_daemon(state_dir: str):
     """Ensure the daemon is running, launching it if needed."""
     if not is_daemon_running(state_dir):
+        # Clean up stale files from a previous crashed daemon
+        for f in ("daemon.port", "daemon.pid"):
+            p = os.path.join(state_dir, f)
+            if os.path.isfile(p):
+                os.remove(p)
         launch_daemon(state_dir)
         import time
         for _ in range(20):
