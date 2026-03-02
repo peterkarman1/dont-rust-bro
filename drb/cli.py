@@ -26,8 +26,8 @@ def is_daemon_running(state_dir: str) -> bool:
     except PermissionError:
         # PermissionError means the process exists but we can't signal it
         return True
-    except OSError:
-        # On Windows, os.kill raises OSError for non-existent PIDs
+    except (OSError, SystemError):
+        # On Windows, os.kill raises OSError or SystemError for non-existent PIDs
         return False
 
 
