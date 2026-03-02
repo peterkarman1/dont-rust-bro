@@ -3,7 +3,6 @@ import os
 import socket
 import threading
 import time
-import uuid
 
 import pytest
 
@@ -12,13 +11,9 @@ from drb.gui import PracticeWindow
 
 
 @pytest.fixture
-def env(tmp_path, request):
-    # Use a short symlink to avoid AF_UNIX 104-byte path limit on macOS
-    short = "/tmp/_drb_" + uuid.uuid4().hex[:8]
-    os.symlink(str(tmp_path), short)
-
-    state_dir = os.path.join(short, "state")
-    packs_dir = os.path.join(short, "packs")
+def env(tmp_path):
+    state_dir = os.path.join(str(tmp_path), "state")
+    packs_dir = os.path.join(str(tmp_path), "packs")
     os.makedirs(packs_dir)
 
     python_dir = os.path.join(packs_dir, "python")
@@ -44,17 +39,12 @@ def env(tmp_path, request):
                 "skeleton": skel, "test_code": test
             }, f)
 
-    def cleanup():
-        os.unlink(short)
-
-    request.addfinalizer(cleanup)
-
     return state_dir, packs_dir
 
 
-def send_cmd(sock_path, cmd):
-    c = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    c.connect(sock_path)
+def send_cmd(port, cmd):
+    c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    c.connect(("127.0.0.1", port))
     c.sendall(json.dumps({"command": cmd}).encode() + b"\n")
     data = c.recv(4096)
     c.close()
@@ -75,27 +65,27 @@ def test_full_lifecycle(env):
 
     try:
         # Show makes GUI visible
-        resp = send_cmd(server.sock_path, "show")
+        resp = send_cmd(server.port, "show")
         assert resp["visible"] is True
         assert gui.visible is True
 
         # Show again is idempotent
-        resp = send_cmd(server.sock_path, "show")
+        resp = send_cmd(server.port, "show")
         assert resp["visible"] is True
         assert gui.visible is True
 
         # Hide makes GUI invisible
-        resp = send_cmd(server.sock_path, "hide")
+        resp = send_cmd(server.port, "hide")
         assert resp["visible"] is False
         assert gui.visible is False
 
         # Show again after hide works
-        resp = send_cmd(server.sock_path, "show")
+        resp = send_cmd(server.port, "show")
         assert resp["visible"] is True
         assert gui.visible is True
 
         # Hide again
-        resp = send_cmd(server.sock_path, "hide")
+        resp = send_cmd(server.port, "hide")
         assert resp["visible"] is False
         assert gui.visible is False
     finally:

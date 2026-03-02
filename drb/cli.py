@@ -1,7 +1,6 @@
 import json
 import os
 import shutil
-import signal
 import socket
 import subprocess
 import sys
@@ -22,16 +21,24 @@ def is_daemon_running(state_dir: str) -> bool:
             pid = int(f.read().strip())
         os.kill(pid, 0)
         return True
-    except (ValueError, ProcessLookupError, PermissionError):
+    except (ValueError, ProcessLookupError):
+        return False
+    except PermissionError:
+        # PermissionError means the process exists but we can't signal it
+        return True
+    except (OSError, SystemError):
+        # On Windows, os.kill raises OSError or SystemError for non-existent PIDs
         return False
 
 
 def send_to_daemon(state_dir: str, command: str) -> dict:
-    """Send a command to the running daemon via Unix socket."""
-    sock_path = os.path.join(state_dir, "daemon.sock")
-    client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    """Send a command to the running daemon via TCP localhost."""
+    port_path = os.path.join(state_dir, "daemon.port")
+    with open(port_path) as f:
+        port = int(f.read().strip())
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.settimeout(5)
-    client.connect(sock_path)
+    client.connect(("127.0.0.1", port))
     client.sendall(json.dumps({"command": command}).encode() + b"\n")
     data = client.recv(4096)
     client.close()
@@ -40,22 +47,32 @@ def send_to_daemon(state_dir: str, command: str) -> dict:
 
 def launch_daemon(state_dir: str):
     """Launch the daemon as a background process."""
+    kwargs = {}
+    if sys.platform == "win32":
+        kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
+    else:
+        kwargs["start_new_session"] = True
     subprocess.Popen(
         [sys.executable, "-m", "drb.daemon_main", "--state-dir", state_dir],
-        start_new_session=True,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
+        **kwargs,
     )
 
 
 def ensure_daemon(state_dir: str):
     """Ensure the daemon is running, launching it if needed."""
     if not is_daemon_running(state_dir):
+        # Clean up stale files from a previous crashed daemon
+        for f in ("daemon.port", "daemon.pid"):
+            p = os.path.join(state_dir, f)
+            if os.path.isfile(p):
+                os.remove(p)
         launch_daemon(state_dir)
         import time
         for _ in range(20):
             time.sleep(0.1)
-            if os.path.exists(os.path.join(state_dir, "daemon.sock")):
+            if os.path.exists(os.path.join(state_dir, "daemon.port")):
                 break
 
 
@@ -150,11 +167,15 @@ def main(argv=None):
             shutil.rmtree(state_dir)
             print(f"Removed {state_dir}")
 
-        # Remove symlink
+        # Remove entry point (symlink on Unix, .bat on Windows)
         symlink_path = os.path.join(DEFAULT_BIN_DIR, "drb")
+        bat_path = os.path.join(DEFAULT_BIN_DIR, "drb.bat")
         if os.path.islink(symlink_path):
             os.remove(symlink_path)
             print(f"Removed {symlink_path}")
+        if os.path.isfile(bat_path):
+            os.remove(bat_path)
+            print(f"Removed {bat_path}")
 
         # Remove hooks from Claude settings
         if os.path.isfile(CLAUDE_SETTINGS):

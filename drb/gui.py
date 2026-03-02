@@ -1,4 +1,5 @@
 import os
+import sys
 
 from drb.container import load_config
 from drb.problems import load_pack, load_problem
@@ -147,6 +148,9 @@ class PracticeWindow:
         self.visible = True
         if self._window and not self._headless:
             self._window.show()
+            if sys.platform == "win32":
+                self._window.on_top = True
+                self._window.on_top = False
 
     def hide(self):
         self.visible = False
@@ -164,4 +168,10 @@ class PracticeWindow:
             width=720, height=680,
             hidden=True,
         )
+
+        def on_closing():
+            self.hide()
+            return False  # Cancel close
+
+        self._window.events.closing += on_closing
         webview.start()

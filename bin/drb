@@ -12,8 +12,12 @@ done
 SCRIPT_DIR="$(cd "$(dirname "$SOURCE")" && pwd)"
 DRB_ROOT="$(dirname "$SCRIPT_DIR")"
 
-# Use the bundled venv python
-PYTHON="${DRB_ROOT}/venv/bin/python"
+# Use the bundled venv python (handle both Unix and Windows/MSYS paths)
+if [ -f "${DRB_ROOT}/venv/Scripts/python.exe" ]; then
+    PYTHON="${DRB_ROOT}/venv/Scripts/python.exe"
+else
+    PYTHON="${DRB_ROOT}/venv/bin/python"
+fi
 
 export PYTHONPATH="${DRB_ROOT}${PYTHONPATH:+:$PYTHONPATH}"
 exec "$PYTHON" -m drb.cli "$@"

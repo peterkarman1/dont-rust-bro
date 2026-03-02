@@ -11,7 +11,7 @@ User sends prompt ──► UserPromptSubmit hook ──► `drb show`
                                                     │
                                     ┌───────────────┴───────────────┐
                                     │         DaemonServer          │
-                                    │   (Unix socket, daemon.py)    │
+                                    │  (TCP localhost, daemon.py)   │
                                     │                               │
                                     │   show  → gui.show()          │
                                     │   hide  → gui.hide()          │
@@ -38,9 +38,10 @@ Claude finishes ──► Stop hook ──► `drb hide`
 
 | File | Purpose |
 |------|---------|
-| `bin/drb` | Bash entry point, execs `python3 -m drb.cli` |
+| `bin/drb` | Bash entry point (macOS/Linux), execs `python3 -m drb.cli` |
+| `bin/drb.bat` | Windows batch entry point, execs `python -m drb.cli` |
 | `drb/cli.py` | CLI dispatcher: show, hide, stop, status, packs, tutor, update, uninstall |
-| `drb/daemon.py` | `DaemonServer` — Unix socket server, simple show/hide (no reference counting) |
+| `drb/daemon.py` | `DaemonServer` — TCP localhost server, simple show/hide (no reference counting) |
 | `drb/daemon_main.py` | Entry point for daemon process — spawns server thread + pywebview GUI on main thread |
 | `drb/gui.py` | `PracticeWindow` — pywebview UI with HTML/CSS/JS code editor, problem display, test runner, tutor API |
 | `drb/tutor.py` | `get_hint()`, `get_solution()` — OpenRouter LLM integration for progressive hints |
@@ -50,7 +51,8 @@ Claude finishes ──► Stop hook ──► `drb hide`
 | `drb/problems.py` | `list_packs()`, `load_pack()`, `load_problem()` — JSON-based pack/problem loading |
 | `drb/state.py` | `StateManager` — persists active pack, problem index, user code to `state.json` |
 | `hooks/claude-code.json` | Hook config: `UserPromptSubmit` → show, `Stop` → hide |
-| `install.sh` | One-command installer: clean clone, dep check, symlink, hook registration |
+| `install.sh` | One-command installer for macOS/Linux: clean clone, dep check, symlink, hook registration |
+| `install.py` | Cross-platform Python installer (Windows + macOS/Linux) |
 
 ### Data flow
 
@@ -59,7 +61,7 @@ Claude finishes ──► Stop hook ──► `drb hide`
 - **Container config** persists to `~/.dont-rust-bro/config.json` (container engine, tutor settings)
 - **Tutor config** stored in `config.json` (tutor_enabled, tutor_api_key, tutor_model)
 - **Hint history** held in memory per session (resets on problem navigation)
-- **Daemon IPC** uses a Unix socket at `~/.dont-rust-bro/daemon.sock`
+- **Daemon IPC** uses TCP localhost (127.0.0.1, OS-assigned port written to `~/.dont-rust-bro/daemon.port`)
 - **Container image** declared in `pack.json` under `image` and `test_command`
 - **Per-pack Dockerfiles** live in `packs/<name>/Dockerfile` — deps (e.g. pytest) are pre-baked into the image at install time
 - `ensure_image()` builds from Dockerfile if present in the pack dir, otherwise pulls from registry
@@ -84,11 +86,13 @@ python3 -m pytest tests/ -v
 ### Project conventions
 
 - Python 3.9+ (system python on macOS)
+- Cross-platform: Windows, macOS, Linux
 - pywebview for GUI (requires pywebview + pyobjc-framework-WebKit on macOS)
 - Docker or Podman for containerized test execution
 - pytest for testing
-- Tests use short `/tmp` symlinks to work around macOS AF_UNIX 104-byte path limit
+- IPC uses TCP localhost (no platform-specific socket APIs)
 - GUI tests use `headless=True` to avoid requiring a display
+- Windows install: `python install.py` / macOS/Linux: `install.sh` or `python install.py`
 
 ## Workflow rules
 
